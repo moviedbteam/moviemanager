@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 17px;
+    padding-right: 17px;
+    width: 100%; 
+    background-color: rgb(15, 15, 50) !important;
+    position: fixed;
+    top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    z-index: 1;
+    box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
+}
+
+nav i {
+    font-size: 2em;
+    color: rgb(140, 120, 160);
+}
+nav a.navbar-brand {
+    color: rgb(140, 120, 160)
+}

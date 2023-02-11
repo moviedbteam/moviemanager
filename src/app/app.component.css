@@ -1,39 +1,30 @@
-div.topnav {
+nav.topnav {
     display: flex;
     justify-content: flex-end;
     padding-left: 17px;
     padding-right: 17px;
-    width: 100%; 
+    width: 98%; 
     background-color: rgb(15, 15, 50) !important;
     position: fixed;
-    top: 0;
+    top: 5px;
+    right: 10px;
+    left: 10px;
     padding-top: 0;
     padding-bottom: 0;
     z-index: 1;
     box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
+    border-radius: 30px;
 }
-
-div.topnav i {
+nav.topnav span {
+    font-size: 0.75em;
+    color: rgb(140, 120, 160);
+}
+nav.topnav i {
     font-size: 2em;
     color: rgb(140, 120, 160);
 }
-div.topnav a.navbar-brand {
+nav.topnav a.navbar-brand {
     color: rgb(140, 120, 160)
-}
-
-div.leftnavmenu {
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 17px;
-    padding-right: 17px;
-    width: 200px; 
-    background-color: rgb(15, 15, 50) !important;
-    position: fixed;
-    top: 100px;
-    padding-top: 17px;
-    padding-bottom: 17px;
-    z-index: 2;
-    box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
 }
 
 div.leftnav {
@@ -44,9 +35,13 @@ div.leftnav {
     width: 200px; 
     background-color: rgb(15, 15, 50) !important;
     position: fixed;
-    top: 150px;
+    top: 67px;
+    right: 10px;
+    left: 10px;
+    bottom: 10px;
     padding-top: 17px;
     padding-bottom: 17px;
     z-index: 2;
     box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
+    border-radius: 30px;
 }

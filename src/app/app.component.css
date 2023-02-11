@@ -15,10 +15,6 @@ nav.topnav {
     box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
     border-radius: 30px;
 }
-nav.topnav span {
-    font-size: 0.75em;
-    color: rgb(140, 120, 160);
-}
 nav.topnav i {
     font-size: 2em;
     color: rgb(140, 120, 160);

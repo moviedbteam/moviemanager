@@ -3,7 +3,7 @@ nav.topnav {
     justify-content: flex-end;
     padding-left: 17px;
     padding-right: 17px;
-    width: 98%; 
+    width: 97%; 
     background-color: rgb(15, 15, 50) !important;
     position: fixed;
     top: 5px;
@@ -28,12 +28,31 @@ div.leftnav {
     justify-content: flex-start;
     padding-left: 17px;
     padding-right: 17px;
-    width: 150px; 
+    width: 172px; 
     background-color: rgb(15, 15, 50) !important;
     position: fixed;
     top: 67px;
     right: 10px;
     left: 10px;
+    bottom: 10px;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    z-index: 2;
+    box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%);
+    border-radius: 30px;
+}
+
+div.centre {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 17px;
+    padding-right: 17px;
+    width: 83%; 
+    background-color: rgb(15, 15, 50) !important;
+    position: fixed;
+    top: 20px;
+    right: 10px;
+    left: 150px;
     bottom: 10px;
     padding-top: 17px;
     padding-bottom: 17px;

@@ -4,7 +4,9 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { AjouterComponent } from './ajouter/ajouter.component';
 import { BibliothequeComponent } from './bibliotheque/bibliotheque.component';
 import { ConnexionComponent } from './connexion/connexion.component';
+import { DetailComponent } from './detail/detail.component';
 import { FicheComponent } from './fiche/fiche.component';
+import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
   {
@@ -12,6 +14,12 @@ const routes: Routes = [
   },
   {
     path:'login', component:ConnexionComponent
+  },
+  {
+    path:'list', component:ListComponent
+  },
+  {
+    path:'detail/:id', component:DetailComponent
   },
   {
     path:'bibliotheque', component:BibliothequeComponent
@@ -23,7 +31,7 @@ const routes: Routes = [
     path:'ajouter', component:AjouterComponent
   },
   {
-    path:'*', component:AccueilComponent
+    path:'**', component:ListComponent
   },
 ];
 

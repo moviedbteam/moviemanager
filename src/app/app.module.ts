@@ -9,6 +9,14 @@ import { BibliothequeComponent } from './bibliotheque/bibliotheque.component';
 import { FicheComponent } from './fiche/fiche.component';
 import { AjouterComponent } from './ajouter/ajouter.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ListComponent } from './list/list.component';
+import { ActionbarComponent } from './actionbar/actionbar.component';
+import { SearchbarComponent } from './searchbar/searchbar.component';
+import { DetailComponent } from './detail/detail.component';
+import { PrintDurationPipe } from './shared/pipes/print-duration.pipe';
 
 @NgModule({
   declarations: [
@@ -17,14 +25,27 @@ import { AccueilComponent } from './accueil/accueil.component';
     BibliothequeComponent,
     FicheComponent,
     AjouterComponent,
-    AccueilComponent
+    AccueilComponent,
+    ListComponent,
+    ActionbarComponent,
+    SearchbarComponent,
+    DetailComponent,
+    PrintDurationPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    HttpClientModule,
+
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

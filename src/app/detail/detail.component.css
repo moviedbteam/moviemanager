@@ -1,0 +1,28 @@
+h1 {
+    margin: 0 0 0 10px;
+    line-height: 1.4em;
+  }
+  h2 {
+      font-size: 1.3em;
+      color:rgba(93,27,235);
+      margin-bottom: 0;
+  }
+  p.genre span{
+    padding: 2px 5px;
+    background: #fff;
+    margin: 5px;
+    border-radius: 50px;
+    color: #60605a;
+  }
+  .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }

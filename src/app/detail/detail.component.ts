@@ -17,7 +17,8 @@ export class DetailComponent {
   constructor(
     private route:ActivatedRoute,
     private router:Router,
-    private movieSvc:MovieService,
+    // private movieSvc:MovieService,
+    public movieSvc:MovieService,
     private sanitize:DomSanitizer
     ) {}
 
@@ -28,10 +29,12 @@ export class DetailComponent {
       
     this.movieSvc.getDetailsFromApi(this.movieId);
     
-    this.movieSvc.getMovieDetail$()
-    .subscribe(
-      (movies:MovieModel[]) => this.movie = movies
-    );
+    // this.movieSvc.getMovieDetail$()
+    // .subscribe(
+    //   (movies:MovieModel[]) => {
+    //     console.log("je suis la requete http de Detail Component");
+    //     this.movie = movies
+    //   });
     
     this.movieSvc.getVideosFromApi(this.movieId)
     .subscribe( (response:any) => {

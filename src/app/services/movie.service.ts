@@ -12,6 +12,7 @@ import { MovieModel } from '../shared/models/movie.model';
 export class MovieService {
 
   apitTmdb = environment.base_url_apiTmdb;
+  apiKeyTmdb = environment.apiKey_apiTmdb;
 
   private movies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -27,8 +28,9 @@ export class MovieService {
 
   getMoviesFromApi():void {
     let urlApi = this.apitTmdb+'/discover/movie';
+    let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
-    .set('api_key', '267af5120325d394d4ce784b430c2043')
+    .set('api_key', apiKey)
     .set('language', 'fr')
     .set('page', this.indexPage);
 
@@ -53,9 +55,10 @@ export class MovieService {
   }
 
   searchMoviesFromApi(userSearch:string):void{
-    let urlApi = 'https://api.themoviedb.org/3/search/movie';
+    let urlApi = this.apitTmdb+'/search/movie';
+    let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
-    .set('api_key', '267af5120325d394d4ce784b430c2043')
+    .set('api_key', apiKey)
     .set('language', 'fr')
     .set('query', userSearch);
 
@@ -70,9 +73,10 @@ export class MovieService {
   }
   
   getDetailsFromApi(id:number):void{
-    let urlApi = 'https://api.themoviedb.org/3/movie/';
+    let urlApi = this.apitTmdb+'/movie/';
+    let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
-    .set('api_key', '267af5120325d394d4ce784b430c2043')
+    .set('api_key', apiKey)
     .set('language', 'fr')
     this.http.get(urlApi+id, {params})
     .pipe(
@@ -83,9 +87,10 @@ export class MovieService {
   }
 
   getVideosFromApi(id:number){  
-    let urlApi = 'https://api.themoviedb.org/3/movie/';
+    let urlApi = this.apitTmdb+'/movie/';
+    let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
-    .set('api_key', '267af5120325d394d4ce784b430c2043')
+    .set('api_key', apiKey)
     .set('language', 'fr')
     return this.http.get(urlApi+id+'/videos', {params});
   }
@@ -94,7 +99,8 @@ export class MovieService {
     return this.movies$.asObservable();
   }
 
-  getMovieDetail$ ():Observable<MovieModel[]> {
+  // getMovieDetail$ ():Observable<MovieModel[]> {
+    getMovieDetail$ ():Observable<MovieModel> {
     return this.movieDetail$.asObservable();
   }
 

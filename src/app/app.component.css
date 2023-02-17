@@ -21,7 +21,7 @@
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   /* box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%); */
   background-color: rgb(15, 15, 50) !important;
-  color: rgb(140, 120, 160);
+  /* color: rgb(140, 120, 160); */
 }
 
 @media (max-width: 767.98px) {
@@ -38,7 +38,8 @@
 
 .sidebar .nav-link {
   font-weight: 500;
-  color: #333;
+  /* color: #333; */
+  color: rgb(140, 120, 160);
 }
 
 .sidebar .nav-link .feather {
@@ -59,6 +60,10 @@
   font-size: .75rem;
 }
 
+.sidebar-heading span{
+  color: #2470dc;
+}
+
 /*
   * Navbar
   */
@@ -66,32 +71,44 @@
 
 .navbar{
   background-color: rgb(15, 15, 50) !important;
-  color: rgb(140, 120, 160);
+  /* color: rgb(140, 120, 160); */
+  /* color: rgb(227, 17, 49); */
 
 }
 .navbar-brand {
   padding-top: .75rem;
   padding-bottom: .75rem;
   /* background-color: rgba(0, 0, 0, .25); */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  /* box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25); */
+  /* box-shadow: 1px 1px 4px 4px rgb(253, 13, 13); */
+  /* color: #9c71d9 */
+  color: rgb(140, 120, 160);
+  /* color: rgb(113 13 253); */
+  /* color: aqua; */
   
 }
 
 .navbar-nav{
-  background-color: rgb(15, 15, 50) !important;
+  /* background-color: rgb(15, 15, 50) !important; */
   font-size: 1.4em;
-  color: rgb(113 13 253);
+  /* color: rgb(140, 120, 160); */
+  /* color: rgb(113 13 253); */
   /* color: rgb(140, 120, 160); */
 
 }
 
 .navbar .navbar-toggler {
   top: .25rem;
-  right: 1rem;
-  background-color: rgb(15, 15, 50) !important;
+  left: 10rem;
+  /* color: rgb(140, 120, 160); */
+  /* background-color: rgb(15, 15, 50) !important; */
 }
 
-.navbar .form-control {
+.navbar i{
+  color: rgb(140, 120, 160);
+}
+
+/* .navbar .form-control {
   padding: .75rem 1rem;
 }
 
@@ -104,6 +121,6 @@
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
+} */
 
 

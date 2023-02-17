@@ -4,18 +4,26 @@
 <ul *ngIf="searchedMovies.length>0"> 
   <li [routerLink]="['/detail', movie.id]" *ngFor="let movie of searchedMovies">
     <h5>{{movie?.titre}}</h5>
+    <!-- <div>
+      <div class="image-container col">
+        <img [src]="getImgFullUrl(movie.image_portrait)" alt="">
+      </div>
+      <div class="col">
+        <h6>Date de sortie</h6>  
+        <p>{{ movie?.date | date:'dd/MM/yyyy' }}</p>
+        <h6>Résumé</h6>
+        <p>{{movie?.resume}}</p>
+      </div>
+    </div> -->
     <div class="row">
       <div class="col">
         <div class="image-container">
           <img [src]="getImgFullUrl(movie.image_portrait)" alt="">
         </div>
       </div>
-      <div class="col">
-        <h6>Date de sortie</h6>  
-        <p>{{ movie?.date | date:'dd/MM/yyyy' }}</p>
-        <h6>Résumé</h6>
-      </div>
-      <div class="col">
+      <div class="col-10">
+        <h6>Date de sortie : {{ movie?.date | date:'dd/MM/yyyy' }}</h6>
+        <h4>Résumé :</h4>
         <p>{{movie?.resume}}</p>
       </div>
     </div>

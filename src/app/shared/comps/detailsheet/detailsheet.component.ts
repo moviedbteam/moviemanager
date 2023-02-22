@@ -85,7 +85,7 @@ export class DetailsheetComponent {
     this.collectionId = 1313;
 
     // let sendToApi = JSON.stringify({ "idUser":"324827", "idMovie":11, "idCollection":1313 });
-    let sendToApi = { idUser:"324827", idMovie:11, idCollection:1313 };
+    let sendToApi = { idUser:this.userId, idMovie:this.movieId, idCollection:this.collectionId };
 
 
     console.log(sendToApi);

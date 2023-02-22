@@ -84,16 +84,18 @@ export class DetailsheetComponent {
     this.movieId = this.route.snapshot.params['id'];
     this.collectionId = 1313;
 
-    let sendToApi = "{ 'idUser':'324827', 'idMovie':11, 'idCollection':1313 }";
+    // let sendToApi = JSON.stringify({ "idUser":"324827", "idMovie":11, "idCollection":1313 });
+    let sendToApi = { idUser:"324827", idMovie:11, idCollection:1313 };
+
 
     console.log(sendToApi);
 
-    this.tagSvc.postWishToApi( sendToApi )
-      .subscribe({
-          next: (response:any)=>  {console.log(response.status)},
-          error: error => console.error(error)
-          
-    })
+    this.tagSvc.postWishToApi(sendToApi)
+    .subscribe({
+      next: (response:any)=>  {console.log(response.status)},
+      error: error => console.error(error)
+    });
+
 
   }
 

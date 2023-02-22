@@ -1,38 +1,35 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccueilComponent } from './accueil/accueil.component';
-import { AjouterComponent } from './ajouter/ajouter.component';
-import { BibliothequeComponent } from './bibliotheque/bibliotheque.component';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { DetailComponent } from './detail/detail.component';
-import { FicheComponent } from './fiche/fiche.component';
-import { ListComponent } from './list/list.component';
+import {DiscoverComponent} from "./discover/discover.component";
+import {LibraryComponent} from "./library/library.component";
+import {DetailsheetComponent} from "./shared/comps/detailsheet/detailsheet.component";
+import {SeeallComponent} from "./shared/comps/seeall/seeall.component";
+import {ProfilComponent} from "./profil/profil.component";
 
 const routes: Routes = [
   {
-    path:'', component:AccueilComponent
+    path:'', component:DiscoverComponent
   },
   {
-    path:'login', component:ConnexionComponent
+    path:'connexion', component:ConnexionComponent
   },
   {
-    path:'list', component:ListComponent
+    path:'library', component:LibraryComponent
   },
   {
-    path:'detail/:id', component:DetailComponent
+    path:'profil', component:ProfilComponent
   },
   {
-    path:'bibliotheque', component:BibliothequeComponent
+    path:'seeall', component:SeeallComponent
   },
   {
-    path:'fiche', component:FicheComponent
+    path:'detail/:id', component:DetailsheetComponent
   },
   {
-    path:'ajouter', component:AjouterComponent
+    path:'**', component:DiscoverComponent
   },
-  {
-    path:'**', component:ListComponent
-  },
+
 ];
 
 @NgModule({

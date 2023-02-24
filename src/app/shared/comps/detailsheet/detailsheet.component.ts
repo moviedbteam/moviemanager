@@ -15,9 +15,9 @@ export class DetailsheetComponent {
 
   movie:any = {};
 
-  IdUser:string = "";
-  IdMovie:number = 0;
-  IdCollection:number = 0;
+  idUser:number = 0;
+  idMovie:number = 0;
+  idCollection:number = 0;
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
@@ -39,9 +39,9 @@ export class DetailsheetComponent {
   ngOnInit() {
 
     console.log(this.route.snapshot.params);
-    this.IdMovie = this.route.snapshot.params['id'];
+    this.idMovie = this.route.snapshot.params['id'];
 
-    this.movieSvc.getDetailsFromApi(this.IdMovie);
+    this.movieSvc.getDetailsFromApi(this.idMovie);
 
     // this.movieSvc.getMovieDetail$()
     // .subscribe(
@@ -50,7 +50,7 @@ export class DetailsheetComponent {
     //     this.movie = movies
     //   });
 
-    this.movieSvc.getVideosFromApi(this.IdMovie)
+    this.movieSvc.getVideosFromApi(this.idMovie)
         .subscribe( (response:any) => {
           console.log(response);
           if(response.results.length>0){
@@ -82,13 +82,13 @@ export class DetailsheetComponent {
   
   addWish() {
 
-    this.IdUser = "324827";
-    this.IdMovie = this.route.snapshot.params['id'];
-    this.IdCollection = 1313;
+    this.idUser = 324827;
+    this.idMovie = this.route.snapshot.params['id'];
+    this.idCollection = 1313;
     let sendToApi = { 
-      idUser:this.IdUser, 
-      idMovie:this.IdMovie, 
-      idCollection:this.IdCollection 
+      idUser:this.idUser, 
+      idMovie:this.idMovie, 
+      idCollection:this.idCollection 
     };
     console.log(sendToApi);
 
@@ -102,16 +102,16 @@ export class DetailsheetComponent {
 
   checkWatch() {
 
-    this.IdUser = "324827";
-    this.IdMovie = this.route.snapshot.params['id'];
-    this.IdCollection = 1313;
+    this.idUser = 324827;
+    this.idMovie = this.route.snapshot.params['id'];
+    this.idCollection = 1313;
     this.viewingPlace = "cinéma";
     this.viewingRate = 5;
     this.viewingMood = 1;
     let sendToApi = { 
-      idUser:this.IdUser, 
-      idMovie:this.IdMovie, 
-      idCollection:this.IdCollection, 
+      idUser:this.idUser, 
+      idMovie:this.idMovie, 
+      idCollection:this.idCollection, 
       viewingPlace:this.viewingPlace, 
       viewingRate:this.viewingRate, 
       viewingMood:this.viewingMood

@@ -17,6 +17,7 @@ import { LibraryComponent } from './library/library.component';
 import { SeeallComponent } from './shared/comps/seeall/seeall.component';
 import { DetailsheetComponent } from './shared/comps/detailsheet/detailsheet.component';
 import { ProfilComponent } from './profil/profil.component';
+import { MaterialExampleModule } from 'src/material.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import { ProfilComponent } from './profil/profil.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
 
-    MatSnackBarModule
+    MatSnackBarModule,
+
+    MaterialExampleModule,
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},

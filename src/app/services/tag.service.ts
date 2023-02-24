@@ -6,30 +6,33 @@ import { Injectable } from '@angular/core';
 })
 export class TagService {
   
-  API_TAG:string = 'http://localhost:8080/api/wish/movie';
+  ApiPostWishMovie:string = 'http://localhost:8080/api/wish/movie';
+  ApiPostWatchMovie:string = 'http://localhost:8080/api/watch/movie';
+  
+  ApiGetAllWishMovies:string = 'http://localhost:8080/api/wish/movies';
+  ApiGetAllWatchMovies:string = 'http://localhost:8080/api/watch/movies';
+
 
   constructor(
     private http:HttpClient,
   ) { }
 
-  // postWishToApi(movieWish:any) {
-
-  //   console.log (movieWish);
-
-  //   return this.http.post(this.API_TAG, { data : movieWish});
-  // }
-
-  postWishToApi(movieWish: any) {
-    console.log(movieWish);
-  
-    // const jsonMovieWish = JSON.stringify(movieWish);
-
-    console.log(movieWish);
-  
-    // return this.http.post(this.API_TAG, { data: jsonMovieWish });
-    // return this.http.post(this.API_TAG, { idUser:"324827", idMovie:11, idCollection:1313 } );
-    return this.http.post(this.API_TAG, movieWish);
+  postWishMovieToApi(postWishMovie: any) {
+    console.log(postWishMovie);  
+    return this.http.post(this.ApiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
   }
-  
+
+  postWatchMovieToApi(postWatchMovie: any) {
+    console.log(postWatchMovie);  
+    return this.http.post(this.ApiPostWatchMovie, postWatchMovie, {observe: 'response', responseType: 'text'} );
+  }
+
+  getAllWishMoviesFromApi() {
+    return this.http.get(this.ApiGetAllWishMovies);
+  }
+
+  getAllWatchMoviesFromApi() {
+    return this.http.get(this.ApiGetAllWatchMovies);
+  }
 
 }

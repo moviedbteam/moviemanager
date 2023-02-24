@@ -14,9 +14,9 @@ export class DetailsheetComponent {
 
   movie:any = {};
 
-  userId:string = "";
-  movieId:number = 0;
-  collectionId:number = 0;
+  IdUser:string = "";
+  IdMovie:number = 0;
+  IdCollection:number = 0;
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
@@ -37,9 +37,9 @@ export class DetailsheetComponent {
   ngOnInit() {
 
     console.log(this.route.snapshot.params);
-    this.movieId = this.route.snapshot.params['id'];
+    this.IdMovie = this.route.snapshot.params['id'];
 
-    this.movieSvc.getDetailsFromApi(this.movieId);
+    this.movieSvc.getDetailsFromApi(this.IdMovie);
 
     // this.movieSvc.getMovieDetail$()
     // .subscribe(
@@ -48,7 +48,7 @@ export class DetailsheetComponent {
     //     this.movie = movies
     //   });
 
-    this.movieSvc.getVideosFromApi(this.movieId)
+    this.movieSvc.getVideosFromApi(this.IdMovie)
         .subscribe( (response:any) => {
           console.log(response);
           if(response.results.length>0){
@@ -80,45 +80,47 @@ export class DetailsheetComponent {
   
   addWish() {
 
-    this.userId = "324827";
-    this.movieId = this.route.snapshot.params['id'];
-    this.collectionId = 1313;
-
-    // let sendToApi = JSON.stringify({ "idUser":"324827", "idMovie":11, "idCollection":1313 });
-    let sendToApi = { idUser:this.userId, idMovie:this.movieId, idCollection:this.collectionId };
-
-
+    this.IdUser = "324827";
+    this.IdMovie = this.route.snapshot.params['id'];
+    this.IdCollection = 1313;
+    let sendToApi = { 
+      idUser:this.IdUser, 
+      idMovie:this.IdMovie, 
+      idCollection:this.IdCollection 
+    };
     console.log(sendToApi);
 
-    this.tagSvc.postWishToApi(sendToApi)
+    this.tagSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {console.log(response.status)},
       error: error => console.error(error)
     });
 
-
   }
 
   checkWatch() {
 
-    this.userId = "324827";
-    this.movieId = this.route.snapshot.params['id'];
-    this.collectionId = 1313;
-
-    
-    console.log(this.movieSvc.getMovieDetail$);
-
-    this.movieSvc.getMovieDetail$()
-    .subscribe(
-      (movies) => {
-        console.log("je suis la requete http de Detail Component");
-        this.movie = movies;
-        console.log(this.movie);
-      });
-
+    this.IdUser = "324827";
+    this.IdMovie = this.route.snapshot.params['id'];
+    this.IdCollection = 1313;
     this.viewingPlace = "cinéma";
     this.viewingRate = 5;
     this.viewingMood = 1;
+    let sendToApi = { 
+      idUser:this.IdUser, 
+      idMovie:this.IdMovie, 
+      idCollection:this.IdCollection, 
+      viewingPlace:this.viewingPlace, 
+      viewingRate:this.viewingRate, 
+      viewingMood:this.viewingMood
+    };
+    console.log(sendToApi);
+
+    this.tagSvc.postWatchMovieToApi(sendToApi)
+    .subscribe({
+      next: (response:any)=>  {console.log(response.status)},
+      error: error => console.error(error)
+    });
 
   }
 

@@ -1,133 +1,66 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
-import { TagService } from 'src/app/services/tag.service';
+import { WatchService } from 'src/app/services/watch.service';
+import { WishService } from 'src/app/services/wish.service';
+import { WatchesModel } from '../../models/watches.model';
+import { WishesModel } from '../../models/wishes.model';
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.css'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class OverviewComponent {
-  wishMoviesINIT = Array.from({length: 100}).map((_, i) => `Wish Movie #${i}`);
-  wishMovies:any;
 
-  watchMoviesINIT = Array.from({length: 100}).map((_, i) => `Watch Movie #${i}`);
-  watchMovies:any ;
+  wishMovies:Array<WishesModel> = [];
+  subscriptionWishes:any;
 
-  jsonWishMovies: any;
-  jsonWatchMovies: any;
-
-  ApiGetAllWishMovies:string = 'http://localhost:8080/api/wish/movies';
-  ApiGetAllWatchMovies:string = 'http://localhost:8080/api/watch/movies';
+  watchMovies:Array<WatchesModel> = [] ;
+  subscriptionWatches:any;
 
   constructor(
     
-    private tagSvc:TagService
-  ) {}
+    private wishSvc:WishService,
+    private watchSvc:WatchService,
+  ) {
+    console.log(this)
+  }
 
   ngOnInit() {
-    this.viewWishes();  
-    this.viewWatches();
+    this.subscriptionWishes = this.wishSvc.getWishes$()
+      .subscribe(
+        (wishesArr:WishesModel[]) => {
+          if(wishesArr.length===0) {
+            this.wishSvc.getWishMoviesFromApi();
+          }
+          this.wishMovies = wishesArr
+        }
+      );
 
-    // this.wishMovies = JSON.parse (this.jsonWishMovies);
-    // this.watchMovies = JSON.parse (this.jsonWatchMovies);
-
-    console.log(this.wishMoviesINIT);
-    console.log(this.watchMoviesINIT);
+    this.subscriptionWatches = this.watchSvc.getWatches$()
+      .subscribe(
+        (watchesArr:WatchesModel[]) => {
+          if(watchesArr.length===0) {
+            this.watchSvc.getWatchMoviesFromApi();
+          }
+          this.watchMovies = watchesArr
+        }
+      );
 
     console.log(this.wishMovies);
     console.log(this.watchMovies);
 
-
-
-
   }
 
-
-
-  viewWishes() {  
-    fetch(this.ApiGetAllWishMovies)
-    .then(response => response.json())
-    .then(data => {
-      const tableau = [];
-      for (let i = 0; i < data.length; i++) {
-        tableau.push(("data[i].idMovie"));
-      }
-      // console.log(tableau); // affiche le tableau complet
-      this.wishMovies = [...tableau];
-      // console.log(this.wishMovies); // affiche le tableau complet
-    })
-    .catch(error => console.error(error));
-
-
-    
-    /*
-    this.tagSvc.getAllWishMoviesFromApi()
-    .subscribe({
-      next: (response:any)=>  {
-        this.jsonWishMovies = response;
-        console.log(this.jsonWishMovies);
-      },
-      error: error => console.error(error)
-    });
-
-    // for (let i = 0; i < this.jsonWishMovies.length; i++) {
-    //   this.wishMovies.push(this.jsonWishMovies[i]);
-    // }
+  ngOnDestroy() {
     console.log(this.wishMovies);
-    */
+    console.log(this.watchMovies);
 
+    this.subscriptionWishes.unsubscribe();
+    this.subscriptionWatches.unsubscribe();
   }
-
-  viewWatches() {  
-    fetch(this.ApiGetAllWatchMovies)
-    .then(response => response.json())
-    .then(data => {
-      const tableau = [];
-      for (let i = 0; i < data.length; i++) {
-        tableau.push(data[i]);
-      }
-      // console.log(tableau); // affiche le tableau complet
-      this.watchMovies = [...tableau];
-      // console.log(this.watchMovies); // affiche le tableau complet
-    })
-    .catch(error => console.error(error));
-
-
-    /*
-
-    this.tagSvc.getAllWatchMoviesFromApi()
-    .subscribe({
-      next: (response:any)=>  {
-        this.jsonWatchMovies = response;
-        console.log(this.jsonWatchMovies);
-        // fetch(response)
-        // .then(respons => respons.json())
-        // .then(data => {
-        //   const tableau = [];
-        //   for (let i = 0; i < data.length; i++) {
-        //     tableau.push(data[i]);
-        //   }
-        //   console.log(tableau); 
-        //   this.wishMovies = [...tableau];
-        // })
-      },
-      error: error => console.error(error)
-    });
-    */
-
-    
-
-    
-    
-    
-
-  }
-
-
-
 
 }
 

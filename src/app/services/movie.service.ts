@@ -34,7 +34,8 @@ export class MovieService {
     .set('language', 'fr')
     .set('page', this.indexPage);
 
-  
+    console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
+
     this.http.get(urlApi, {params})
   
     .pipe(

@@ -1,15 +1,13 @@
 <div class="overviewContainer">
-
-    
     <p>overview works!</p>
     
     <div class="cdk-virtual-scroll-data-source-example">
         <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-            <div *cdkVirtualFor="let wishMovie of wishMoviesINIT" class="example-item">{{wishMovie}}</div>
+            <div *cdkVirtualFor="let wishMovie of wishMovies" class="example-item">{{wishMovie.idMovie}}</div>
         </cdk-virtual-scroll-viewport>
         <br>
         <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-            <div *cdkVirtualFor="let watchMovie of watchMoviesINIT" class="example-item">{{watchMovie}}</div>
+            <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item">{{watchMovie.idMovie}}</div>
         </cdk-virtual-scroll-viewport>
     </div>
     

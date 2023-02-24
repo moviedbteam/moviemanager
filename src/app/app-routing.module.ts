@@ -6,6 +6,7 @@ import {LibraryComponent} from "./library/library.component";
 import {DetailsheetComponent} from "./shared/comps/detailsheet/detailsheet.component";
 import {SeeallComponent} from "./shared/comps/seeall/seeall.component";
 import {ProfilComponent} from "./profil/profil.component";
+import { OverviewComponent } from './shared/comps/overview/overview.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path:'profil', component:ProfilComponent
+  },
+  {
+    path:'overview', component:OverviewComponent
   },
   {
     path:'seeall', component:SeeallComponent

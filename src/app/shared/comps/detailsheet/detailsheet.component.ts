@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
-import { TagService } from 'src/app/services/tag.service';
+import { WatchService } from 'src/app/services/watch.service';
+import { WishService } from 'src/app/services/wish.service';
 import {MovieService} from "../../../services/movie.service";
 import { MovieModel } from '../../models/movie.model';
 
@@ -31,7 +32,8 @@ export class DetailsheetComponent {
       // private movieSvc:MovieService,
       public movieSvc:MovieService,
       private sanitize:DomSanitizer,
-      private tagSvc:TagService
+      private wishSvc:WishService,
+      private watchSvc:WatchService,
   ) {}
 
   ngOnInit() {
@@ -90,7 +92,7 @@ export class DetailsheetComponent {
     };
     console.log(sendToApi);
 
-    this.tagSvc.postWishMovieToApi(sendToApi)
+    this.wishSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {console.log(response.status)},
       error: error => console.error(error)
@@ -116,7 +118,7 @@ export class DetailsheetComponent {
     };
     console.log(sendToApi);
 
-    this.tagSvc.postWatchMovieToApi(sendToApi)
+    this.watchSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {console.log(response.status)},
       error: error => console.error(error)

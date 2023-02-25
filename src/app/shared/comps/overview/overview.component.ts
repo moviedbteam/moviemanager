@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
+import { MovieModel } from '../../models/movie.model';
 import { WatchesModel } from '../../models/watches.model';
 import { WishesModel } from '../../models/wishes.model';
 
@@ -20,10 +22,15 @@ export class OverviewComponent {
   watchMovies:Array<WatchesModel> = [] ;
   subscriptionWatches:any;
 
+  movies:Array<MovieModel>=[];
+  // movies:MovieModel[][] =[];
+  subscription:any;
+
   constructor(
     
     private wishSvc:WishService,
     private watchSvc:WatchService,
+    public movieSvc:MovieService,
   ) {
     console.log(this)
   }
@@ -36,8 +43,30 @@ export class OverviewComponent {
             this.wishSvc.getWishMoviesFromApi();
           }
           this.wishMovies = wishesArr
+
+          console.log("this.wishMovies");
+          console.log(this.wishMovies);
+
+          for (let wish of this.wishMovies) {
+            
+            this.subscription = this.movieSvc.getMovies$()
+              .subscribe(
+                (moviesArr:MovieModel[]) => {
+                  if(moviesArr.length===0) {
+                    this.movieSvc.getDetailsFromApi(wish.idMovie);
+                  }
+                  this.movies = moviesArr
+
+                  console.log("this.movies");
+                  console.log(this.movies);
+                }
+              );
+          }
+
         }
       );
+
+    
 
     this.subscriptionWatches = this.watchSvc.getWatches$()
       .subscribe(
@@ -46,11 +75,14 @@ export class OverviewComponent {
             this.watchSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
+
+          console.log("this.watchMovies");
+          console.log(this.watchMovies);
         }
       );
 
-    console.log(this.wishMovies);
-    console.log(this.watchMovies);
+    
+    
 
   }
 
@@ -60,6 +92,7 @@ export class OverviewComponent {
 
     this.subscriptionWishes.unsubscribe();
     this.subscriptionWatches.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

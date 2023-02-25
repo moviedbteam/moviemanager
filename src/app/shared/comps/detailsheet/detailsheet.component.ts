@@ -51,7 +51,7 @@ export class DetailsheetComponent {
     //   });
 
     this.movieSvc.getVideosFromApi(this.idMovie)
-        .subscribe( (response:any) => {
+          .subscribe( (response:any) => {
           console.log(response);
           if(response.results.length>0){
             let videoId = response.results[0].key;

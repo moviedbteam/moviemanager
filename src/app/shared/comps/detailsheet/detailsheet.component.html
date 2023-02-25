@@ -1,4 +1,4 @@
-<div class="d-flex mt-5 py-2">
+<div class="d-flex mt-5 py-2 title">
     <button class="btn btn-outline-light btn-sm" (click)="goBack()">
         <i class="fas fa-arrow-left"></i>
     </button>
@@ -7,7 +7,7 @@
 </div>
 
 <!-- <div class="row"> -->
-<div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row">
+<div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
 
     <!-- video -->
     <div class="col-12 col-lg-6">

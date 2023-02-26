@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
@@ -9,7 +9,10 @@ import { WishesModel } from '../../models/wishes.model';
 @Component({
   selector: 'app-overview-watch',
   templateUrl: './overview-watch.component.html',
-  styleUrls: ['./overview-watch.component.css']
+  styleUrls: ['./overview-watch.component.css'],
+  // encapsulation: ViewEncapsulation.None,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.Default,
 })
 export class OverviewWatchComponent {
 
@@ -40,7 +43,7 @@ export class OverviewWatchComponent {
 
           let boucle = 1;
           for (let watch of this.watchMovies) {
-            this.movieSvcWatch.getDetailsFromApi(watch.idMovie);
+            this.movieSvcWatch.getDetailsWatchFromApi(watch.idMovie);
             console.log("boucle "+boucle);
             boucle++;
           }
@@ -48,7 +51,7 @@ export class OverviewWatchComponent {
         }
       );
     
-    this.subscriptionMovieWatch = this.movieSvcWatch.getMovieDetail$()
+    this.subscriptionMovieWatch = this.movieSvcWatch.getMovieWatchDetail$()
     .subscribe(
       (movieWatch:MovieModel) => {      
         this.moviesWatch.push(movieWatch);

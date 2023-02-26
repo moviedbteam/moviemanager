@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
-import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
 import { MovieModel } from '../../models/movie.model';
-import { WatchesModel } from '../../models/watches.model';
 import { WishesModel } from '../../models/wishes.model';
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css'],
+  selector: 'app-overview-wish',
+  templateUrl: './overview-wish.component.html',
+  styleUrls: ['./overview-wish.component.css'],
   encapsulation: ViewEncapsulation.None,
   // changeDetection: ChangeDetectionStrategy.OnPush,
-  changeDetection: ChangeDetectionStrategy.Default,
+  // changeDetection: ChangeDetectionStrategy.Default,
 })
-export class OverviewComponent {
+export class OverviewWishComponent {
 
   wishMovies:Array<WishesModel> = [];
   subscriptionWishes:any;
@@ -25,7 +23,8 @@ export class OverviewComponent {
   constructor(
     private wishSvc:WishService,
     public movieSvcWish:MovieService,
-  ) {
+  )
+  {
     console.log(this)
   }
 
@@ -44,7 +43,7 @@ export class OverviewComponent {
 
           let boucle = 1;
           for (let wish of this.wishMovies) {
-            this.movieSvcWish.getDetailsFromApi(wish.idMovie);
+            this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
             console.log("boucle "+boucle);
             boucle++;
           }
@@ -52,7 +51,7 @@ export class OverviewComponent {
         }
       );
     
-    this.subscriptionMovieWish = this.movieSvcWish.getMovieDetail$()
+    this.subscriptionMovieWish = this.movieSvcWish.getMovieWishDetail$()
       .subscribe(
         (movieWish:MovieModel) => {      
           this.moviesWish.push(movieWish);
@@ -81,5 +80,3 @@ export class OverviewComponent {
   }
 
 }
-
-

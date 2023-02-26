@@ -19,18 +19,12 @@ export class OverviewComponent {
   wishMovies:Array<WishesModel> = [];
   subscriptionWishes:any;
 
-  watchMovies:Array<WatchesModel> = [] ;
-  subscriptionWatches:any;
-
-  movies:Array<MovieModel>=[];
-  // movies:MovieModel[][] =[];
-  subscription:any;
+  moviesWish:Array<MovieModel>=[];
+  subscriptionMovieWish:any;
 
   constructor(
-    
     private wishSvc:WishService,
-    private watchSvc:WatchService,
-    public movieSvc:MovieService,
+    public movieSvcWish:MovieService,
   ) {
     console.log(this)
   }
@@ -39,60 +33,51 @@ export class OverviewComponent {
     this.subscriptionWishes = this.wishSvc.getWishes$()
       .subscribe(
         (wishesArr:WishesModel[]) => {
+
           if(wishesArr.length===0) {
             this.wishSvc.getWishMoviesFromApi();
           }
+          
           this.wishMovies = wishesArr
-
           console.log("this.wishMovies");
           console.log(this.wishMovies);
 
+          let boucle = 1;
           for (let wish of this.wishMovies) {
-            
-            this.subscription = this.movieSvc.getMovies$()
-              .subscribe(
-                (moviesArr:MovieModel[]) => {
-                  if(moviesArr.length===0) {
-                    this.movieSvc.getDetailsFromApi(wish.idMovie);
-                  }
-                  this.movies = moviesArr
-
-                  console.log("this.movies");
-                  console.log(this.movies);
-                }
-              );
+            this.movieSvcWish.getDetailsFromApi(wish.idMovie);
+            console.log("boucle "+boucle);
+            boucle++;
           }
 
         }
       );
-
     
-
-    this.subscriptionWatches = this.watchSvc.getWatches$()
+    this.subscriptionMovieWish = this.movieSvcWish.getMovieDetail$()
       .subscribe(
-        (watchesArr:WatchesModel[]) => {
-          if(watchesArr.length===0) {
-            this.watchSvc.getWatchMoviesFromApi();
-          }
-          this.watchMovies = watchesArr
+        (movieWish:MovieModel) => {      
+          this.moviesWish.push(movieWish);
 
-          console.log("this.watchMovies");
-          console.log(this.watchMovies);
+          console.log("movieWish");
+          console.log(movieWish);
+          console.log("this.moviesWish");
+          console.log(this.moviesWish);
+          
         }
       );
 
-    
-    
 
+  }
+
+  getImgFullUrl(urlFragment:string):string {
+    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
+    return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 
   ngOnDestroy() {
     console.log(this.wishMovies);
-    console.log(this.watchMovies);
 
     this.subscriptionWishes.unsubscribe();
-    this.subscriptionWatches.unsubscribe();
-    this.subscription.unsubscribe();
+    this.subscriptionMovieWish.unsubscribe();
   }
 
 }

@@ -79,12 +79,18 @@ export class MovieService {
     let params = new HttpParams()
     .set('api_key', apiKey)
     .set('language', 'fr')
+    
     this.http.get(urlApi+id, {params})
+    
     .pipe(
       map((apiResponse:any)=> new MovieModel(apiResponse) )
     )
 
-    .subscribe( (movie:MovieModel) => this.movieDetail$.next(movie) );
+    .subscribe( (movie:MovieModel) => {
+      console.log("details mappés: ", movie)
+      this.movieDetail$.next(movie)
+    })
+    ;
   }
 
   getVideosFromApi(id:number){  
@@ -101,7 +107,7 @@ export class MovieService {
   }
 
   // getMovieDetail$ ():Observable<MovieModel[]> {
-    getMovieDetail$ ():Observable<MovieModel> {
+  getMovieDetail$ ():Observable<MovieModel> {
     return this.movieDetail$.asObservable();
   }
 

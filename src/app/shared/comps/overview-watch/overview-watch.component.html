@@ -1,0 +1,14 @@
+<div class="overviewContainer">
+    <p>overview Watch works!</p>
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+          <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
+          <div *ngFor="let movieWatch of moviesWatch" class="example-item">
+            <img [src]="getImgFullUrl(movieWatch.image_portrait)" alt="">
+            {{movieWatch.titre}}
+          </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+      
+  </div>

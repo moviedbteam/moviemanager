@@ -18,6 +18,7 @@ import { SeeallComponent } from './shared/comps/seeall/seeall.component';
 import { DetailsheetComponent } from './shared/comps/detailsheet/detailsheet.component';
 import { ProfilComponent } from './profil/profil.component';
 import { MaterialExampleModule } from 'src/material.module';
+import { OverviewWatchComponent } from './shared/comps/overview-watch/overview-watch.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MaterialExampleModule } from 'src/material.module';
     LibraryComponent,
     SeeallComponent,
     DetailsheetComponent,
-    ProfilComponent
+    ProfilComponent,
+    OverviewWatchComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WishService } from 'src/app/services/wish.service';
 import { MovieModel } from '../../models/movie.model';

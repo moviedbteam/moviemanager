@@ -1,98 +1,84 @@
+
+
+<div class="dialog">
+  <ul>
+    <li class="ligne">
+      <mat-form-field appearance="fill">
+        <mat-label>What's your userName?</mat-label>
+        <input matInput [(ngModel)]="myData.name">
+      </mat-form-field>
+    </li>
+    <li class="ligne">
+      <button mat-raised-button (click)="openDialog()">Formulaire de création</button>
+    </li>
+    <li class="ligne" *ngIf="myData.name">name: <i>{{myData.name}}</i></li>
+    <li class="ligne" *ngIf="myData.name">email: <i>{{myData.email}}</i></li>
+    <li class="ligne" *ngIf="myData.name">password: <i>{{myData.password}}</i></li>
+    <li class="ligne" *ngIf="myData.name">birthYear: <i>{{myData.birthYear}}</i></li>
+    <li class="ligne" *ngIf="myData.name">adultContent: <i>{{myData.adultContent}}</i></li>
+    <li class="ligne" *ngIf="myData.name">enableAccount: <i>{{myData.enableAccount}}</i></li>
+    <li class="ligne" *ngIf="myData.name">genreMovie: <i>{{myData.genreMovie}}</i></li>
+    <li class="ligne" *ngIf="myData.name">genreTv: <i>{{myData.genreTv}}</i></li>
+    <li class="ligne" *ngIf="myData.name">streaming: <i>{{myData.streaming}}</i></li>
+    <li class="ligne">
+      <button mat-raised-button (click)="createAccount()">Création de compte</button>
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+
+
 <div class="row justify-content-center">
-  
 
-    <div *ngIf="userSvc.isAuth()" class="col-12 col-md-6 connected">
-      <h1>Hello, vous êtes connecté(e)</h1>
-  
-  
-        <p>Username : {{ userData.username?userData.username:'' }}</p>
-        <p>Email : {{ userData.email?userData.email:'' }}</p>
-        <p>ID : {{ userData.id?userData.id:'' }}</p>
-  
-  
-        <button class="btn btn-light" (click)="userSvc.logout()">
-          Déconnexion
-        </button>
-    </div>
-  
+  <div *ngIf="userSvc.isAuth()" class="col-12 col-md-6 connected">
+    <h1>Hello, vous êtes connecté(e)</h1>
+
+
+      <p>Username : {{ userData.username?userData.username:'' }}</p>
+      <p>Email : {{ userData.email?userData.email:'' }}</p>
+      <p>ID : {{ userData.id?userData.id:'' }}</p>
+
+
+      <button class="btn btn-light" (click)="userSvc.logout()">
+        Déconnexion
+      </button>
+  </div>
+
+  <form *ngIf="!userSvc.isAuth()" class="col-12 col-md-6 connexion" [formGroup]="connexion" (submit)="onSubmit()">
+    <h1>Connexion</h1>  
+    <label class="form-label">Email</label>
+    <input class="form-control" placeholder="user@domaine" formControlName="email" type="text">
     
-    <form *ngIf="!userSvc.isAuth()" class="col-12 col-md-6" [formGroup]="connexion" (submit)="onSubmit()">
-      <h1>Connexion</h1>  
-      <label class="form-label">Email</label>
-      <input class="form-control" placeholder="user@domaine" formControlName="email" type="text">
-      
-      <p class="error" 
-        *ngIf="connexion.touched && 
-              connexion.controls['email'].errors?.['required']">Email requis</p>
-      <p class="error" 
-        *ngIf="connexion.touched && 
-              connexion.controls['email'].errors?.['email']">Veuillez saisir un email valide</p>
-  
-  
-      <label class="form-label">Mot de passe</label>
-      <input class="form-control" placeholder="5 caractères mini" formControlName="password" type="password">
-      <p class="error" 
-        *ngIf="connexion.controls['password'].dirty &&
-              connexion.touched && 
-              connexion.controls['password'].hasError('required')">Le mot de passe est requis</p>
-      <p class="error" 
-        *ngIf="connexion.controls['password'].dirty &&
-              connexion.touched &&
-              connexion.controls['password'].hasError('minlength')">Veuillez saisir un password valide (taille 5 mini)</p>
-  
-      <div class="d-flex justify-content-right">
-        <button class="btn btn-dark btn-smd mt-2">Se connecter</button>
-        
-        <button class="btn btn-primary" routerLink='/'>
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-      </div>
-        
-    </form>
-      
-  </div>
+    <p class="error" 
+      *ngIf="connexion.touched && 
+            connexion.controls['email'].errors?.['required']">Email requis</p>
+    <p class="error" 
+      *ngIf="connexion.touched && 
+            connexion.controls['email'].errors?.['email']">Veuillez saisir un email valide</p>
 
-  <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-          <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
-          <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-  
-        <div class="modal-body p-5 pt-0">
-          <form class="">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
-            </div>
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
-            <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-            <hr class="my-4">
-            <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-            <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"/></svg>
-              Sign up with Twitter
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"/></svg>
-              Sign up with Facebook
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16"><use xlink:href="#github"/></svg>
-              Sign up with GitHub
-            </button>
-          </form>
-        </div>
-      </div>
+
+    <label class="form-label">Mot de passe</label>
+    <input class="form-control" placeholder="5 caractères mini" formControlName="password" type="password">
+    <p class="error" 
+      *ngIf="connexion.controls['password'].dirty &&
+            connexion.touched && 
+            connexion.controls['password'].hasError('required')">Le mot de passe est requis</p>
+    <p class="error" 
+      *ngIf="connexion.controls['password'].dirty &&
+            connexion.touched &&
+            connexion.controls['password'].hasError('minlength')">Veuillez saisir un password valide (taille 5 mini)</p>
+
+    <div class="d-flex justify-content-right">
+      <button class="btn btn-dark btn-smd mt-2">Se connecter</button>
+      
+      <button class="btn btn-primary" routerLink='/'>
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
     </div>
-  </div>
-  
-  
-  
-  
+      
+  </form>
+    
+</div>
+

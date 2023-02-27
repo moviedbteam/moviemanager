@@ -10,8 +10,6 @@ import {AlertService} from "../services/alert.service";
 })
 export class DiscoverComponent {
 
-  userData:any;
-
   constructor(
       public userSvc:UserService,
       private router:Router,

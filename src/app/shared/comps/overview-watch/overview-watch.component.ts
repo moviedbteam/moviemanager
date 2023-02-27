@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
-import { WishService } from 'src/app/services/wish.service';
 import { MovieModel } from '../../models/movie.model';
 import { WatchesModel } from '../../models/watches.model';
-import { WishesModel } from '../../models/wishes.model';
 
 @Component({
   selector: 'app-overview-watch',

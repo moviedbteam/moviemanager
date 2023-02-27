@@ -10,22 +10,17 @@ import { WatchesModel } from '../shared/models/watches.model';
 export class WatchService {
 
   apiBack = environment.base_url_apiBack;
-
   apiPostWatchMovie:string = '/watch/movie';
-  
   apiGetWatchMovies:string = '/watch/movies';
-
   private _watches$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient,
-  ) { 
-    console.log(this._watches$);
-  }
+  ) { console.log(this._watches$);}
 
   getWatchMoviesFromApi() {
-    console.log(this.apiBack+this.apiGetWatchMovies);
 
+    console.log(this.apiBack+this.apiGetWatchMovies);
     this.http.get(this.apiBack+this.apiGetWatchMovies)
 
     .pipe(

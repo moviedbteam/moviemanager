@@ -28,7 +28,7 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
     this.alertSvc.showAlert('Vous êtes déconnecté(e)');
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
   }
 
   isAuth():boolean {

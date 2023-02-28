@@ -10,25 +10,18 @@ import { WishesModel } from '../shared/models/wishes.model';
 export class WishService {
 
   apiBack = environment.base_url_apiBack;
-
   apiPostWishMovie:string = '/wish/movie';
-  
   apiGetWishMovies:string = '/wish/movies';
-
   private _wishes$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient,
-  ) { 
-    console.log(this._wishes$);
-  }
+  ) { console.log(this._wishes$); }
 
   getWishMoviesFromApi() {
     
     console.log(this.apiBack+this.apiGetWishMovies);
-
     this.http.get(this.apiBack+this.apiGetWishMovies)
-    
     
     .pipe(
       map((apiResponse:any) => {
@@ -40,7 +33,6 @@ export class WishService {
       console.log ("wishes mappés : ", wishes)
       let actualWishes = this._wishes$.getValue();
       let allWishes:any = [...actualWishes, ...wishes]
-
       this._wishes$.next(allWishes);
     });
   }
@@ -53,7 +45,5 @@ export class WishService {
     console.log(postWishMovie);  
     return this.http.post(this.apiBack+this.apiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
   }
-
-  
 
 }

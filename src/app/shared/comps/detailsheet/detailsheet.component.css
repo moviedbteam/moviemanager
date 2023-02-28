@@ -1,3 +1,11 @@
+.title {
+    color: rgb(140, 120, 160);
+}
+
+.detail {
+    color: rgb(140, 120, 160);
+}
+
 h1 {
     margin: 0 0 0 10px;
     line-height: 1.4em;

@@ -1,4 +1,20 @@
+.ligne {
+  list-style: none;
+}
+
+.dialog{
+  color: rgb(140, 120, 160);
+}
+
 .connected{
+  color: rgb(140, 120, 160);
+}
+
+.connexion{
+  color: rgb(140, 120, 160);
+}
+
+hr {
   color: rgb(140, 120, 160);
 }
 

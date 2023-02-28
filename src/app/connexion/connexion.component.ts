@@ -1,8 +1,25 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ConnexmodalComponent } from '../connexmodal/connexmodal.component';
 import { AlertService } from '../services/alert.service';
 import { UserService } from '../services/user.service';
+
+export interface DialogData {
+
+  name: string;
+  email: string;
+  password: string;
+  birthYear: string;
+  adultContent: any;
+  enableAccount: any;
+  genreMovie: [];
+  genreTv: [];
+  streaming: [];
+
+
+}
 
 @Component({
   selector: 'app-connexion',
@@ -10,7 +27,19 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./connexion.component.css']
 })
 export class ConnexionComponent {
+  
+  myData: DialogData = {
 
+    name: '',
+    email: '',
+    password: '',
+    birthYear: '',
+    adultContent: [],
+    enableAccount: [],
+    genreMovie: [],
+    genreTv: [],
+    streaming: []
+  };
   connexion!:FormGroup;
   isSubmitted:boolean = false;
   userData:any;
@@ -19,7 +48,8 @@ export class ConnexionComponent {
     private fb:FormBuilder,
     public userSvc:UserService,
     private alertSvc:AlertService,
-    private router:Router
+    private router:Router,
+    public dialog: MatDialog,
   ){}
 
   ngOnInit() {
@@ -31,6 +61,40 @@ export class ConnexionComponent {
 
     let userDataInStorage = localStorage.getItem('userData');
     this.userData = userDataInStorage!=null?JSON.parse(userDataInStorage):{};
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConnexmodalComponent, {
+      data: {
+        name: this.myData.name,
+        email: this.myData.email,
+        password: this.myData.password,
+        birthYear: this.myData.birthYear,
+        adultContent: this.myData.adultContent,
+        enableAccount: this.myData.enableAccount,
+        genreMovie: this.myData.genreMovie,
+        genreTv: this.myData.genreTv,
+        streaming: this.myData.streaming,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      this.myData.name = result.name;
+      this.myData.email = result.email;
+      this.myData.password = result.password;
+      this.myData.birthYear = result.birthYear;
+      this.myData.adultContent = result.adultContent;
+      this.myData.enableAccount = result.enableAccount;
+      this.myData.genreMovie = result.genreMovie;
+      this.myData.genreTv = result.genreTv;
+      this.myData.streaming = result.streaming;
+    });
+  }
+
+  createAccount() {
+    
   }
 
   onSubmit() {
@@ -54,7 +118,7 @@ export class ConnexionComponent {
 
 
             if(response.jwt){  
-              this.router.navigate(['/']);
+              // this.router.navigate(['/']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
             }
           },

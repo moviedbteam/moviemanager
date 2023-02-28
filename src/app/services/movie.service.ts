@@ -16,6 +16,8 @@ export class MovieService {
 
   private movies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private movieDetailWish$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private movieDetailWatch$:BehaviorSubject<any> = new BehaviorSubject([]);
   private indexPage:number = 1;
   
   private searchedMovies$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -55,6 +57,85 @@ export class MovieService {
     this.indexPage++;
   }
 
+  getMovies$ ():Observable<MovieModel[]> {
+    return this.movies$.asObservable();
+  }
+
+  getDetailsFromApi(id:number):void{
+    let urlApi = this.apitTmdb+'/movie/';
+    let apiKey = this.apiKeyTmdb;
+    let params = new HttpParams()
+    .set('api_key', apiKey)
+    .set('language', 'fr')
+    
+    this.http.get(urlApi+id, {params})
+    
+    .pipe(
+      map((apiResponse:any)=> new MovieModel(apiResponse) )
+    )
+
+    .subscribe( (movie:MovieModel) => {
+      console.log("details mappés: ", movie)
+      this.movieDetail$.next(movie)
+    })
+    ;
+  }
+
+  // getMovieDetail$ ():Observable<MovieModel[]> {
+  getMovieDetail$ ():Observable<MovieModel> {
+    return this.movieDetail$.asObservable();
+  }
+
+  getDetailsWishFromApi(id:number):void{
+    let urlApi = this.apitTmdb+'/movie/';
+    let apiKey = this.apiKeyTmdb;
+    let params = new HttpParams()
+    .set('api_key', apiKey)
+    .set('language', 'fr')
+    
+    this.http.get(urlApi+id, {params})
+    
+    .pipe(
+      map((apiResponse:any)=> new MovieModel(apiResponse) )
+    )
+
+    .subscribe( (movie:MovieModel) => {
+      console.log("details Wish mappés: ", movie)
+      this.movieDetailWish$.next(movie)
+    })
+    ;
+  }
+
+  // getMovieDetail$ ():Observable<MovieModel[]> {
+  getMovieWishDetail$ ():Observable<MovieModel> {
+    return this.movieDetailWish$.asObservable();
+  }
+
+  getDetailsWatchFromApi(id:number):void{
+    let urlApi = this.apitTmdb+'/movie/';
+    let apiKey = this.apiKeyTmdb;
+    let params = new HttpParams()
+    .set('api_key', apiKey)
+    .set('language', 'fr')
+    
+    this.http.get(urlApi+id, {params})
+    
+    .pipe(
+      map((apiResponse:any)=> new MovieModel(apiResponse) )
+    )
+
+    .subscribe( (movie:MovieModel) => {
+      console.log("details mappés: ", movie)
+      this.movieDetailWatch$.next(movie)
+    })
+    ;
+  }
+
+  // getMovieDetail$ ():Observable<MovieModel[]> {
+  getMovieWatchDetail$ ():Observable<MovieModel> {
+    return this.movieDetailWatch$.asObservable();
+  }
+
   searchMoviesFromApi(userSearch:string):void{
     let urlApi = this.apitTmdb+'/search/movie';
     let apiKey = this.apiKeyTmdb;
@@ -72,20 +153,15 @@ export class MovieService {
     )
     .subscribe( (foundMovies:MovieModel[]) => this.searchedMovies$.next(foundMovies) );
   }
-  
-  getDetailsFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/movie/';
-    let apiKey = this.apiKeyTmdb;
-    let params = new HttpParams()
-    .set('api_key', apiKey)
-    .set('language', 'fr')
-    this.http.get(urlApi+id, {params})
-    .pipe(
-      map((apiResponse:any)=> new MovieModel(apiResponse) )
-    )
 
-    .subscribe( (movie:MovieModel) => this.movieDetail$.next(movie) );
+  getSearchedMovies$ ():Observable<MovieModel[]> {
+    return this.searchedMovies$.asObservable();
   }
+
+  setSearchMovies$ (movies:MovieModel[]):void {
+    this.searchedMovies$.next(movies);
+  }
+
 
   getVideosFromApi(id:number){  
     let urlApi = this.apitTmdb+'/movie/';
@@ -96,21 +172,7 @@ export class MovieService {
     return this.http.get(urlApi+id+'/videos', {params});
   }
   
-  getMovies$ ():Observable<MovieModel[]> {
-    return this.movies$.asObservable();
-  }
 
-  // getMovieDetail$ ():Observable<MovieModel[]> {
-    getMovieDetail$ ():Observable<MovieModel> {
-    return this.movieDetail$.asObservable();
-  }
-
-  getSearchedMovies$ ():Observable<MovieModel[]> {
-    return this.searchedMovies$.asObservable();
-  }
-
-  setSearchMovies$ (movies:MovieModel[]):void {
-    this.searchedMovies$.next(movies);
-  }
+  
 
 }

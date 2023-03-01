@@ -86,7 +86,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: mkdir /home/runner/work/moviemanager/moviemanager/dist
+      #- run: mkdir /home/runner/work/moviemanager/moviemanager/dist
 
       # ( Build to ./dist or other directory... )
 

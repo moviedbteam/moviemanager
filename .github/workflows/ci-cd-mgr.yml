@@ -48,11 +48,12 @@ jobs:
   #  pull_request:
   #jobs:
   build_to_netlify:
+    needs: build_on_github
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
 
-      - run: mkdir /home/runner/work/moviemanager/moviemanager/dist
+      #- run: mkdir /home/runner/work/moviemanager/moviemanager/dist
 
       # ( Build to ./dist or other directory... )
 

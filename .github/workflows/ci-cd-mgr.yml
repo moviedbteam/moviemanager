@@ -95,6 +95,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-without-markdown
+          path: dist
 
       # ( Build to ./dist or other directory... )
 

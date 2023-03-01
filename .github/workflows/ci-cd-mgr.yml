@@ -62,11 +62,11 @@ jobs:
           path: |
             dist
             !dist/**/*.md
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: output/test/code-coverage.html
+      # - name: Archive code coverage results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: code-coverage-report
+      #     path: output/test/code-coverage.html
 
 
   #################################
@@ -84,9 +84,17 @@ jobs:
     needs: build_and_test
     runs-on: ubuntu-18.04
     steps:
+      
+      
+      
       - uses: actions/checkout@v2
 
       #- run: mkdir /home/runner/work/moviemanager/moviemanager/dist
+      # récupération de l'artefact
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-without-markdown
 
       # ( Build to ./dist or other directory... )
 

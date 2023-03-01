@@ -52,10 +52,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: mkdir /home/runner/work/moviemanager/moviemanager/dist
+
       # ( Build to ./dist or other directory... )
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v1.2
+      - name: Netlify Actions
+        uses: nwtgck/actions-netlify@v2.0.0
+
         with:
           publish-dir: './dist'
           production-branch: master

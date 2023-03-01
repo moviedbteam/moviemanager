@@ -11,7 +11,7 @@ export class WatchService {
 
   apiBack = environment.base_url_apiBack;
   apiPostWatchMovie:string = '/watch/movie';
-  apiGetWatchMovies:string = '/watch/movies';
+  apiGetWatchMovies:string = '/watch/movie/all';
   private _watches$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(

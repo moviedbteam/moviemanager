@@ -108,12 +108,13 @@ export class ConnexionComponent {
             console.log(response);
             
             let userData = {
-              id: response.user.id,
+              // id: response.id,
               token: response.jwt,
-              email: response.user.email,
-              username: response.user.username,
+              email: response.email,
+              // username: response.username,
             };
             localStorage.setItem('token', response.jwt);
+            console.log(response.jwt);
             localStorage.setItem('userData', JSON.stringify(userData));
 
 

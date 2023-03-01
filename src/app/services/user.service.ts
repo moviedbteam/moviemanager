@@ -3,13 +3,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserModel } from '../shared/models/userlogin.model';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  API_USER:string = 'https://api-user-server.herokuapp.com/api';
+  // API_USER:string = 'http://localhost:8081/login';
+  API_USER = environment.url_apiUser;
 
   constructor(
     private http:HttpClient,
@@ -19,10 +21,10 @@ export class UserService {
 
   login(credentials:UserModel) {
     let userData = {
-      identifier : credentials.email, 
-      password: credentials.password
+      email : credentials.email, 
+      passwordHash: credentials.password
     };
-    return this.http.post(this.API_USER+'/auth/local', userData);
+    return this.http.post(this.API_USER, userData);
   }
 
   logout() {

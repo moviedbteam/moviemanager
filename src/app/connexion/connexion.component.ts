@@ -107,7 +107,6 @@ export class ConnexionComponent {
           next: (response:any) => {
             console.log(response);
             
-<<<<<<< HEAD
             // let userData = {
             //   id: response.user.id,
             //   token: response.jwt,
@@ -117,17 +116,6 @@ export class ConnexionComponent {
 
             localStorage.setItem('token', response.jwt);
             // localStorage.setItem('userData', JSON.stringify(userData));
-=======
-            let userData = {
-              // id: response.id,
-              token: response.jwt,
-              email: response.email,
-              // username: response.username,
-            };
-            localStorage.setItem('token', response.jwt);
-            console.log(response.jwt);
-            localStorage.setItem('userData', JSON.stringify(userData));
->>>>>>> 842ec97b1e542579a0b41d7dae01d3d7d2177814
 
 
             if(response.jwt){  

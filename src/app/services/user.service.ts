@@ -10,13 +10,8 @@ import { environment } from 'src/environments/environment.development';
 })
 export class UserService {
 
-<<<<<<< HEAD
-  // API_USER:string = 'https://api-user-server.herokuapp.com/api/auth/local';
   API_USER:string = 'http://localhost:8081/login';
-=======
-  // API_USER:string = 'http://localhost:8081/login';
-  API_USER = environment.url_apiUser;
->>>>>>> 842ec97b1e542579a0b41d7dae01d3d7d2177814
+  // API_USER = environment.url_apiUser;
 
   constructor(
     private http:HttpClient,

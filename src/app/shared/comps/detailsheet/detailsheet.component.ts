@@ -67,6 +67,11 @@ export class DetailsheetComponent {
     this.router.navigate(['/']);
   }
 
+  getImgFullUrl(urlFragment:string):string {
+    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
+    return "https://image.tmdb.org/t/p/w300"+urlFragment;
+  }
+
   
   // onSubmitCommentForm(){
   //   console.log(this.commentForm.value)
@@ -120,7 +125,12 @@ export class DetailsheetComponent {
 
     this.watchSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
-      next: (response:any)=>  {console.log(response.status)},
+      next: (response:any) => {
+        console.log(response)
+        if(response.status = "201") {
+          
+        }
+      },
       error: error => console.error(error)
     });
 

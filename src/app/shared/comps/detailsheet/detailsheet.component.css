@@ -34,3 +34,20 @@ p.genre span{
     width: 100%;
     height: 100%;
 }
+
+div>button:nth-child(1) {
+    margin-bottom: 10px;
+}
+
+div>button:nth-child(2) {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+div>button>span>i {
+    margin-right: 7px;
+}
+
+.rounded-pill {
+    font-size: 0.9em;
+}

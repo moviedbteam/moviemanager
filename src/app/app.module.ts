@@ -20,6 +20,7 @@ import { MaterialExampleModule } from 'src/material.module';
 import { OverviewWatchComponent } from './shared/comps/overview-watch/overview-watch.component';
 import { OverviewWishComponent } from './shared/comps/overview-wish/overview-wish.component';
 import { ConnexmodalComponent } from './connexmodal/connexmodal.component';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { ConnexmodalComponent } from './connexmodal/connexmodal.component';
 
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

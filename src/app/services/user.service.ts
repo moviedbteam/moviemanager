@@ -9,7 +9,8 @@ import { UserModel } from '../shared/models/userlogin.model';
 })
 export class UserService {
 
-  API_USER:string = 'https://api-user-server.herokuapp.com/api';
+  // API_USER:string = 'https://api-user-server.herokuapp.com/api/auth/local';
+  API_USER:string = 'http://localhost:8081/login';
 
   constructor(
     private http:HttpClient,
@@ -19,10 +20,10 @@ export class UserService {
 
   login(credentials:UserModel) {
     let userData = {
-      identifier : credentials.email, 
-      password: credentials.password
+      email : credentials.email, 
+      passwordHash: credentials.password
     };
-    return this.http.post(this.API_USER+'/auth/local', userData);
+    return this.http.post(this.API_USER, userData);
   }
 
   logout() {

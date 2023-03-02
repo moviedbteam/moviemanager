@@ -107,18 +107,19 @@ export class ConnexionComponent {
           next: (response:any) => {
             console.log(response);
             
-            let userData = {
-              id: response.user.id,
-              token: response.jwt,
-              email: response.user.email,
-              username: response.user.username,
-            };
+            // let userData = {
+            //   id: response.user.id,
+            //   token: response.jwt,
+            //   email: response.user.email,
+            //   username: response.user.username,
+            // };
+
             localStorage.setItem('token', response.jwt);
-            localStorage.setItem('userData', JSON.stringify(userData));
+            // localStorage.setItem('userData', JSON.stringify(userData));
 
 
             if(response.jwt){  
-              // this.router.navigate(['/']);
+              this.router.navigate(['/']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
             }
           },

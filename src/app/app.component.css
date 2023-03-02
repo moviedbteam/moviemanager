@@ -39,7 +39,8 @@
 .sidebar .nav-link {
   font-weight: 500;
   /* color: #333; */
-  color: rgb(140, 120, 160);
+  /* color: rgb(140, 120, 160); */
+  /* color: rgb(255, 255, 255); */
 }
 
 .sidebar .nav-link .feather {
@@ -69,6 +70,11 @@
   */
 
 
+.nav {
+  --bs-nav-link-color: white; /* Couleur des liens de la Sidebar */ 
+}
+
+
 .navbar{
   background-color: rgb(15, 15, 50) !important;
   /* color: rgb(140, 120, 160); */
@@ -82,7 +88,7 @@
   /* box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25); */
   /* box-shadow: 1px 1px 4px 4px rgb(253, 13, 13); */
   /* color: #9c71d9 */
-  color: rgb(140, 120, 160);
+  /* color: rgb(140, 120, 160); */
   /* color: rgb(113 13 253); */
   /* color: aqua; */
   

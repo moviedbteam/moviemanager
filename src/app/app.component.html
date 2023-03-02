@@ -52,7 +52,7 @@
 </style>
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">Movie Manager</a>
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/"><h1>Movie Manager</h1></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -71,38 +71,38 @@
 <div class="container-fluid">
   <div class="row">
 
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav id="sidebarMenu" class="col-md-1 col-lg-1 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a routerLink="/" class="nav-link active" aria-current="page" href="#">
+            <a routerLink="/" class="nav-link" aria-current="page" href="#">
               <span data-feather="home" class="align-text-bottom"></span>
-              Discovery
+              <h3><i class="fa-solid fa-compass" style="margin-right: 10px"></i>Discover</h3>
             </a>
           </li>
           <li class="nav-item">
             <a routerLink="/library" class="nav-link" href="#">
-              <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              TV
+              <span data-feather="shopping-cart" class="align-text-bottom" ></span>
+              <h3><i class="fa-solid fa-tv" style="margin-right: 10px;"></i>TV</h3>
             </a>
           </li>
           <li class="nav-item">
             <a routerLink="/library" class="nav-link" href="#">
               <span data-feather="users" class="align-text-bottom"></span>
-              Movie
+              <h3><i class="fa-solid fa-film" style="margin-right: 10px"></i>Movie</h3>
             </a>
           </li>
           <li class="nav-item">
             <a routerLink="/profil" class="nav-link" href="#">
               <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-              Profil
+              <h3><i class="fa-solid fa-address-card" style="margin-right: 10px"></i>Profil</h3>
             </a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-10 ms-sm-auto col-lg-11 px-md-4">
       <router-outlet></router-outlet>
     </main>
 

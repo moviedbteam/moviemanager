@@ -5,7 +5,8 @@ name: CI/CD Serveur MGR
 
 on:
   push:
-    branches: [ "develop" ]
+    #branches: [ $default-branch ]
+    branches: [ develop ]
 
 env:
   REGISTRY: ghcr.io
@@ -60,7 +61,8 @@ jobs:
         with:
           name: dist-without-markdown
           path: |
-            dist
+            #dist
+            dist/moviemanager
             !dist/**/*.md
       # - name: Archive code coverage results
       #   uses: actions/upload-artifact@v3
@@ -95,7 +97,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-without-markdown
-          path: dist
+          #path: dist
+          path: dist/moviemanager
 
       # ( Build to ./dist or other directory... )
 
@@ -105,8 +108,9 @@ jobs:
       #  uses: nwtgck/actions-netlify@v2.0.0
 
         with:
-          publish-dir: './dist'
-          production-branch: master
+          #publish-dir: './dist'
+          publish-dir: './dist/moviemanager'
+          production-branch: develop
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: false

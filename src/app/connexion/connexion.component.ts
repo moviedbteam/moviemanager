@@ -119,7 +119,7 @@ export class ConnexionComponent {
 
 
             if(response.jwt){  
-              this.router.navigate(['/']);
+              // this.router.navigate(['/']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
             }
           },

@@ -3,7 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserModel } from '../shared/models/userlogin.model';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment.development';
 })
 export class UserService {
 
-  API_USER:string = 'http://localhost:8081/login';
-  // API_USER = environment.url_apiUser;
+  // API_USER:string = 'http://localhost:8081/login';
+  API_USER = environment.url_apiUser;
 
   constructor(
     private http:HttpClient,

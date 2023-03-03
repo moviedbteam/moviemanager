@@ -24,9 +24,11 @@ export class TokenInterceptor implements HttpInterceptor {
     console.log(request); // DEBUG
 
     if(request.url.includes(environment.base_url_apiBack)) {
-      if(request.method == 'POST') {
+      if(request.method == 'POST' || request.method == 'GET') {
         this.cloneRequest = request
         .clone({headers: request.headers.set('authorization', 'Bearer '+token)})
+      } else {
+        this.cloneRequest = request;
       }
     }
     else {

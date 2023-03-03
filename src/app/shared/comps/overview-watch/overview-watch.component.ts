@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { MovieModel } from '../../models/movie.model';
@@ -8,7 +8,7 @@ import { WatchesModel } from '../../models/watches.model';
   selector: 'app-overview-watch',
   templateUrl: './overview-watch.component.html',
   styleUrls: ['./overview-watch.component.css'],
-  // encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
   // changeDetection: ChangeDetectionStrategy.OnPush,
   // changeDetection: ChangeDetectionStrategy.Default,
 })
@@ -28,6 +28,8 @@ export class OverviewWatchComponent {
   }
 
   ngOnInit() {
+
+    console.log("====== ngOnInit ======");
 
     this.subscriptionWatches = this.watchSvc.getWatches$()
       .subscribe(
@@ -67,7 +69,7 @@ export class OverviewWatchComponent {
 
   getImgFullUrl(urlFragment:string):string {
     // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
-    return "https://image.tmdb.org/t/p/w500"+urlFragment;
+    return "https://image.tmdb.org/t/p/w500/"+urlFragment;
   }
 
   ngOnDestroy() {

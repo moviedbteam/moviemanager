@@ -25,7 +25,7 @@ export class WatchService {
 
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (watch: any) => new WatchesModel(watch) )
+        return apiResponse.map( (watch: any) => new WatchesModel(watch) );
       })
     )
     

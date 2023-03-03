@@ -9,9 +9,10 @@
 <!-- <div class="row"> -->
 <div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
 
+    <div class="flex-container">
 
     <!-- Affiche -->
-    <div class="col-sm-2 col-md-3 col-lg-3">
+    <div class="affiche">
         <img [src]="getImgFullUrl(movie.image_portrait)" alt="">
     </div>
 
@@ -25,7 +26,7 @@
     </div> -->
 
     <!-- details -->
-    <div class="col-sm-5 col-md-5 col-lg-6">
+    <div>
         <button class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
             <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
@@ -72,6 +73,7 @@
         <app-comment-form [movie_id]="movie.id"></app-comment-form> -->
     </div>
 
+    </div> 
 
 
 </div>

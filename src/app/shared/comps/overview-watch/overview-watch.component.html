@@ -5,7 +5,9 @@
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
           <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
           <div *ngFor="let movieWatch of moviesWatch" class="example-item">
-            <img [src]="getImgFullUrl(movieWatch.image_portrait)" alt="">
+            <div>
+              <img [src]="getImgFullUrl(movieWatch.image_portrait)" alt="">
+            </div>
             {{movieWatch.titre}}
           </div>
       </cdk-virtual-scroll-viewport>

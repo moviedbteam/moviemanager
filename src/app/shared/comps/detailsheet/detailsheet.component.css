@@ -15,6 +15,17 @@ h2 {
     color:rgba(93,27,235);
     margin-bottom: 0;
 }
+
+.flex-container {
+    display: flex;
+    justify-content:flex-start;
+}
+
+.affiche {
+    width: 300px;
+    margin-right: 50px;
+}
+
 p.genre span{
     padding: 2px 5px;
     background: #fff;

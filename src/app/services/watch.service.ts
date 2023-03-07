@@ -31,8 +31,9 @@ export class WatchService {
     .subscribe((watches:WatchesModel[]) => {
       let actualWatches = this._watches$.getValue();
       let allWatches:any = [...actualWatches, ...watches]
-
-      this._watches$.next(allWatches);
+      if (allWatches.length !== 0){ 
+        this._watches$.next(allWatches);
+      }
     });    
   }
   

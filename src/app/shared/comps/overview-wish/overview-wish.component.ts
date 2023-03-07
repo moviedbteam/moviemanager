@@ -26,23 +26,13 @@ export class OverviewWishComponent {
   ){}
 
   ngOnInit() {
-
-    // console.log(this.moviesWish.length);
-    // this.moviesWish.length=0;
-    
-    
-    // this.wishSvc.getWishMoviesFromApi();
     
     this.subscriptionWishes = this.wishSvc.getWishes$()
     .subscribe(
-      (wishesArr:WishesModel[]) => {
-          
-          console.log (wishesArr);
-        
+      (wishesArr:WishesModel[]) => {        
           if(wishesArr.length===0) {
             this.wishSvc.getWishMoviesFromApi();
           }
-
           this.wishMovies = wishesArr
           for (let wish of this.wishMovies) {
             this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
@@ -54,11 +44,8 @@ export class OverviewWishComponent {
       .subscribe(
         (movieWish:MovieModel) => {
           if (movieWish.id ){
-
             this.moviesWish.push(movieWish);
           }
-
-          console.log (this.moviesWish);
         }
       );
   }

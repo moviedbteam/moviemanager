@@ -32,7 +32,6 @@ export class WishService {
       let actualWishes = this._wishes$.getValue();
       let allWishes:any = [...actualWishes, ...wishes]
       if (allWishes.length !== 0){
-
         this._wishes$.next(allWishes);
       }
     });
@@ -45,5 +44,4 @@ export class WishService {
   postWishMovieToApi(postWishMovie: any) {
     return this.http.post(this.apiBack+this.apiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
   }
-
 }

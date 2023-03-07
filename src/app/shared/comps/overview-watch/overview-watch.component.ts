@@ -23,15 +23,9 @@ export class OverviewWatchComponent {
   constructor(
     private watchSvc:WatchService,
     public movieSvcWatch:MovieService,
-  ) {
-    console.log(this)
-  }
+  ) {}
 
   ngOnInit() {
-
-    console.log("====== ngOnInit Watch ======");
-
-    // this.watchSvc.getWatchMoviesFromApi();
 
     this.subscriptionWatches = this.watchSvc.getWatches$()
       .subscribe(
@@ -40,36 +34,20 @@ export class OverviewWatchComponent {
             this.watchSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
-          console.log("this.watchMovies");
-          console.log(this.watchMovies);
-
-          let boucle = 1;
           for (let watch of this.watchMovies) {
             this.movieSvcWatch.getDetailsWatchFromApi(watch.idMovie);
-            console.log("boucle "+boucle);
-            boucle++;
           }
-
         }
       );
     
     this.subscriptionMovieWatch = this.movieSvcWatch.getMovieWatchDetail$()
     .subscribe(
       (movieWatch:MovieModel) => {      
-        
-        console.log("movieWatch");
-        console.log(movieWatch);
-        
-        this.moviesWatch.push(movieWatch);
-
-        
-        console.log("this.moviesWatch");
-        console.log(this.moviesWatch);
-        
+        if (movieWatch.id){
+          this.moviesWatch.push(movieWatch);
+        }
       }
     );
-    
-
   }
 
   getImgFullUrl(urlFragment:string):string {
@@ -78,9 +56,6 @@ export class OverviewWatchComponent {
   }
 
   ngOnDestroy() {
-    console.log("ng OnDestroy : this.watchMovies");
-    console.log(this.watchMovies);
-
     this.subscriptionWatches.unsubscribe();
     this.subscriptionMovieWatch.unsubscribe();
   }

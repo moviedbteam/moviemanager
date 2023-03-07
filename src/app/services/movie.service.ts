@@ -17,7 +17,7 @@ export class MovieService {
   private movies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetailWish$:Subject<any> = new Subject();
-  private movieDetailWatch$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private movieDetailWatch$:Subject<any> = new Subject();
   private indexPage:number = 1;
   
   private searchedMovies$:BehaviorSubject<any> = new BehaviorSubject([]);

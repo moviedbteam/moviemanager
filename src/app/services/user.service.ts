@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { Router, RouterModule } from '@angular/router';
-import { UserModel } from '../shared/models/userlogin.model';
+import { CreateUserModel, UserModel } from '../shared/models/userlogin.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +12,10 @@ export class UserService {
 
   // API_USER:string = 'http://localhost:8081/login';
   API_USER = environment.url_apiUser;
+  API_CREATE_USER = environment.base_url_apiBack+'/userAccount/create';
+  API_GET_GENRESMOVIE = environment.base_url_apiBack+'/genre/movie/all';
+  API_GET_GENRESTV = environment.base_url_apiBack+'/genre/tv/all';
+  API_GET_STREAMING = environment.base_url_apiBack+'/streaming/all';
 
   constructor(
     private http:HttpClient,
@@ -19,6 +23,20 @@ export class UserService {
     private router:Router,
   ) { }
 
+  getGenresMovie () {
+    return this.http.get(this.API_GET_GENRESMOVIE);
+  }
+  getGenresTv () {
+    return this.http.get(this.API_GET_GENRESTV);
+  }
+  getStreaming () {
+    return this.http.get(this.API_GET_STREAMING);
+  }
+  
+  postCreateUserToApi (createUser:CreateUserModel) {
+    return this.http.post(this.API_CREATE_USER, createUser);
+  }
+  
   login(credentials:UserModel) {
     let userData = {
       email : credentials.email, 

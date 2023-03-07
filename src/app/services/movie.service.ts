@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MovieModel } from '../shared/models/movie.model';
 
@@ -16,7 +16,7 @@ export class MovieService {
 
   private movies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
-  private movieDetailWish$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private movieDetailWish$:Subject<any> = new Subject();
   private movieDetailWatch$:BehaviorSubject<any> = new BehaviorSubject([]);
   private indexPage:number = 1;
   
@@ -24,9 +24,7 @@ export class MovieService {
 
   constructor(
     private http:HttpClient
-  ) { 
-    console.log(this.movies$);
-  }
+  ) {}
 
   getMoviesFromApi():void {
     let urlApi = this.apitTmdb+'/discover/movie';
@@ -36,7 +34,7 @@ export class MovieService {
     .set('language', 'fr')
     .set('page', this.indexPage);
 
-    console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
+    // console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
 
     this.http.get(urlApi, {params})
   
@@ -47,7 +45,6 @@ export class MovieService {
     )
     
     .subscribe( (movies:MovieModel[]) => {
-      console.log("objets mappés: ", movies)
       let actualMovies = this.movies$.getValue();
       let allMovies:any = [...actualMovies, ...movies];
     
@@ -75,10 +72,8 @@ export class MovieService {
     )
 
     .subscribe( (movie:MovieModel) => {
-      console.log("details mappés: ", movie)
       this.movieDetail$.next(movie)
-    })
-    ;
+    });
   }
 
   // getMovieDetail$ ():Observable<MovieModel[]> {
@@ -100,13 +95,11 @@ export class MovieService {
     )
 
     .subscribe( (movie:MovieModel) => {
-      console.log("details Wish mappés: ", movie)
       this.movieDetailWish$.next(movie)
     })
     ;
   }
 
-  // getMovieDetail$ ():Observable<MovieModel[]> {
   getMovieWishDetail$ ():Observable<MovieModel> {
     return this.movieDetailWish$.asObservable();
   }
@@ -125,13 +118,11 @@ export class MovieService {
     )
 
     .subscribe( (movie:MovieModel) => {
-      console.log("details mappés: ", movie)
       this.movieDetailWatch$.next(movie)
     })
     ;
   }
 
-  // getMovieDetail$ ():Observable<MovieModel[]> {
   getMovieWatchDetail$ ():Observable<MovieModel> {
     return this.movieDetailWatch$.asObservable();
   }
@@ -162,7 +153,6 @@ export class MovieService {
     this.searchedMovies$.next(movies);
   }
 
-
   getVideosFromApi(id:number){  
     let urlApi = this.apitTmdb+'/movie/';
     let apiKey = this.apiKeyTmdb;
@@ -172,7 +162,4 @@ export class MovieService {
     return this.http.get(urlApi+id+'/videos', {params});
   }
   
-
-  
-
 }

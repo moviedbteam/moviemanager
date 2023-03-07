@@ -23,48 +23,44 @@ export class OverviewWishComponent {
   constructor(
     private wishSvc:WishService,
     public movieSvcWish:MovieService,
-  )
-  {
-    console.log(this)
-  }
+  ){}
 
   ngOnInit() {
-    this.subscriptionWishes = this.wishSvc.getWishes$()
-      .subscribe(
-        (wishesArr:WishesModel[]) => {
 
+    // console.log(this.moviesWish.length);
+    // this.moviesWish.length=0;
+    
+    
+    // this.wishSvc.getWishMoviesFromApi();
+    
+    this.subscriptionWishes = this.wishSvc.getWishes$()
+    .subscribe(
+      (wishesArr:WishesModel[]) => {
+          
+          console.log (wishesArr);
+        
           if(wishesArr.length===0) {
             this.wishSvc.getWishMoviesFromApi();
           }
-          
-          this.wishMovies = wishesArr
-          console.log("this.wishMovies");
-          console.log(this.wishMovies);
 
-          let boucle = 1;
+          this.wishMovies = wishesArr
           for (let wish of this.wishMovies) {
             this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
-            console.log("boucle "+boucle);
-            boucle++;
           }
-
         }
       );
     
     this.subscriptionMovieWish = this.movieSvcWish.getMovieWishDetail$()
       .subscribe(
-        (movieWish:MovieModel) => {      
-          this.moviesWish.push(movieWish);
+        (movieWish:MovieModel) => {
+          if (movieWish.id ){
 
-          console.log("movieWish");
-          console.log(movieWish);
-          console.log("this.moviesWish");
-          console.log(this.moviesWish);
-          
+            this.moviesWish.push(movieWish);
+          }
+
+          console.log (this.moviesWish);
         }
       );
-
-
   }
 
   getImgFullUrl(urlFragment:string):string {
@@ -73,8 +69,6 @@ export class OverviewWishComponent {
   }
 
   ngOnDestroy() {
-    console.log(this.wishMovies);
-
     this.subscriptionWishes.unsubscribe();
     this.subscriptionMovieWish.unsubscribe();
   }

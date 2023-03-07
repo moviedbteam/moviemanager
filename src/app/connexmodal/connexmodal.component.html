@@ -1,7 +1,9 @@
 <h1 mat-dialog-title>Hi {{data.name}}</h1>
 <div mat-dialog-content>
-  <h2>Vous allez créer un compte dans l'application Movie Manager</h2>
-  <h3>Quelques informations sont nécessaires pour personnaliser votre expérience d'utilisation</h3>
+  <!-- <h2>Vous allez créer un compte dans l'application Movie Manager</h2> -->
+  <h2>Vous allez créer un compte</h2>
+  <!-- <h3>Quelques informations sont nécessaires pour personnaliser votre expérience d'utilisation</h3> -->
+  <h3>Quelques questions pour personnaliser votre expérience</h3>
   <p>What's your Email?</p>
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
@@ -78,7 +80,7 @@
     </label>
     <ul cdkListbox
         cdkListboxMultiple
-        [(ngModel)]="data.genreMovie"
+        [(ngModel)]="data.genreMovieDtoSet"
         aria-labelledby="example-toppings-label"
         class="example-listbox">
       <li *ngFor="let topping of toppingsGenreMovie"
@@ -89,8 +91,8 @@
     </ul>
   </div>
   <p>
-    Your order: <b>{{data.genreMovie | json}}</b>&nbsp;
-    <button (click)="data.genreMovie = []">Reset</button>
+    Your order: <b>{{data.genreMovieDtoSet | json}}</b>&nbsp;
+    <button (click)="data.genreMovieDtoSet = []">Reset</button>
   </p>
   <p>What's your genreTv ?</p>
   <!-- <mat-form-field appearance="fill">
@@ -103,7 +105,7 @@
     </label>
     <ul cdkListbox
         cdkListboxMultiple
-        [(ngModel)]="data.genreTv"
+        [(ngModel)]="data.genreTvDtoSet"
         aria-labelledby="example-toppings-label"
         class="example-listbox">
       <li *ngFor="let topping of toppingsGenreTv"
@@ -114,8 +116,8 @@
     </ul>
   </div>
   <p>
-    Your order: <b>{{data.genreTv | json}}</b>&nbsp;
-    <button (click)="data.genreTv = []">Reset</button>
+    Your order: <b>{{data.genreTvDtoSet | json}}</b>&nbsp;
+    <button (click)="data.genreTvDtoSet = []">Reset</button>
   </p>
   <p>What's your streamingSubscription ?</p>
   <!-- <mat-form-field appearance="fill">
@@ -128,7 +130,7 @@
     </label>
     <ul cdkListbox
         cdkListboxMultiple
-        [(ngModel)]="data.streaming"
+        [(ngModel)]="data.streamingSubscriptionDtoSet"
         aria-labelledby="example-toppings-label"
         class="example-listbox">
       <li *ngFor="let topping of toppingsStreaming"
@@ -139,8 +141,8 @@
     </ul>
   </div>
   <p>
-    Your order: <b>{{data.streaming | json}}</b>&nbsp;
-    <button (click)="data.streaming = []">Reset</button>
+    Your order: <b>{{data.streamingSubscriptionDtoSet | json}}</b>&nbsp;
+    <button (click)="data.streamingSubscriptionDtoSet = []">Reset</button>
   </p>
 </div>
 <div mat-dialog-actions>

@@ -29,7 +29,9 @@ export class OverviewWatchComponent {
 
   ngOnInit() {
 
-    console.log("====== ngOnInit ======");
+    console.log("====== ngOnInit Watch ======");
+
+    // this.watchSvc.getWatchMoviesFromApi();
 
     this.subscriptionWatches = this.watchSvc.getWatches$()
       .subscribe(
@@ -54,10 +56,13 @@ export class OverviewWatchComponent {
     this.subscriptionMovieWatch = this.movieSvcWatch.getMovieWatchDetail$()
     .subscribe(
       (movieWatch:MovieModel) => {      
-        this.moviesWatch.push(movieWatch);
-
+        
         console.log("movieWatch");
         console.log(movieWatch);
+        
+        this.moviesWatch.push(movieWatch);
+
+        
         console.log("this.moviesWatch");
         console.log(this.moviesWatch);
         
@@ -73,6 +78,7 @@ export class OverviewWatchComponent {
   }
 
   ngOnDestroy() {
+    console.log("ng OnDestroy : this.watchMovies");
     console.log(this.watchMovies);
 
     this.subscriptionWatches.unsubscribe();

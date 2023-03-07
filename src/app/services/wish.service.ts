@@ -16,11 +16,10 @@ export class WishService {
 
   constructor(
     private http:HttpClient,
-  ) { console.log(this._wishes$); }
+  ) {}
 
   getWishMoviesFromApi() {
     
-    console.log(this.apiBack+this.apiGetWishMovies);
     this.http.get(this.apiBack+this.apiGetWishMovies)
     
     .pipe(
@@ -30,10 +29,12 @@ export class WishService {
     )
 
     .subscribe((wishes:WishesModel[]) => {
-      console.log ("wishes mappés : ", wishes)
       let actualWishes = this._wishes$.getValue();
       let allWishes:any = [...actualWishes, ...wishes]
-      this._wishes$.next(allWishes);
+      if (allWishes.length !== 0){
+
+        this._wishes$.next(allWishes);
+      }
     });
   }
 
@@ -42,7 +43,6 @@ export class WishService {
   }
 
   postWishMovieToApi(postWishMovie: any) {
-    console.log(postWishMovie);  
     return this.http.post(this.apiBack+this.apiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
   }
 

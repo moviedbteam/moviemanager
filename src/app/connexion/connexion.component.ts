@@ -5,19 +5,19 @@ import { Router } from '@angular/router';
 import { ConnexmodalComponent } from '../connexmodal/connexmodal.component';
 import { AlertService } from '../services/alert.service';
 import { UserService } from '../services/user.service';
+import { CreateUserModel } from '../shared/models/userlogin.model';
 
 export interface DialogData {
 
   name: string;
   email: string;
   password: string;
-  birthYear: string;
+  birthYear: number;
   adultContent: any;
   enableAccount: any;
-  genreMovie: [];
-  genreTv: [];
-  streaming: [];
-
+  genreMovieDtoSet: [];
+  genreTvDtoSet: [];
+  streamingSubscriptionDtoSet: [];
 
 }
 
@@ -33,12 +33,12 @@ export class ConnexionComponent {
     name: '',
     email: '',
     password: '',
-    birthYear: '',
+    birthYear: 0,
     adultContent: [],
     enableAccount: [],
-    genreMovie: [],
-    genreTv: [],
-    streaming: []
+    genreMovieDtoSet: [],
+    genreTvDtoSet: [],
+    streamingSubscriptionDtoSet: []
   };
   connexion!:FormGroup;
   isSubmitted:boolean = false;
@@ -72,9 +72,9 @@ export class ConnexionComponent {
         birthYear: this.myData.birthYear,
         adultContent: this.myData.adultContent,
         enableAccount: this.myData.enableAccount,
-        genreMovie: this.myData.genreMovie,
-        genreTv: this.myData.genreTv,
-        streaming: this.myData.streaming,
+        genreMovieDtoSet: this.myData.genreMovieDtoSet,
+        genreTvDtoSet: this.myData.genreTvDtoSet,
+        streamingSubscriptionDtoSet: this.myData.streamingSubscriptionDtoSet,
       },
     });
 
@@ -87,14 +87,59 @@ export class ConnexionComponent {
       this.myData.birthYear = result.birthYear;
       this.myData.adultContent = result.adultContent;
       this.myData.enableAccount = result.enableAccount;
-      this.myData.genreMovie = result.genreMovie;
-      this.myData.genreTv = result.genreTv;
-      this.myData.streaming = result.streaming;
+      this.myData.genreMovieDtoSet = result.genreMovieDtoSet;
+      this.myData.genreTvDtoSet = result.genreTvDtoSet;
+      this.myData.streamingSubscriptionDtoSet = result.streamingSubscriptionDtoSet;
     });
   }
 
   createAccount() {
-    
+    // apiResponse.results.map( (movie: any) => new MovieModel(movie) )
+    // let sendToApi:CreateUserModel = new CreateUserModel (
+
+      let sendToApi:CreateUserModel =
+    {
+      idUser: 10,
+      //     idUser: 1234,
+      userName: this.myData.name,
+      email: this.myData.email,
+      birthYear: this.myData.birthYear,
+      adultContent: this.myData.adultContent,
+      // adultContent: false,
+      // enableAccount: this.myData.enableAccount,
+      enableAccount: true,
+      genreMovieDtoSet: this.myData.genreMovieDtoSet,
+      // genreMovieDtoSet: [
+      //   {id: 35,name: "Comédie"},
+      //   {id: 16,name: "Animation"},
+      //   {id: 10751,name: "Familial"}
+      // ],
+      // genreTvDtoSet: this.myData.genreTvDtoSet,
+      genreTvDtoSet: [
+        {id: 16,name: "Animation"}
+      ],
+      // streamingSubscriptionDtoSet: this.myData.streamingSubscriptionDtoSet,
+      streamingSubscriptionDtoSet: [
+        {id: 20,name: "ABS-CBN"},
+        {id: 87,name: "Fox Sports Detroit"},
+        {id: 47,name: "Comedy Central"}
+      ]
+  }
+  // ); 
+
+    console.log(sendToApi);
+
+    this.userSvc.postCreateUserToApi(sendToApi)
+    .subscribe({
+      next: (response:any) => {
+        console.log(response)
+        if(response.status = "201") {
+          
+        }
+      },
+      error: error => console.error(error)
+    });
+  
   }
 
   onSubmit() {

@@ -17,9 +17,9 @@
     <li class="ligne" *ngIf="myData.name">birthYear: <i>{{myData.birthYear}}</i></li>
     <li class="ligne" *ngIf="myData.name">adultContent: <i>{{myData.adultContent}}</i></li>
     <li class="ligne" *ngIf="myData.name">enableAccount: <i>{{myData.enableAccount}}</i></li>
-    <li class="ligne" *ngIf="myData.name">genreMovie: <i>{{myData.genreMovie}}</i></li>
-    <li class="ligne" *ngIf="myData.name">genreTv: <i>{{myData.genreTv}}</i></li>
-    <li class="ligne" *ngIf="myData.name">streaming: <i>{{myData.streaming}}</i></li>
+    <li class="ligne" *ngIf="myData.name">genreMovie: <i>{{myData.genreMovieDtoSet}}</i></li>
+    <li class="ligne" *ngIf="myData.name">genreTv: <i>{{myData.genreTvDtoSet}}</i></li>
+    <li class="ligne" *ngIf="myData.name">streaming: <i>{{myData.streamingSubscriptionDtoSet}}</i></li>
     <li class="ligne">
       <button mat-raised-button (click)="createAccount()">Création de compte</button>
     </li>

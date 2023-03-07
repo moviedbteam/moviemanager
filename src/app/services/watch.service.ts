@@ -16,11 +16,10 @@ export class WatchService {
 
   constructor(
     private http:HttpClient,
-  ) { console.log(this._watches$);}
+  ) {}
 
   getWatchMoviesFromApi() {
-
-    console.log(this.apiBack+this.apiGetWatchMovies);
+    
     this.http.get(this.apiBack+this.apiGetWatchMovies)
 
     .pipe(
@@ -30,7 +29,6 @@ export class WatchService {
     )
     
     .subscribe((watches:WatchesModel[]) => {
-      console.log ("watches mappés : ", watches)
       let actualWatches = this._watches$.getValue();
       let allWatches:any = [...actualWatches, ...watches]
 
@@ -43,7 +41,6 @@ export class WatchService {
   }
   
   postWatchMovieToApi(postWatchMovie: any) {
-    console.log(postWatchMovie);  
     return this.http.post(this.apiBack+this.apiPostWatchMovie, postWatchMovie, {observe: 'response', responseType: 'text'} );
   }
 }

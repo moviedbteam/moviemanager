@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     let token = localStorage.getItem('token');
     
-    console.log(request); // DEBUG
+    // console.log(request); // DEBUG
 
     if(request.url.includes(environment.base_url_apiBack)) {
       if(request.method == 'POST' || request.method == 'GET') {
@@ -35,7 +35,7 @@ export class TokenInterceptor implements HttpInterceptor {
       this.cloneRequest = request;
     }
 
-    console.log(this.cloneRequest);
+    // console.log(this.cloneRequest);
 
     return next.handle(this.cloneRequest);
   }

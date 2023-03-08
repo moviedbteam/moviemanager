@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TvService } from 'src/app/services/tv.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
-import { TvModel } from '../../models/tv.model';
+import { TvModel } from '../discovertv/models/tv.model';
 
 @Component({
   selector: 'app-detailsheettv',

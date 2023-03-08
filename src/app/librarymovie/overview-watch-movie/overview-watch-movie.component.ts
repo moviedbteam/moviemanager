@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
-import { MovieModel } from '../../models/movie.model';
-import { WatchesMovie } from '../../models/watches-movie.model';
+import { MovieModel } from '../../discovermovie/models/movie.model';
+import { WatchesMovie } from '../models/watches-movie.model';
 
 @Component({
   selector: 'app-overview-watch-movie',

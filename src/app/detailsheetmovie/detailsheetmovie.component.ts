@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
-import { MovieModel } from '../../models/movie.model';
+import { MovieModel } from '../discovermovie/models/movie.model';
 
 @Component({
   selector: 'app-detailsheetmovie',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
-import { MovieModel } from '../../models/movie.model';
+import { MovieModel } from '../models/movie.model';
 
 @Component({
   selector: 'app-seeallmovie',

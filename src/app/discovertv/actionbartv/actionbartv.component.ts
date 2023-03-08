@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TvService } from '../services/tv.service';
+import { TvService } from '../../services/tv.service';
 
 @Component({
   selector: 'app-actionbartv',

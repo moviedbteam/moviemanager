@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MovieService } from '../services/movie.service';
-import { MovieModel } from '../shared/models/movie.model';
+import { MovieService } from '../../services/movie.service';
+import { MovieModel } from '../models/movie.model';
 
 @Component({
   selector: 'app-searchbarmovie',

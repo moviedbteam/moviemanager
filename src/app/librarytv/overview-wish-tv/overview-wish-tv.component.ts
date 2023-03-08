@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TvService } from 'src/app/services/tv.service';
 import { WishService } from 'src/app/services/wish.service';
-import { TvModel } from '../../models/tv.model';
-import { WishesTv } from '../../models/wishes-tv.model';
+import { TvModel } from '../../discovertv/models/tv.model';
+import { WishesTv } from '../models/wishes-tv.model';
 
 @Component({
   selector: 'app-overview-wish-tv',

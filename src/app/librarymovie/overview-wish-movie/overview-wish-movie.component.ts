@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MovieService } from 'src/app/services/movie.service';
 import { WishService } from 'src/app/services/wish.service';
-import { MovieModel } from '../../models/movie.model';
-import { WishesMovie } from '../../models/wishes-movie.model';
+import { MovieModel } from '../../discovermovie/models/movie.model';
+import { WishesMovie } from '../models/wishes-movie.model';
 
 @Component({
   selector: 'app-overview-wish-movie',

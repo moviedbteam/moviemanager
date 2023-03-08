@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { WatchesMovie } from '../shared/models/watches-movie.model';
-import { WatchesTv } from '../shared/models/watches-tv.model';
+import { WatchesMovie } from '../librarymovie/models/watches-movie.model';
+import { WatchesTv } from '../librarytv/models/watches-tv.model';
 
 @Injectable({
   providedIn: 'root'

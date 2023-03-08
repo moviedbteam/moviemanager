@@ -8,10 +8,10 @@ import { LibrarymovieComponent } from './librarymovie/librarymovie.component';
 import { LibrarytvComponent } from './librarytv/librarytv.component';
 import {ProfilComponent} from "./profil/profil.component";
 import { RecommendationComponent } from './recommendation/recommendation.component';
-import { DetailsheetmovieComponent } from './shared/comps/detailsheetmovie/detailsheetmovie.component';
-import { DetailsheettvComponent } from './shared/comps/detailsheettv/detailsheettv.component';
-import { SeeallmovieComponent } from './shared/comps/seeallmovie/seeallmovie.component';
-import { SeealltvComponent } from './shared/comps/seealltv/seealltv.component';
+import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
+import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
+import { SeeallmovieComponent } from './discovermovie/seeallmovie/seeallmovie.component';
+import { SeealltvComponent } from './discovertv/seealltv/seealltv.component';
 
 const routes: Routes = [
   {

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MovieModel } from '../shared/models/movie.model';
+import { MovieModel } from '../discovermovie/models/movie.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TvService } from 'src/app/services/tv.service';
 import { WatchService } from 'src/app/services/watch.service';
-import { TvModel } from '../../models/tv.model';
-import { WatchesTv } from '../../models/watches-tv.model';
+import { TvModel } from '../../discovertv/models/tv.model';
+import { WatchesTv } from '../models/watches-tv.model';
 
 @Component({
   selector: 'app-overview-watch-tv',

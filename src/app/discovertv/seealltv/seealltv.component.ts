@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TvService } from 'src/app/services/tv.service';
-import { TvModel } from '../../models/tv.model';
+import { TvModel } from '../models/tv.model';
 
 @Component({
   selector: 'app-seealltv',

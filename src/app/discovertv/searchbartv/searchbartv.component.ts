@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TvService } from '../services/tv.service';
-import { TvModel } from '../shared/models/tv.model';
+import { TvService } from '../../services/tv.service';
+import { TvModel } from '../models/tv.model';
 
 @Component({
   selector: 'app-searchbartv',

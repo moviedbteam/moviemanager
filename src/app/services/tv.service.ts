@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TvModel } from '../shared/models/tv.model';
+import { TvModel } from '../discovertv/models/tv.model';
 
 
 @Injectable({

@@ -18,13 +18,13 @@ export class DiscoverComponent {
 
   ngOnInit() {
 
-    if(this.userSvc.isAuth()){
-      this.router.navigate(['/']);
-      this.alertSvc.showAlert('Vous êtes connecté(e)');
-    }else{
-      this.router.navigate(['/']);
-      this.alertSvc.showAlert('Vous êtes déconnecté(e)');
-    }
+    // if(this.userSvc.isAuth()){
+    //   this.router.navigate(['/']);
+    //   this.alertSvc.showAlert('Vous êtes connecté(e)');
+    // }else{
+    //   this.router.navigate(['/']);
+    //   this.alertSvc.showAlert('Vous êtes déconnecté(e)');
+    // }
   }
 
 }

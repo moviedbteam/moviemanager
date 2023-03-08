@@ -4,8 +4,6 @@ import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MovieModel } from '../shared/models/movie.model';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

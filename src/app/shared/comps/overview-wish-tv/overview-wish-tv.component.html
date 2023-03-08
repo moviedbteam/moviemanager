@@ -1,0 +1,18 @@
+<div class="overviewContainer">
+    <p>Wish overview</p>
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+        <!-- <div *cdkVirtualFor="let wishtv of wishtvs" class="example-item">{{tvs[ wishtv.idtv].titre}}</div> -->
+        <!-- <div *cdkVirtualFor="let wishtv of wishtvs" class="example-item">{{wishtv.idtv}}</div> -->
+        <div [routerLink]="['/detailtv', tvWish.id]"  *ngFor="let tvWish of tvsWish" class="example-item">
+            <div>
+              <img [src]="getImgFullUrl(tvWish.image_portrait)" alt="">
+            </div>
+            {{tvWish.titre}}
+        </div>
+      </cdk-virtual-scroll-viewport>
+      
+    </div>
+      
+  </div>

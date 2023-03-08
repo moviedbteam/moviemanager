@@ -8,35 +8,77 @@ import { ConnexionComponent } from './connexion/connexion.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ActionbarComponent } from './actionbar/actionbar.component';
-import { SearchbarComponent } from './searchbar/searchbar.component';
 import { PrintDurationPipe } from './shared/pipes/print-duration.pipe';
 import { DiscoverComponent } from './discover/discover.component';
-import { LibraryComponent } from './library/library.component';
-import { SeeallComponent } from './shared/comps/seeall/seeall.component';
-import { DetailsheetComponent } from './shared/comps/detailsheet/detailsheet.component';
 import { ProfilComponent } from './profil/profil.component';
 import { MaterialExampleModule } from 'src/material.module';
-import { OverviewWatchComponent } from './shared/comps/overview-watch/overview-watch.component';
-import { OverviewWishComponent } from './shared/comps/overview-wish/overview-wish.component';
 import { ConnexmodalComponent } from './connexmodal/connexmodal.component';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { DiscovertvComponent } from './discovertv/discovertv.component';
+import { DiscovermovieComponent } from './discovermovie/discovermovie.component';
+import { ActionbarmovieComponent } from './actionbarmovie/actionbarmovie.component';
+import { ActionbartvComponent } from './actionbartv/actionbartv.component';
+import { SearchbartvComponent } from './searchbartv/searchbartv.component';
+import { SearchbarmovieComponent } from './searchbarmovie/searchbarmovie.component';
+import { DetailsheetmovieComponent } from './shared/comps/detailsheetmovie/detailsheetmovie.component';
+import { DetailsheettvComponent } from './shared/comps/detailsheettv/detailsheettv.component';
+import { SeeallmovieComponent } from './shared/comps/seeallmovie/seeallmovie.component';
+import { SeealltvComponent } from './shared/comps/seealltv/seealltv.component';
+import { OverviewWatchMovieComponent } from './shared/comps/overview-watch-movie/overview-watch-movie.component';
+import { OverviewWatchTvComponent } from './shared/comps/overview-watch-tv/overview-watch-tv.component';
+import { OverviewWishTvComponent } from './shared/comps/overview-wish-tv/overview-wish-tv.component';
+import { OverviewWishMovieComponent } from './shared/comps/overview-wish-movie/overview-wish-movie.component';
+import { LibrarymovieComponent } from './librarymovie/librarymovie.component';
+import { LibrarytvComponent } from './librarytv/librarytv.component';
+import { OverviewRecoMovieComponent } from './shared/comps/overview-reco-movie/overview-reco-movie.component';
+import { OverviewRecoTvComponent } from './shared/comps/overview-reco-tv/overview-reco-tv.component';
+import { StatisticComponent } from './statistic/statistic.component';
+import { PreferenceComponent } from './preference/preference.component';
+import { RecommendationComponent } from './recommendation/recommendation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConnexionComponent,
-    ActionbarComponent,
-    SearchbarComponent,
+    ActionbarmovieComponent,
+    ActionbartvComponent,
+    SearchbarmovieComponent,
+    SearchbartvComponent,
     PrintDurationPipe,
     DiscoverComponent,
-    LibraryComponent,
-    SeeallComponent,
-    DetailsheetComponent,
+    LibrarymovieComponent,
+    LibrarytvComponent,
+    SeeallmovieComponent,
+    SeealltvComponent,
+    DetailsheetmovieComponent,
+    DetailsheettvComponent,
     ProfilComponent,
-    OverviewWatchComponent,
-    OverviewWishComponent,
+    OverviewWatchMovieComponent,
+    OverviewWatchTvComponent,
+    OverviewWishMovieComponent,
+    OverviewWishTvComponent,
     ConnexmodalComponent,
+    DiscovertvComponent,
+    DiscovermovieComponent,
+    ActionbarmovieComponent,
+    ActionbartvComponent,
+    SearchbartvComponent,
+    SearchbarmovieComponent,
+    DetailsheetmovieComponent,
+    DetailsheettvComponent,
+    SeeallmovieComponent,
+    SeealltvComponent,
+    OverviewWatchMovieComponent,
+    OverviewWatchTvComponent,
+    OverviewWishTvComponent,
+    OverviewWishMovieComponent,
+    LibrarymovieComponent,
+    LibrarytvComponent,
+    OverviewRecoMovieComponent,
+    OverviewRecoTvComponent,
+    StatisticComponent,
+    PreferenceComponent,
+    RecommendationComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { WatchesModel } from '../shared/models/watches.model';
+import { WatchesMovie } from '../shared/models/watches-movie.model';
+import { WatchesTv } from '../shared/models/watches-tv.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ export class WatchService {
 
   apiBack = environment.base_url_apiBack;
   apiPostWatchMovie:string = '/watch/movie';
+  apiPostWatchTv:string = '/watch/episode';
   apiGetWatchMovies:string = '/watch/movie/all';
-  private _watches$:BehaviorSubject<any> = new BehaviorSubject([]);
+  apiGetWatchTvs:string = '/watch/episode/all';
+  private _watchesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _watchesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient,
@@ -24,24 +28,52 @@ export class WatchService {
 
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (watch: any) => new WatchesModel(watch) );
+        return apiResponse.map( (watch: any) => new WatchesMovie(watch) );
       })
     )
     
-    .subscribe((watches:WatchesModel[]) => {
-      let actualWatches = this._watches$.getValue();
+    .subscribe((watches:WatchesMovie[]) => {
+      let actualWatches = this._watchesMovie$.getValue();
       let allWatches:any = [...actualWatches, ...watches]
       if (allWatches.length !== 0){ 
-        this._watches$.next(allWatches);
+        this._watchesMovie$.next(allWatches);
       }
     });    
   }
   
-  getWatches$ ():Observable<WatchesModel[]> {
-    return this._watches$.asObservable();
+  getWatchesMovie$ ():Observable<WatchesMovie[]> {
+    return this._watchesMovie$.asObservable();
   }
   
   postWatchMovieToApi(postWatchMovie: any) {
     return this.http.post(this.apiBack+this.apiPostWatchMovie, postWatchMovie, {observe: 'response', responseType: 'text'} );
   }
+
+  getWatchTvsFromApi() {
+    
+    this.http.get(this.apiBack+this.apiGetWatchTvs)
+
+    .pipe(
+      map((apiResponse:any) => {
+        return apiResponse.map( (watch: any) => new WatchesTv(watch) );
+      })
+    )
+    
+    .subscribe((watches:WatchesTv[]) => {
+      let actualWatches = this._watchesTv$.getValue();
+      let allWatches:any = [...actualWatches, ...watches]
+      if (allWatches.length !== 0){ 
+        this._watchesTv$.next(allWatches);
+      }
+    });    
+  }
+  
+  getWatchesTv$ ():Observable<WatchesTv[]> {
+    return this._watchesTv$.asObservable();
+  }
+  
+  postWatchTvToApi(postWatchTv: any) {
+    return this.http.post(this.apiBack+this.apiPostWatchTv, postWatchTv, {observe: 'response', responseType: 'text'} );
+  }
+
 }

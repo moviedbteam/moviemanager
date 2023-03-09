@@ -3,8 +3,14 @@
 }
 
 .form-label {
-    color: yellow;
+    color: white;
     font-size: medium;
     font-weight: 500;
     margin-top: 20px;
+}
+
+.error {
+    font-size: 0.9em;
+    font-style: italic;
+    color:yellowgreen;
 }

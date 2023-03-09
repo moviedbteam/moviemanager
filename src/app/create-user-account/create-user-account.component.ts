@@ -14,9 +14,13 @@ import { CreateUserModel, CreateUserModelIam, UserModel } from '../shared/models
 export class CreateUserAccountComponent {
 
   formInscription!:FormGroup;
+
+  //Liste de toutes les catégories
   movieGenreRef: any;
   serieGenreRef:any;
   streamingSubsciptionRef:any;
+
+  //Tableau des catégories sélectionnées
   movieGenreCheckSelected: any;
   serieGenreCheckSelected: any;
   streamingGenreCheckSelected: any;
@@ -34,7 +38,7 @@ export class CreateUserAccountComponent {
       pseudo: ['', [Validators.required]],
       email:['', [Validators.required, Validators.email]],
       password:['', [Validators.required, Validators.minLength(5)]],
-      birthYear: ['', [Validators.required]],
+      birthYear: ['', [Validators.required, Validators.pattern("^(19[0-9]{2}|20[0-2][0-3])$"), Validators.minLength(4), Validators.maxLength(4)]],
       adultContent: [''],
       movieGenre: [''],
       serieGenre: [''],
@@ -44,19 +48,15 @@ export class CreateUserAccountComponent {
       checkArrayStreaming: this.fb.array([])
     });
 
+
     this.userService.getGenresMovie()
     .subscribe( (response:any) => {
-        // console.log(response);
         this.movieGenreRef = response;
-        // console.log(this.movieGenreRef[0]);
-        // console.log(this.movieGenreRef[0].id);
-        // console.log(this.movieGenreRef[0].name);
       }
     )
 
     this.userService.getGenresTv()
     .subscribe( (response:any) => {
-        // console.log(response);
         this.serieGenreRef = response;
       }
     )
@@ -135,9 +135,9 @@ export class CreateUserAccountComponent {
         birthYear: Number(this.formInscription.controls['birthYear'].value),
         adultContent: this.formInscription.controls['adultContent'].value === "true",
         enableAccount: true,
-        genreMovieDtoSet: this.movieGenreCheckSelected.map((id:number) => ({ id })),
-        genreTvDtoSet: this.serieGenreCheckSelected.map((id:number) => ({ id })),
-        streamingSubscriptionDtoSet: this.streamingGenreCheckSelected.map((id:number) => ({ id }))
+        genreMovieDtoSet: this.movieGenreCheckSelected?this.movieGenreCheckSelected.map((id:number) => ({ id })):[],
+        genreTvDtoSet: this.serieGenreCheckSelected?this.serieGenreCheckSelected.map((id:number) => ({ id })):[],
+        streamingSubscriptionDtoSet: this.streamingGenreCheckSelected?this.streamingGenreCheckSelected.map((id:number) => ({ id })):[]
       }
 
       let userModelIam:CreateUserModelIam =

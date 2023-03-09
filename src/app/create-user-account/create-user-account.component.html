@@ -30,20 +30,30 @@
 
         <label class="form-label">Année de naissance</label>
         <input class="form-control" placeholder="" formControlName="birthYear" type="text">
+        <p class="error" 
+        *ngIf="formInscription.controls['birthYear'].dirty &&
+                formInscription.touched && 
+                formInscription.controls['birthYear'].hasError('required')">L'année de naissance est requise</p>
+                <p class="error" 
+            *ngIf="formInscription.controls['birthYear'].dirty &&
+                    formInscription.touched &&
+                    (formInscription.controls['birthYear'].hasError('minlength') || formInscription.controls['birthYear'].hasError('maxlength'))">Veuillez saisir une année valide (4 chiffres) entre 1900 et 2023</p>
 
-        <label class="form-label" >Adult content</label>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="true" formControlName="adultContent">
-            <label class="form-check-label" for="flexRadioDefault1">
-              Oui
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="false" formControlName="adultContent">
-            <label class="form-check-label" for="flexRadioDefault1">
-              Non
-            </label>
-        </div>
+        <div *ngIf="formInscription.controls['birthYear'].valid && +formInscription.controls['birthYear'].value <= 2005">
+          <label class="form-label" >Adult content</label>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="true" formControlName="adultContent">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Oui
+              </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="false" formControlName="adultContent" checked>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Non
+              </label>
+          </div>
+      </div>
 
         <br>
         

@@ -12,6 +12,7 @@ import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.c
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
 import { SeeallmovieComponent } from './discovermovie/seeallmovie/seeallmovie.component';
 import { SeealltvComponent } from './discovertv/seealltv/seealltv.component';
+import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,9 @@ const routes: Routes = [
   },
   {
     path:'connexion', component:ConnexionComponent
+  },
+  {
+    path:'inscription', component:CreateUserAccountComponent
   },
   {
     path:'librarymovie', component:LibrarymovieComponent

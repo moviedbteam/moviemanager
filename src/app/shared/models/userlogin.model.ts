@@ -3,6 +3,12 @@ export interface UserModel {
     password: string;
 }
 
+export interface CreateUserModelIam {
+    email: string;
+    password: string;
+    loginName: string;
+}
+
 export interface GenreMovieModel {
     id: number;
     name: string;
@@ -18,7 +24,6 @@ export interface StreamingModel {
 
 export class CreateUserModel    {
     
-    idUser: number;
     userName: string;
     email: string;
     birthYear: number;
@@ -29,7 +34,6 @@ export class CreateUserModel    {
     streamingSubscriptionDtoSet: StreamingModel[] | any[];
 
     constructor(postCreateUserToApi:any) {
-        this.idUser = postCreateUserToApi.idUser;
         this.userName = postCreateUserToApi.userName;
         this.email = postCreateUserToApi.email;
         this.birthYear = postCreateUserToApi.birthYear;

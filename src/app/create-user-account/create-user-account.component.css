@@ -1,0 +1,10 @@
+.row {
+    color: aliceblue;
+}
+
+.form-label {
+    color: yellow;
+    font-size: medium;
+    font-weight: 500;
+    margin-top: 20px;
+}

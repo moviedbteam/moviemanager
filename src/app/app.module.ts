@@ -44,6 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MaterialExampleModule } from 'src/material.module';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     DetailsheetmovieComponent,
     DetailsheettvComponent,
     PrintDurationPipe,
+    CreateUserAccountComponent,
   ],
   imports: [
     BrowserModule,

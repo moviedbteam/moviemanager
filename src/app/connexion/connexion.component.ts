@@ -99,7 +99,6 @@ export class ConnexionComponent {
 
       let sendToApi:CreateUserModel =
     {
-      idUser: 10,
       //     idUser: 1234,
       userName: this.myData.name,
       email: this.myData.email,

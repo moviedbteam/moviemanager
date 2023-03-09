@@ -5,6 +5,7 @@ import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
 import { MovieModel } from '../discovermovie/models/movie.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-detailsheetmovie',
@@ -34,6 +35,7 @@ export class DetailsheetmovieComponent {
       private sanitize:DomSanitizer,
       private wishSvc:WishService,
       private watchSvc:WatchService,
+      private _location:Location,
   ) {}
 
   ngOnInit() {
@@ -64,7 +66,8 @@ export class DetailsheetmovieComponent {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    this._location.back();
   }
 
   getImgFullUrl(urlFragment:string):string {

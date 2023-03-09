@@ -5,6 +5,7 @@ import { TvService } from 'src/app/services/tv.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
 import { TvModel } from '../discovertv/models/tv.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-detailsheettv',
@@ -36,6 +37,7 @@ export class DetailsheettvComponent {
       private sanitize:DomSanitizer,
       private wishSvc:WishService,
       private watchSvc:WatchService,
+      private _location:Location,
   ) {}
 
   ngOnInit() {
@@ -66,7 +68,8 @@ export class DetailsheettvComponent {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    this._location.back();
   }
 
   getImgFullUrl(urlFragment:string):string {

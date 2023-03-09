@@ -18,6 +18,8 @@ export class CreateUserAccountComponent {
   serieGenreRef:any;
   streamingSubsciptionRef:any;
   movieGenreCheckSelected: any;
+  serieGenreCheckSelected: any;
+  streamingGenreCheckSelected: any;
 
   constructor(
     private fb:FormBuilder,
@@ -37,7 +39,9 @@ export class CreateUserAccountComponent {
       movieGenre: [''],
       serieGenre: [''],
       streamingSubs: [''],
-      checkArrayMovie: this.fb.array([])
+      checkArrayMovie: this.fb.array([]),
+      checkArraySerie: this.fb.array([]),
+      checkArrayStreaming: this.fb.array([])
     });
 
     this.userService.getGenresMovie()
@@ -59,7 +63,6 @@ export class CreateUserAccountComponent {
 
     this.userService.getStreaming()
     .subscribe( (response:any) => {
-        // console.log(response);
         this.streamingSubsciptionRef = response;
       }
     )
@@ -67,47 +70,63 @@ export class CreateUserAccountComponent {
   }
 
   onCheckboxChangeMovie(event:any) {
-    const checkArray: FormArray = this.formInscription.get('checkArrayMovie') as FormArray;
+    const checkArrayMovie: FormArray = this.formInscription.get('checkArrayMovie') as FormArray;
     if (event.target.checked) {
-      checkArray.push(new FormControl(event.target.value));
+      checkArrayMovie.push(new FormControl(event.target.value));
     } else {
       let i: number = 0;
-      checkArray.controls.forEach(
+      checkArrayMovie.controls.forEach(
         (item: any) => {
         if (item.value == event.target.value) {
-          checkArray.removeAt(i);
+          checkArrayMovie.removeAt(i);
           return;
         }
         i++;
       });
     }
-    this.movieGenreCheckSelected = checkArray.value 
-    // console.log(this.movieGenreCheckSelected)
+    this.movieGenreCheckSelected = checkArrayMovie.value 
+    // console.log("Cat. de films sélectionnées: " + this.movieGenreCheckSelected)
   }
 
+  onCheckboxChangeSerie(event:any) {
+    const checkArraySerie: FormArray = this.formInscription.get('checkArraySerie') as FormArray;
+    if (event.target.checked) {
+      checkArraySerie.push(new FormControl(event.target.value));
+    } else {
+      let i: number = 0;
+      checkArraySerie.controls.forEach(
+        (item: any) => {
+        if (item.value == event.target.value) {
+          checkArraySerie.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+    this.serieGenreCheckSelected = checkArraySerie.value 
+    // console.log("Cat. de séries sélectionnées: " + this.serieGenreCheckSelected)
+  }
 
-  // async function getData (){
+  onCheckboxChangeStreaming(event:any) {
+    const checkArrayStreaming: FormArray = this.formInscription.get('checkArrayStreaming') as FormArray;
+    if (event.target.checked) {
+      checkArrayStreaming.push(new FormControl(event.target.value));
+    } else {
+      let i: number = 0;
+      checkArrayStreaming.controls.forEach(
+        (item: any) => {
+        if (item.value == event.target.value) {
+          checkArrayStreaming.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+    this.streamingGenreCheckSelected = checkArrayStreaming.value 
+    // console.log("Abonnements VOD sélectionnés: " + this.streamingGenreCheckSelected)
+  }
 
-  //   const API_CREATE_USER_MMA = environment.base_url_apiBack+'/userAccount/create';
-  //   const API_CREATE_USER_IAM = environment.base_url_apiBack+'/api/iam/createuser';
-
-  //   const response1 = await fetch(API_CREATE_USER_IAM)
-  //   const data1 = await response1.json()
-
-  //   const response2 = await fetch(API_CREATE_USER_MMA)
-  //   const data2 = await response1.json()
-  // }
-
-  createAccount() {
-    // apiResponse.results.map( (movie: any) => new MovieModel(movie) )
-    // let sendToApi:CreateUserModel = new CreateUserModel (
-
-      // console.log("Pseudo : " + this.formInscription.controls['pseudo'].value)
-      // console.log("Email : " + this.formInscription.controls['email'].value)
-      // console.log("Année naissance : " + this.formInscription.controls['birthYear'].value)
-      // console.log("Adult Content : " + this.formInscription.controls['adultContent'].value)
-      // console.log(this.movieGenreCheckSelected)
-    
+  createAccount() {    
 
       let userModelMma:CreateUserModel =
       {
@@ -116,9 +135,9 @@ export class CreateUserAccountComponent {
         birthYear: Number(this.formInscription.controls['birthYear'].value),
         adultContent: this.formInscription.controls['adultContent'].value === "true",
         enableAccount: true,
-        genreMovieDtoSet: [],
-        genreTvDtoSet: [],
-        streamingSubscriptionDtoSet: []
+        genreMovieDtoSet: this.movieGenreCheckSelected.map((id:number) => ({ id })),
+        genreTvDtoSet: this.serieGenreCheckSelected.map((id:number) => ({ id })),
+        streamingSubscriptionDtoSet: this.streamingGenreCheckSelected.map((id:number) => ({ id }))
       }
 
       let userModelIam:CreateUserModelIam =
@@ -128,14 +147,24 @@ export class CreateUserAccountComponent {
         loginName: this.formInscription.controls['pseudo'].value
       }
 
-      // console.log("==== SendToAPI ====")
-      // console.log(userModelMma);
+      console.log("==== UserModel IAM ====")
+      console.log(userModelIam);
 
+      console.log("==== UserModel MMA ====")
+      console.log(userModelMma);
+
+            // this.userService.postCreateUserToApi(userModelMma)
+            // .subscribe({
+            //   next: (responseMma:any) => {
+            //       console.log("User MMA créé avec succès!")
+            //   },
+            //   error:error => console.log("Error create user mma: " + error)
+              
+            // })
 
       this.userService.postCreateUserIamToApi(userModelIam)
       .subscribe({
         next: (responseIam:any) => {
-          // console.log(responseIam);
           if(responseIam.status = "201") {
             console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
 

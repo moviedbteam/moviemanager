@@ -11,15 +11,12 @@ export interface CreateUserModelIam {
 
 export interface GenreMovieModel {
     id: number;
-    name: string;
 }
 export interface GenreTvModel {
     id: number;
-    name: string;
 }
 export interface StreamingModel {
     id: number;
-    name: string;
 }
 
 export class CreateUserModel    {

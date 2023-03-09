@@ -59,7 +59,7 @@
         <!-- SERIE GENRE -->
         <label class="form-label">Catégories préférées de séries TV</label>
         <div class="form-check" *ngFor="let serieGenre of serieGenreRef">
-            <input class="form-check-input" type="checkbox" value="{{serieGenre.id}}" id="MovieGenre{{serieGenre.name}}" formControlName="serieGenre">
+            <input class="form-check-input" type="checkbox" value="{{serieGenre.id}}" id="MovieGenre{{serieGenre.name}}" formControlName="serieGenre" (change)="onCheckboxChangeSerie($event)">
             <label class="form-check-label" for="MovieGenre{{serieGenre.name}}">
               {{serieGenre.name}}
             </label>
@@ -68,7 +68,7 @@
         <!-- ABONNEMENT STREAMING -->
         <label class="form-label">Abonnement(s) VOD</label>
         <div class="form-check" *ngFor="let streaming of streamingSubsciptionRef">
-            <input class="form-check-input" type="checkbox" value="{{streaming.id}}" id="MovieGenre{{streaming.name}}" formControlName="streamingSubs">
+            <input class="form-check-input" type="checkbox" value="{{streaming.id}}" id="MovieGenre{{streaming.name}}" formControlName="streamingSubs" (change)="onCheckboxChangeStreaming($event)">
             <label class="form-check-label" for="MovieGenre{{streaming.name}}">
               {{streaming.name}}
             </label>

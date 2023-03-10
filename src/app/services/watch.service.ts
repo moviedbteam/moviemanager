@@ -12,7 +12,7 @@ export class WatchService {
 
   apiBack = environment.base_url_apiBack;
   apiPostWatchMovie:string = '/watch/movie';
-  apiPostWatchTv:string = '/watch/episode';
+  apiPostWatchTv:string = '/watch/tv';
   apiGetWatchMovies:string = '/watch/movie/all';
   apiGetWatchTvs:string = '/watch/episode/all';
   private _watchesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);

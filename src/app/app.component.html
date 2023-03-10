@@ -52,7 +52,7 @@
 </style>
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/"><h1>Movie Manager</h1></a>
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" routerLink="/" href="#"><h1>Movie Manager</h1></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -75,19 +75,19 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item" style="margin-top: 40px;">
-            <a routerLink="/" class="nav-link" aria-current="page" href="#">
+            <a routerLink="/discover" class="nav-link" aria-current="page" href="#">
               <span><i class="fa-solid fa-compass" style="margin-right: 10px"></i></span>
               Discovery
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/library" class="nav-link" href="#">
+            <a routerLink="/librarytv" class="nav-link" href="#">
               <span><i class="fa-solid fa-tv" style="margin-right: 10px"></i></span>
               TV
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/library" class="nav-link" href="#">
+            <a routerLink="/librarymovie" class="nav-link" href="#">
               <span><i class="fa-solid fa-film" style="margin-right: 10px"></i></span>
               Movie
             </a>

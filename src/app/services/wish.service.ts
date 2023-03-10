@@ -12,7 +12,7 @@ export class WishService {
 
   apiBack = environment.base_url_apiBack;
   apiPostWishMovie:string = '/wish/movie';
-  apiPostWishTv:string = '/wish/episode';
+  apiPostWishTv:string = '/wish/tv';
   apiGetWishMovies:string = '/wish/movie/all';
   apiGetWishTvs:string = '/wish/episode/all';
   private _wishesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);

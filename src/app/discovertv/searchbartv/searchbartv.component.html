@@ -1,4 +1,4 @@
-<input #field (keyup)="onKeyupInput(field.value)" type="text" class="form-control" placeholder="Rechercher des films...">
+<input #field (keyup)="onKeyupInput(field.value)" type="text" class="form-control" placeholder="Rechercher des séries...">
 
 <ul *ngIf="searchedtvs.length>0"> 
   <li [routerLink]="['/detail', tv.id]" *ngFor="let tv of searchedtvs">

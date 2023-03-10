@@ -13,8 +13,8 @@ export class AlertService {
   showAlert(msg:string) {
     this.snackbar.open(msg,'Fermer', {
       horizontalPosition: 'center',
-      // verticalPosition: 'top',
-      duration: 100
+      verticalPosition: 'bottom',
+      duration: 2000
     })
   }
 }

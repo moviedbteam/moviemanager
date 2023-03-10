@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertService } from 'src/app/services/alert.service';
 import { TvService } from 'src/app/services/tv.service';
 import { TvModel } from '../models/tv.model';
 
@@ -12,7 +13,7 @@ export class SeealltvComponent {
   tvs:Array<TvModel> =[];
   subscription:any;
 
-  constructor(private tvSvc:TvService) {
+  constructor(private tvSvc:TvService, private alerteService:AlertService) {
     console.log(this);
   }
 
@@ -33,6 +34,9 @@ export class SeealltvComponent {
     return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 
+  callTest(str:string) {
+    this.alerteService.showAlert("Ajouté aux " + str + "!!!");
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

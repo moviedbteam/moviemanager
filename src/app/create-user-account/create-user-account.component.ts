@@ -165,13 +165,13 @@ export class CreateUserAccountComponent {
       this.userService.postCreateUserIamToApi(userModelIam)
       .subscribe({
         next: (responseIam:any) => {
-          if(responseIam.status = "201") {
+          if(responseIam.status == "201") {
             console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
 
             this.userService.postCreateUserToApi(userModelMma)
             .subscribe({
               next: (responseMma:any) => {
-                if(responseIam.status = "201") {
+                if(responseIam.status == "201") {
                   console.log("User MMA créé avec succès!");
                 }
                 else {

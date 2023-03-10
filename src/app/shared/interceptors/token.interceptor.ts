@@ -45,7 +45,7 @@ export class TokenInterceptor implements HttpInterceptor {
     let token = localStorage.getItem('token');
     
     if( this.IsPrivateApi(request) ) {
-        if(request.method == 'POST' || request.method == 'GET') {
+        if(request.method == 'POST' || request.method == 'GET' || request.method == 'DELETE') {
           // console.log("==== Interceptor TOKEN ====")
           this.cloneRequest = request
           .clone({headers: request.headers.set('authorization', 'Bearer '+token)})

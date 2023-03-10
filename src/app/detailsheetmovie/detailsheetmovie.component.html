@@ -1,79 +1,66 @@
 <div class="d-flex mt-5 py-2 title">
-    <button class="btn btn-outline-light btn-sm" (click)="goBack()">
-        <i class="fas fa-arrow-left"></i>
-    </button>
-    <!-- <h1>{{movie?.titre}}</h1> -->
-    <h1>{{ (movieSvc.getMovieDetail$() | async )?.titre }}</h1>
+  <button class="btn btn-outline-light btn-sm" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i>
+  </button>
+  <h1>{{ (detailMovieSvc.getMovieDetail$() | async )?.titre }}</h1>
 </div>
 
-<!-- <div class="row"> -->
-<div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
-
-    <div class="flex-container">
-
-    <!-- Affiche -->
+<div *ngIf="detailMovieSvc.getMovieDetail$() | async as movie" class="row detail">
+  <div class="flex-container">
     <div class="affiche">
-        <img [src]="getImgFullUrl(movie.image_portrait)" alt="">
+      <img [src]="getImgFullUrl(movie.image_portrait)" alt="">
     </div>
 
-
-    <!-- video -->
-    <!-- <div class="col-12 col-lg-6">
-        <div class="video-container">
-            <iframe *ngIf="videoUrl != null" [src]="videoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <h2 *ngIf="videoUrl == null">Pas de video disponible</h2>
-        </div>
-    </div> -->
-
-    <!-- details -->
     <div>
-        <button class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
-            <span><i class="fa-regular fa-bookmark"></i></span>Wish
-        </button>
+      <button *ngIf="movie.idWish !== 0" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="detailMovieSvc.delWishMovie()">
+        <span><i class="fa-regular fa-bookmark"></i></span>Wish
+      </button>
 
-        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="checkWatch()">
-            <span><i class="fa-solid fa-check"></i></span>Watch
-        </button>
-        
-        <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
-        <p>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star-half-stroke fa-lg"></i>
-            <i class="fa-regular fa-star fa-lg"></i>
-        </p>
-        <p>
-            <i class="fa-regular fa-face-angry fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
-            <i class="fa-regular fa-face-frown fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
-            <i class="fa-regular fa-face-frown-open fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
-            <i class="fa-regular fa-face-meh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
-            <i class="fa-regular fa-face-grin fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
-            <i class="fa-regular fa-face-smile-beam fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
-            <i class="fa-regular fa-face-laugh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
-            <i class="fa-regular fa-face-grin-stars fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
-            <i class="fa-regular fa-face-grin-hearts fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
-        </p>
-        <h2>Date de sortie</h2>
-        <p>{{ movie?.date | date:'dd/MM/yyyy' }}</p>
+      <button *ngIf="movie.idWish == 0" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
+        <span><i class="fa-regular fa-bookmark"></i></span>Wish
+      </button>
 
-        <h2>Résumé</h2>
-        <p>{{movie?.resume}}</p>
+      <button *ngIf="movie.idWatch !== 0" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="detailMovieSvc.delWatchMovie()">
+        <span><i class="fa-solid fa-check"></i></span>Watch
+      </button>
 
-        <h2>Genres</h2>
-        <p>
-            <span class="badge rounded-pill bg-primary" *ngFor="let genre of movie.genres">{{ genre.name}}</span>
-        </p>
+      <button *ngIf="movie.idWatch == 0" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="checkWatch()">
+        <span><i class="fa-solid fa-check"></i></span>Watch
+      </button>
+      
+      <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
+      <p>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star-half-stroke fa-lg"></i>
+        <i class="fa-regular fa-star fa-lg"></i>
+      </p>
+      <p>
+        <i class="fa-regular fa-face-angry fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
+        <i class="fa-regular fa-face-frown fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
+        <i class="fa-regular fa-face-frown-open fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
+        <i class="fa-regular fa-face-meh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
+        <i class="fa-regular fa-face-grin fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
+        <i class="fa-regular fa-face-smile-beam fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
+        <i class="fa-regular fa-face-laugh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
+        <i class="fa-regular fa-face-grin-stars fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
+        <i class="fa-regular fa-face-grin-hearts fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
+      </p>
+      <h2>Date de sortie</h2>
+      <p>{{ movie?.date | date:'dd/MM/yyyy' }}</p>
 
-        <h2>Durée</h2>
-        <p>{{ movie.duration | printDuration }}</p>
+      <h2>Résumé</h2>
+      <p>{{movie?.resume}}</p>
 
-        <!-- <hr>
-        <h2>Commentaires</h2>
-        <app-comment-form [movie_id]="movie.id"></app-comment-form> -->
+      <h2>Genres</h2>
+      <p>
+        <span class="badge rounded-pill bg-primary" *ngFor="let genre of movie.genres">{{ genre.name}}</span>
+      </p>
+
+      <h2>Durée</h2>
+      <p>{{ movie.duration | printDuration }}</p>
+
     </div>
-
-    </div> 
-
-
+  </div> 
 </div>

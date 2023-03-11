@@ -45,6 +45,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MaterialExampleModule } from 'src/material.module';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
+import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { CreateUserAccountComponent } from './create-user-account/create-user-ac
     DetailsheettvComponent,
     PrintDurationPipe,
     CreateUserAccountComponent,
+    DetailmovieComponent,
   ],
   imports: [
     BrowserModule,

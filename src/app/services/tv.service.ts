@@ -33,7 +33,7 @@ export class TvService {
     .set('language', 'fr')
     .set('page', this.indexPage);
 
-    // console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
+    console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
 
     this.http.get(urlApi, {params})
   
@@ -64,6 +64,7 @@ export class TvService {
     .set('api_key', apiKey)
     .set('language', 'fr')
     
+    console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
     this.http.get(urlApi+id, {params})
     
     .pipe(
@@ -87,6 +88,7 @@ export class TvService {
     .set('api_key', apiKey)
     .set('language', 'fr')
     
+    console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
     this.http.get(urlApi+id, {params})
     
     .pipe(
@@ -110,6 +112,7 @@ export class TvService {
     .set('api_key', apiKey)
     .set('language', 'fr')
     
+    console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
     this.http.get(urlApi+id, {params})
     
     .pipe(
@@ -134,6 +137,7 @@ export class TvService {
     .set('language', 'fr')
     .set('query', userSearch);
 
+    console.log (urlApi+'?api_key='+apiKey+'&language=fr&query='+userSearch);
     this.http.get(urlApi, {params})
     
     .pipe(
@@ -158,6 +162,7 @@ export class TvService {
     let params = new HttpParams()
     .set('api_key', apiKey)
     .set('language', 'fr')
+    console.log (urlApi+id+'/videos'+'?api_key='+apiKey+'&language=fr');
     return this.http.get(urlApi+id+'/videos', {params});
   }
 }

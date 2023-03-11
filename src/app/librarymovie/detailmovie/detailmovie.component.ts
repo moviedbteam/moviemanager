@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
-import { DetailMovieService } from './services/detail-movie.service';
-import { WishService } from '../services/wish.service';
-import { WatchService } from '../services/watch.service';
+import { WatchService } from 'src/app/services/watch.service';
+import { WishService } from 'src/app/services/wish.service';
+import { MovieDetailService } from '../services/movie-detail.service';
 
 @Component({
-  selector: 'app-detailsheetmovie',
-  templateUrl: './detailsheetmovie.component.html',
-  styleUrls: ['./detailsheetmovie.component.css']
+  selector: 'app-detailmovie',
+  templateUrl: './detailmovie.component.html',
+  styleUrls: ['./detailmovie.component.css']
 })
-export class DetailsheetmovieComponent {
-
+export class DetailmovieComponent {
+  
   idMovie:number = 0;
   // idCollection:number = 0;
   viewingPlace:string = "";
@@ -20,7 +20,7 @@ export class DetailsheetmovieComponent {
 
   constructor(
       private route:ActivatedRoute,
-      public detailMovieSvc:DetailMovieService,
+      public detailMovieSvc:MovieDetailService,
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,

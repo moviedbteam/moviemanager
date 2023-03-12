@@ -128,66 +128,79 @@ export class CreateUserAccountComponent {
 
   createAccount() {    
 
-      let userModelMma:CreateUserModel =
-      {
-        userName: this.formInscription.controls['pseudo'].value,
-        email: this.formInscription.controls['email'].value,
-        birthYear: Number(this.formInscription.controls['birthYear'].value),
-        adultContent: this.formInscription.controls['adultContent'].value === "true",
-        enableAccount: true,
-        genreMovieDtoSet: this.movieGenreCheckSelected?this.movieGenreCheckSelected.map((id:number) => ({ id })):[],
-        genreTvDtoSet: this.serieGenreCheckSelected?this.serieGenreCheckSelected.map((id:number) => ({ id })):[],
-        streamingSubscriptionDtoSet: this.streamingGenreCheckSelected?this.streamingGenreCheckSelected.map((id:number) => ({ id })):[]
-      }
+    let userModelMma:CreateUserModel =
+    {
+      userName: this.formInscription.controls['pseudo'].value,
+      email: this.formInscription.controls['email'].value,
+      birthYear: Number(this.formInscription.controls['birthYear'].value),
+      adultContent: this.formInscription.controls['adultContent'].value === "true",
+      enableAccount: true,
+      genreMovieDtoSet: this.movieGenreCheckSelected?this.movieGenreCheckSelected.map((id:number) => ({ id })):[],
+      genreTvDtoSet: this.serieGenreCheckSelected?this.serieGenreCheckSelected.map((id:number) => ({ id })):[],
+      streamingSubscriptionDtoSet: this.streamingGenreCheckSelected?this.streamingGenreCheckSelected.map((id:number) => ({ id })):[]
+    }
 
-      let userModelIam:CreateUserModelIam =
-      {
-        email: this.formInscription.controls['email'].value,
-        password: this.formInscription.controls['password'].value,
-        loginName: this.formInscription.controls['pseudo'].value
-      }
+    let userModelIam:CreateUserModelIam =
+    {
+      email: this.formInscription.controls['email'].value,
+      password: this.formInscription.controls['password'].value,
+      loginName: this.formInscription.controls['pseudo'].value
+    }
 
-      console.log("==== UserModel IAM ====")
-      console.log(userModelIam);
+    console.log("==== UserModel IAM ====")
+    console.log(userModelIam);
 
-      console.log("==== UserModel MMA ====")
-      console.log(userModelMma);
+    console.log("==== UserModel MMA ====")
+    console.log(userModelMma);
 
-            // this.userService.postCreateUserToApi(userModelMma)
-            // .subscribe({
-            //   next: (responseMma:any) => {
-            //       console.log("User MMA créé avec succès!")
-            //   },
-            //   error:error => console.log("Error create user mma: " + error)
-              
-            // })
+          // this.userService.postCreateUserToApi(userModelMma)
+          // .subscribe({
+          //   next: (responseMma:any) => {
+          //       console.log("User MMA créé avec succès!")
+          //   },
+          //   error:error => console.log("Error create user mma: " + error)
+            
+          // })
 
-      this.userService.postCreateUserIamToApi(userModelIam)
-      .subscribe({
-        next: (responseIam:any) => {
-          if(responseIam.status = "201") {
-            console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
+    this.userService.postCreateUserIamToApi(userModelIam)
+    .subscribe({
+      next: (responseIam:any) => {
+        console.log("responseIam");
+        console.log(responseIam);
+        console.log("responseIam.status");
+        console.log(responseIam.status);
+        if(responseIam.status = "201") {
+          console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
+          console.log(responseIam.status);
 
-            this.userService.postCreateUserToApi(userModelMma)
-            .subscribe({
-              next: (responseMma:any) => {
-                if(responseIam.status = "201") {
-                  console.log("User MMA créé avec succès!");
-                }
-                else {
-                  console.log("Pb création user mma")
-                }
-              },
-              error:error => console.log("Error create user mma: " + error)
-              
-            })
+          this.userService.postCreateUserToApi(userModelMma)
+          .subscribe({
+            next: (responseMma:any) => {
+              console.log(responseMma);
+              console.log(responseMma.status);
+              if(responseMma.status = "201") {
+                console.log("User MMA créé avec succès!");
+                console.log(responseMma.status);
+                this.router.navigate(['connexion']);
+              }
+              else {
+                console.log("Pb création user mma")
+                console.log(responseMma.status);
+              }
+            },
+            error:error => console.log("Error create user mma: " + error)
+            // error:error => console.log(error)
+            
+          })
 
-          } else {
-            console.log("Pb création user iam");
-          }
-        },
-        error: error => console.error("Error create user iam: " + error)
-      });
+        } else {
+          console.log("Pb création user iam");
+          console.log(responseIam.status);
+        }
+      },
+      error: error => console.error("Error create user iam: " + error)
+      // error:error => console.log(error)
+    });
   
   }
 

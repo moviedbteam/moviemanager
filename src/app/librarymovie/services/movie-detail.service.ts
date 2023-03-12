@@ -14,14 +14,14 @@ export class MovieDetailService {
   detailMovie:any = {};
   
   apiBack = environment.base_url_apiBack;
-  apiPostWishMovie:string = '/wish/movie';
-  apiGetWishMovies:string = '/wish/movie/all';
-  apiPostWatchMovie:string = '/watch/movie';
-  apiGetWatchMovies:string = '/watch/movie/all';
+  apiPostWishMovie:string = '/wish/movie/';
+  // apiGetWishMovies:string = '/wish/movie/all';
+  apiPostWatchMovie:string = '/watch/movie/';
+  // apiGetWatchMovies:string = '/watch/movie/all';
   
   // apitTmdb = environment.base_url_apiTmdb;
   // apiKey = environment.apiKey_apiTmdb;
-  urlApi = this.apiBack+'/movie/detail';
+  urlApi = this.apiBack+'/movie/detail/';
   
   private detailMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
 
@@ -44,51 +44,52 @@ export class MovieDetailService {
       this.detailMovie$.next(this.detailMovie)
     });
 
-    this.http.get(this.apiBack+this.apiGetWishMovies)
-    .pipe(
-      map((apiResponse:any) => {
-        return apiResponse.map( (wish: any) => new WishesMovie(wish) )
-      })
-    )
-    .subscribe((wishes:WishesMovie[]) => {
-      for (let wish of wishes) {
-        if (wish.idMovie == id) {
-          this.detailMovie.idWish = wish.idWish;
-        }
-      }
-      this.detailMovie$.next(this.detailMovie);
-    });
+    // this.http.get(this.apiBack+this.apiGetWishMovies)
+    // .pipe(
+    //   map((apiResponse:any) => {
+    //     return apiResponse.map( (wish: any) => new WishesMovie(wish) )
+    //   })
+    // )
+    // .subscribe((wishes:WishesMovie[]) => {
+    //   for (let wish of wishes) {
+    //     if (wish.idMovie == id) {
+    //       this.detailMovie.idWish = wish.idWish;
+    //     }
+    //   }
+    //   this.detailMovie$.next(this.detailMovie);
+    // });
 
-    this.http.get(this.apiBack+this.apiGetWatchMovies)
-    .pipe(
-      map((apiResponse:any) => {
-        return apiResponse.map( (watch: any) => new WatchesMovie(watch) );
-      })
-    )
-    .subscribe((watches:WatchesMovie[]) => {
-      for (let watch of watches) {
-        console.log("watch : ");
-        console.log(watch);
-        if (watch.idMovie == id) {
-          this.detailMovie.idWatch = watch.idWatch;
-        }
-      }
-      console.log("this.detailMovie : ");
-      console.log(this.detailMovie);
-      this.detailMovie$.next(this.detailMovie);
+    // this.http.get(this.apiBack+this.apiGetWatchMovies)
+    // .pipe(
+    //   map((apiResponse:any) => {
+    //     return apiResponse.map( (watch: any) => new WatchesMovie(watch) );
+    //   })
+    // )
+    // .subscribe((watches:WatchesMovie[]) => {
+    //   for (let watch of watches) {
+    //     console.log("watch : ");
+    //     console.log(watch);
+    //     if (watch.idMovie == id) {
+    //       this.detailMovie.idWatch = watch.idWatch;
+    //     }
+    //   }
+    //   console.log("this.detailMovie : ");
+    //   console.log(this.detailMovie);
+    //   this.detailMovie$.next(this.detailMovie);
       
-    });  
+    // });  
 
   }
 
   delWishMovie() {
     // return this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+idWishMovie, {observe: 'response', responseType: 'text'});
-    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.detailMovie.idWish)
+    this.http.delete(this.apiBack+this.apiPostWishMovie+this.detailMovie.idWish)
     .subscribe({
       next: (response:any) => {
         console.log(response)
+        console.log(response.status)
         if(response.status == "201") {
-          this.detailMovie.idWish = 0;
+          this.detailMovie.idWish = null;
           this.detailMovie$.next(this.detailMovie);
         }
       },
@@ -98,17 +99,20 @@ export class MovieDetailService {
 
   delWatchMovie() {
     // return this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+idWatchMovie, {observe: 'response', responseType: 'text'} );
-    this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.detailMovie.idWatch)
+    console.log("delWatchMovie");
+    this.http.delete(this.apiBack+this.apiPostWatchMovie+this.detailMovie.idWatch)
     .subscribe({
       next: (response:any) => {
-        console.log(response)
-        if(response.status == "201") {
-          this.detailMovie.idWatch = 0;
+        console.log(response);
+        console.log(response.status);
+        if(response.status == "200") {
+          this.detailMovie.idWatch = null;
           this.detailMovie$.next(this.detailMovie);
         }
       },
       error: error => console.error(error)
     });
+    console.log(this.detailMovie);
   }
    
   getMovieDetail$ ():Observable<Moviedetail> {

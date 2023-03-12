@@ -167,7 +167,8 @@ export class ConnexionComponent {
               this.alertSvc.showAlert('Vous êtes connecté(e)');
             }
           },
-          error: (err) => console.log('mon erreur'+err)
+          // error: (err) => console.log('mon erreur'+err)
+          error: (err) => console.log(err)
         }
       
       )

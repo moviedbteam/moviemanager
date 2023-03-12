@@ -12,19 +12,19 @@
       </div>
   
       <div>
-        <button *ngIf="movie.idWish !== 0" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="detailMovieSvc.delWishMovie()">
+        <button *ngIf="movie.idWish !== null" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="detailMovieSvc.delWishMovie()">
           <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
   
-        <button *ngIf="movie.idWish == 0" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
+        <button *ngIf="movie.idWish == null" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
           <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
   
-        <button *ngIf="movie.idWatch !== 0" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="detailMovieSvc.delWatchMovie()">
+        <button *ngIf="movie.idWatch !== null" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="detailMovieSvc.delWatchMovie()">
           <span><i class="fa-solid fa-check"></i></span>Watch
         </button>
   
-        <button *ngIf="movie.idWatch == 0" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="checkWatch()">
+        <button *ngIf="movie.idWatch == null" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="checkWatch()">
           <span><i class="fa-solid fa-check"></i></span>Watch
         </button>
         

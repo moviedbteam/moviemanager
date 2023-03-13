@@ -5,11 +5,11 @@
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
         <!-- <div *cdkVirtualFor="let wishMovie of wishMovies" class="example-item">{{movies[ wishMovie.idMovie].titre}}</div> -->
         <!-- <div *cdkVirtualFor="let wishMovie of wishMovies" class="example-item">{{wishMovie.idMovie}}</div> -->
-        <div [routerLink]="['/detailmovie', movieWish.id]"  *ngFor="let movieWish of moviesWish" class="example-item">
+        <div [routerLink]="['/moviedetail', movieWish.idMovie]"  *ngFor="let movieWish of wishMovies" class="example-item">
             <div>
-              <img [src]="getImgFullUrl(movieWish.image_portrait)" alt="">
+              <img [src]="getImgFullUrl(movieWish.posterPath)" alt="">
             </div>
-            {{movieWish.titre}}
+            {{movieWish.title}}
         </div>
       </cdk-virtual-scroll-viewport>
       

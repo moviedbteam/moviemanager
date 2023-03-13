@@ -70,17 +70,17 @@ export class DetailsheettvComponent {
   
   addWish() {
 
-    this.idEpisode = 1;
-    this.idSeason = 1;
+    // this.idEpisode = 1;
+    // this.idSeason = 1;
     // this.idUser = 324827;
-    this.idTv = this.route.snapshot.params['id'];
     // this.idCollection = 1313;
+    this.idTv = this.route.snapshot.params['id'];
     let sendToApi = { 
-      idEpisode:this.idEpisode,
-      idSeason:this.idSeason,
+      // idEpisode:this.idEpisode,
+      // idSeason:this.idSeason,
       // idUser:this.idUser, 
-      idTv:this.idTv, 
-      // idCollection:this.idCollection 
+      // idCollection:this.idCollection ,
+      idTv:this.idTv
     };
     console.log(sendToApi);
 
@@ -94,11 +94,11 @@ export class DetailsheettvComponent {
 
   checkWatch() {
 
-    this.idEpisode = 1;
-    this.idSeason = 1;
+    // this.idEpisode = 1;
+    // this.idSeason = 1;
     // this.idUser = 324827;
-    this.idTv = this.route.snapshot.params['id'];
     // this.idCollection = 1313;
+    this.idTv = this.route.snapshot.params['id'];
     this.viewingPlace = "cinéma";
     this.viewingRate = 5;
     this.viewingMood = 1;
@@ -106,8 +106,8 @@ export class DetailsheettvComponent {
       idEpisode:this.idEpisode,
       idSeason:this.idSeason,
       // idUser:this.idUser, 
-      idTv:this.idTv, 
       // idCollection:this.idCollection, 
+      idTv:this.idTv, 
       viewingPlace:this.viewingPlace, 
       viewingRate:this.viewingRate, 
       viewingMood:this.viewingMood

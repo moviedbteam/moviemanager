@@ -3,6 +3,7 @@ import { MovieService } from 'src/app/services/movie.service';
 import { WishService } from 'src/app/services/wish.service';
 import { MovieModel } from '../../discovermovie/models/movie.model';
 import { WishesMovie } from '../models/wishes-movie.model';
+import { WishesMovieService } from '../services/wishes-movie.service';
 
 @Component({
   selector: 'app-overview-wish-movie',
@@ -17,11 +18,11 @@ export class OverviewWishMovieComponent {
   wishMovies:Array<WishesMovie> = [];
   subscriptionWishesMovie:any;
 
-  moviesWish:Array<MovieModel>=[];
-  subscriptionMovieWish:any;
+  // moviesWish:Array<MovieModel>=[];
+  // subscriptionMovieWish:any;
 
   constructor(
-    private wishSvc:WishService,
+    private wishSvc:WishesMovieService,
     public movieSvcWish:MovieService,
   ){}
 
@@ -34,20 +35,20 @@ export class OverviewWishMovieComponent {
             this.wishSvc.getWishMoviesFromApi();
           }
           this.wishMovies = wishesArr
-          for (let wish of this.wishMovies) {
-            this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
-          }
+          // for (let wish of this.wishMovies) {
+          //   this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
+          // }
         }
       );
     
-    this.subscriptionMovieWish = this.movieSvcWish.getMovieWishDetail$()
-      .subscribe(
-        (movieWish:MovieModel) => {
-          if (movieWish.id ){
-            this.moviesWish.push(movieWish);
-          }
-        }
-      );
+    // this.subscriptionMovieWish = this.movieSvcWish.getMovieWishDetail$()
+    //   .subscribe(
+    //     (movieWish:MovieModel) => {
+    //       if (movieWish.id ){
+    //         this.moviesWish.push(movieWish);
+    //       }
+    //     }
+    //   );
   }
 
   getImgFullUrl(urlFragment:string):string {
@@ -57,7 +58,7 @@ export class OverviewWishMovieComponent {
 
   ngOnDestroy() {
     this.subscriptionWishesMovie.unsubscribe();
-    this.subscriptionMovieWish.unsubscribe();
+    // this.subscriptionMovieWish.unsubscribe();
   }
 
 

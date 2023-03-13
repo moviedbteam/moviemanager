@@ -3,6 +3,7 @@ import { MovieService } from 'src/app/services/movie.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { MovieModel } from '../../discovermovie/models/movie.model';
 import { WatchesMovie } from '../models/watches-movie.model';
+import { WatchesMovieService } from '../services/watches-movie.service';
 
 @Component({
   selector: 'app-overview-watch-movie',
@@ -17,11 +18,11 @@ export class OverviewWatchMovieComponent {
   watchMovies:Array<WatchesMovie> = [] ;
   subscriptionWatchesMovie:any;
 
-  moviesWatch:Array<MovieModel>=[];
-  subscriptionMovieWatch:any;
+  // moviesWatch:Array<MovieModel>=[];
+  // subscriptionMovieWatch:any;
 
   constructor(
-    private watchSvc:WatchService,
+    private watchSvc:WatchesMovieService,
     public movieSvcWatch:MovieService,
   ) {}
 
@@ -34,20 +35,20 @@ export class OverviewWatchMovieComponent {
             this.watchSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
-          for (let watch of this.watchMovies) {
-            this.movieSvcWatch.getDetailsWatchFromApi(watch.idMovie);
-          }
+          // for (let watch of this.watchMovies) {
+          //   this.movieSvcWatch.getDetailsWatchFromApi(watch.idMovie);
+          // }
         }
       );
     
-    this.subscriptionMovieWatch = this.movieSvcWatch.getMovieWatchDetail$()
-    .subscribe(
-      (movieWatch:MovieModel) => {      
-        if (movieWatch.id){
-          this.moviesWatch.push(movieWatch);
-        }
-      }
-    );
+    // this.subscriptionMovieWatch = this.movieSvcWatch.getMovieWatchDetail$()
+    // .subscribe(
+    //   (movieWatch:MovieModel) => {      
+    //     if (movieWatch.id){
+    //       this.moviesWatch.push(movieWatch);
+    //     }
+    //   }
+    // );
   }
 
   getImgFullUrl(urlFragment:string):string {
@@ -57,7 +58,7 @@ export class OverviewWatchMovieComponent {
 
   ngOnDestroy() {
     this.subscriptionWatchesMovie.unsubscribe();
-    this.subscriptionMovieWatch.unsubscribe();
+    // this.subscriptionMovieWatch.unsubscribe();
   }
 
 }

@@ -21,7 +21,7 @@ export class DetailsheetmovieComponent {
   // MAJ Statuts des boutons Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
   wishTitleButton: string = "Ajouter à la Wish liste";
-  watchStatusButton: string = "btn btn-primary btn-sm";
+  watchStatusButton: string = "btn btn-outline-primary btn-sm";
   watchTitleButton: string = "Ajouter à la Watch liste";
 
   // *ngIf="movie.idWatch == 0" 

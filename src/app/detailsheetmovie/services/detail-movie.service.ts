@@ -39,8 +39,6 @@ export class DetailMovieService {
       map((apiResponse:any)=> new DetailMovie(apiResponse))
     )
     .subscribe( (movie:DetailMovie) => {
-      console.log("movie : ");
-      console.log(movie);
       this.detailMovie = movie;
       console.log("this.detailMovie : ");
       console.log(this.detailMovie);
@@ -70,16 +68,11 @@ export class DetailMovieService {
     )
     .subscribe((watches:WatchesMovie[]) => {
       for (let watch of watches) {
-        console.log("watch : ");
-        console.log(watch);
         if (watch.idMovie == id) {
           this.detailMovie.idWatch = watch.idWatch;
         }
       }
-      console.log("this.detailMovie : ");
-      console.log(this.detailMovie);
       this.movieDetail$.next(this.detailMovie);
-      
     });  
 
   }

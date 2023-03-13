@@ -8,6 +8,7 @@ import { TvModel } from '../discovertv/models/tv.model';
 import {Location} from '@angular/common';
 import { DetailTvService } from './services/detail-tv.service';
 import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-detailsheettv',
@@ -15,18 +16,23 @@ import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
   styleUrls: ['./detailsheettv.component.css']
 })
 export class DetailsheettvComponent {
+  
+  // Utilisé
+  idTv:number = 0;
+  idWish:number = 0;
+  idWatch:number = 0;
 
+  // Pas utilisé
   idEpisode:number = 0;
   idSeason:number = 0;
-  idTv:number = 0;
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
-  // tvs:Array<TvModel> =[];
-  // seasonCount:number = 0;
+
 
   subscriptionDetailSeasons:any;
   detailSeasons: Array<DetailSeasonTmdbModel> = [];
+
 
   constructor(
       private route:ActivatedRoute,
@@ -35,6 +41,7 @@ export class DetailsheettvComponent {
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,
+      private alerteService:AlertService
   ) {}
 
   ngOnInit() {
@@ -42,17 +49,26 @@ export class DetailsheettvComponent {
     console.log(this.route.snapshot.params);
     this.idTv = this.route.snapshot.params['id'];
 
+    // vérifie si la série n'est pas dans une Wish/Watch List
+    
+    
     this.detailTvService.getDetailsFromApiTmdb(this.idTv);
 
     this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
     .subscribe( (arrDetailSeasons:any) => {
-        // console.log("subscriptionDetailSeasons", arrDetailSeasons)
         this.detailSeasons = arrDetailSeasons
-        console.log("subscriptionDetailSeasons", this.detailSeasons)
+        // tri du tableau des saisons par ordre chronologique
+        this.detailSeasons.sort(
+          (a,b) => ( a.season_number < b.season_number ? -1 : 1)
+        )
       }  
 
     )
 
+  }
+
+  callTest(str:string) {
+    this.alerteService.showAlert("Ajouté aux " + str + "!!!");
   }
 
   goBack() {
@@ -64,10 +80,20 @@ export class DetailsheettvComponent {
   }
 
   getImgSeasonFullUrl(urlFragment:string):string {
-    return "https://image.tmdb.org/t/p/w92"+urlFragment;
+    return "https://image.tmdb.org/t/p/w154"+urlFragment;
   }
 
-  
+  getWishIdTv() {
+
+    this.wishSvc.getWishIdTv().subscribe({
+      next: (response:any) => {
+        
+      },
+      error: error => console.error(error)
+    })
+      
+  }
+
   addWish() {
 
     // this.idEpisode = 1;
@@ -129,7 +155,6 @@ export class DetailsheettvComponent {
 
   ngOnDestroy() {
     this.subscriptionDetailSeasons.unsubscribe();
-    this.detailSeasons = [];
   }
 
 }

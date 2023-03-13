@@ -12,13 +12,13 @@
     </div>
 
     <div>
-      <button *ngIf="movie.idWish !== 0" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="detailMovieSvc.delWishMovie()">
+      <button [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
         <span><i class="fa-regular fa-bookmark"></i></span>Wish
       </button>
 
-      <button *ngIf="movie.idWish == 0" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
+      <!-- <button *ngIf="movie.idWish == 0" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
         <span><i class="fa-regular fa-bookmark"></i></span>Wish
-      </button>
+      </button> -->
 
       <button *ngIf="movie.idWatch !== 0" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="detailMovieSvc.delWatchMovie()">
         <span><i class="fa-solid fa-check"></i></span>Watch

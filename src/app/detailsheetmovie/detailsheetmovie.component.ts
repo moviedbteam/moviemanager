@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import { DetailMovieService } from './services/detail-movie.service';
 import { WishService } from '../services/wish.service';
 import { WatchService } from '../services/watch.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-detailsheetmovie',
@@ -18,17 +19,43 @@ export class DetailsheetmovieComponent {
   viewingRate:number = 0;
   viewingMood:number = 0;
 
+  // MAJ Statuts des boutons Wish et Watch
+  wishStatusButton: string = "btn btn-outline-warning btn-sm";
+  wishTitleButton: string = "Ajouter à la Wish liste";
+
+
+
   constructor(
       private route:ActivatedRoute,
       public detailMovieSvc:DetailMovieService,
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,
+      private alerteSvc:AlertService
   ) {}
 
   ngOnInit() {
     this.idMovie = this.route.snapshot.params['id'];
     this.detailMovieSvc.getDetailsFromApi(this.idMovie);
+
+    // MAJ du statut des boutons wish et watch
+
+
+  }
+
+  updateStatusWishButton() {
+    if (this.wishStatusButton.includes('btn-warning')) {
+      console.log("Appel à this.detailMovieSvc.delWishMovie()");
+      this.detailMovieSvc.delWishMovie();
+      this.wishStatusButton = "btn btn-outline-warning btn-sm";
+      this.wishTitleButton = "Ajouter à la Wish liste"
+    }
+    else {
+      console.log("Appel à this.addWish()");
+      this.addWish();
+      this.wishStatusButton = "btn btn-warning btn-sm";
+      this.wishTitleButton = "Supprimer de la Wish liste"
+    }
   }
 
   goBack() {
@@ -48,7 +75,10 @@ export class DetailsheetmovieComponent {
     
     this.wishSvc.postWishMovieToApi(sendToApi)
     .subscribe({
-      next: (response:any)=>  {console.log(response.status)},
+      next: (response:any)=>  {
+        console.log(response.status)
+        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+      },
       error: error => console.error(error)
     });
   }

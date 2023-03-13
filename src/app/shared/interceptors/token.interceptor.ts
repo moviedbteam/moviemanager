@@ -30,7 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
         request.url.includes(this.API_GET_GENRESMOVIE) ||
         request.url.includes(this.API_GET_GENRESTV) ||
         request.url.includes(this.API_GET_STREAMING) ||
-        request.url.includes(this.API_LOGIN_USER) 
+        request.url.includes(this.API_LOGIN_USER)
     ) {
       return false;
     }

@@ -86,11 +86,11 @@ export class DetailMovieService {
 
   delWishMovie() {
     // return this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+idWishMovie, {observe: 'response', responseType: 'text'});
-    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.detailMovie.idWish)
+    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.detailMovie.idWish, {observe: 'response', responseType: 'text'})
     .subscribe({
       next: (response:any) => {
         console.log(response)
-        if(response.status == "201") {
+        if(response.status == "202") {
           this.detailMovie.idWish = 0;
           this.movieDetail$.next(this.detailMovie);
         }

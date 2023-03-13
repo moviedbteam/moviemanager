@@ -46,6 +46,7 @@ import { MaterialExampleModule } from 'src/material.module';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
 import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.component';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,7 @@ import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.com
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

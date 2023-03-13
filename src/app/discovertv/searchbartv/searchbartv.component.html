@@ -1,7 +1,7 @@
 <input #field (keyup)="onKeyupInput(field.value)" type="text" class="form-control" placeholder="Rechercher des séries...">
 
 <ul *ngIf="searchedtvs.length>0"> 
-  <li [routerLink]="['/detail', tv.id]" *ngFor="let tv of searchedtvs">
+  <li [routerLink]="['/detailtv', tv.id]" *ngFor="let tv of searchedtvs">
     <h5>{{tv?.titre}}</h5>
     <!-- <div>
       <div class="image-container col">

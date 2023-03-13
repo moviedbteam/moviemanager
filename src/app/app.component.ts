@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'moviemanager';
+  userData:any;
+
+  ngOnInit() {
+   
+    let userDataInStorage = localStorage.getItem('userData');
+    this.userData = userDataInStorage!=null?JSON.parse(userDataInStorage):{};
+  }
 }

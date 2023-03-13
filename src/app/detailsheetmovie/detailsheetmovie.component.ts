@@ -14,7 +14,6 @@ import { AlertService } from '../services/alert.service';
 export class DetailsheetmovieComponent {
 
   idMovie:number = 0;
-  // idCollection:number = 0;
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
@@ -22,6 +21,13 @@ export class DetailsheetmovieComponent {
   // MAJ Statuts des boutons Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
   wishTitleButton: string = "Ajouter à la Wish liste";
+  watchStatusButton: string = "btn btn-primary btn-sm";
+  watchTitleButton: string = "Ajouter à la Watch liste";
+
+  // *ngIf="movie.idWatch == 0" 
+  // "btn btn-primary btn-sm"
+  // "Marquer comme vu"
+  // "detailMovieSvc.delWatchMovie()"
 
 
 
@@ -55,6 +61,21 @@ export class DetailsheetmovieComponent {
       this.addWish();
       this.wishStatusButton = "btn btn-warning btn-sm";
       this.wishTitleButton = "Supprimer de la Wish liste"
+    }
+  }
+
+  updateStatusWatchButton() {
+    if (this.watchStatusButton.includes('btn-primary')) {
+      console.log("Appel à this.detailMovieSvc.delWatchMovie()");
+      this.detailMovieSvc.delWatchMovie();
+      this.watchStatusButton = "btn btn-outline-primary btn-sm";
+      this.watchTitleButton = "Ajouter à la Watch liste"
+    }
+    else {
+      console.log("Appel à this.checkWatch()");
+      this.checkWatch();
+      this.watchStatusButton = "btn btn-primary btn-sm";
+      this.watchTitleButton = "Supprimer de la Watch liste"
     }
   }
 

@@ -52,6 +52,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userData');
     this.alertSvc.showAlert('Vous êtes déconnecté(e)');
     // this.router.navigate(['/']);
   }

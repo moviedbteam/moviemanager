@@ -6,6 +6,8 @@ import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
 import { TvModel } from '../discovertv/models/tv.model';
 import {Location} from '@angular/common';
+import { DetailTvService } from './services/detail-tv.service';
+import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
 
 @Component({
   selector: 'app-detailsheettv',
@@ -14,27 +16,22 @@ import {Location} from '@angular/common';
 })
 export class DetailsheettvComponent {
 
-  tv:any = {};
-
   idEpisode:number = 0;
   idSeason:number = 0;
-  // idUser:number = 0;
   idTv:number = 0;
-  // idCollection:number = 0;
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
-  
-  videoUrl!:SafeResourceUrl | null;
+  // tvs:Array<TvModel> =[];
+  // seasonCount:number = 0;
 
-  tvs:Array<TvModel> =[];
+  subscriptionDetailSeasons:any;
+  detailSeasons: Array<DetailSeasonTmdbModel> = [];
 
   constructor(
       private route:ActivatedRoute,
       private router:Router,
-      // private tvSvc:tvService,
-      public tvSvc:TvService,
-      private sanitize:DomSanitizer,
+      public detailTvService: DetailTvService,
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,
@@ -45,53 +42,33 @@ export class DetailsheettvComponent {
     console.log(this.route.snapshot.params);
     this.idTv = this.route.snapshot.params['id'];
 
-    this.tvSvc.getDetailsFromApi(this.idTv);
+    this.detailTvService.getDetailsFromApiTmdb(this.idTv);
 
-    // this.tvSvc.gettvDetail$()
-    // .subscribe(
-    //   (tvs:tvModel[]) => {
-    //     console.log("je suis la requete http de Detail Component");
-    //     this.tv = tvs
-    //   });
+    this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
+    .subscribe( (arrDetailSeasons:any) => {
+        // console.log("subscriptionDetailSeasons", arrDetailSeasons)
+        this.detailSeasons = arrDetailSeasons
+        console.log("subscriptionDetailSeasons", this.detailSeasons)
+      }  
 
-    this.tvSvc.getVideosFromApi(this.idTv)
-          .subscribe( (response:any) => {
-          console.log(response);
-          if(response.results.length>0){
-            let videoId = response.results[0].key;
-            this.videoUrl=this.sanitize.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/"+videoId+'?showinfo=0');
-          }
-          else {
-            this.videoUrl = null
-          }
-        })
+    )
+
   }
 
   goBack() {
-    // this.router.navigate(['/']);
     this._location.back();
   }
 
   getImgFullUrl(urlFragment:string):string {
-    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
     return "https://image.tmdb.org/t/p/w300"+urlFragment;
   }
 
-  
-  // onSubmitCommentForm(){
-  //   console.log(this.commentForm.value)
-  //   if(this.commentForm.valid) {
-  //     this.userSvc.postCommentToApi(this.commentForm.value)
-  //     .subscribe({
-  //         next: (response:any)=>  {console.log(response.status)},
-  //         error: error => console.error(error)
-          
-  //   })
-  //   }
-  // }
+  getImgSeasonFullUrl(urlFragment:string):string {
+    return "https://image.tmdb.org/t/p/w92"+urlFragment;
+  }
+
   
   addWish() {
-
 
     this.idEpisode = 1;
     this.idSeason = 1;
@@ -148,6 +125,11 @@ export class DetailsheettvComponent {
       error: error => console.error(error)
     });
 
+  }
+
+  ngOnDestroy() {
+    this.subscriptionDetailSeasons.unsubscribe();
+    this.detailSeasons = [];
   }
 
 }

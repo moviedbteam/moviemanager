@@ -21,9 +21,23 @@ h2 {
     justify-content:flex-start;
 }
 
+.flex-container-season {
+    display: flex;
+    justify-content:flex-start;
+}
+
 .affiche {
     width: 300px;
     margin-right: 50px;
+}
+
+.affiche-season {
+    width: 92px;
+    margin-right: 20px;
+}
+
+.accordion-body {
+    font-size: small;
 }
 
 p.genre span{
@@ -61,4 +75,8 @@ div>button>span>i {
 
 .rounded-pill {
     font-size: 0.9em;
+}
+
+.accordion {
+    width: 800px;
 }

@@ -25,6 +25,10 @@ export class TvService {
     private http:HttpClient
   ) {}
 
+  //////////////
+  // DISCOVERY
+  //////////////
+  
   getTvsFromApi():void {
     let urlApi = this.apitTmdb+'/discover/tv';
     let apiKey = this.apiKeyTmdb;

@@ -1,31 +1,26 @@
 <div class="d-flex mt-5 py-2 title">
+    
     <button class="btn btn-outline-light btn-sm" (click)="goBack()">
         <i class="fas fa-arrow-left"></i>
     </button>
-    <!-- <h1>{{tv?.titre}}</h1> -->
-    <h1>{{ (tvSvc.getTvDetail$() | async )?.titre }}</h1>
+    <h1> {{ (detailTvService.serieDetail$ | async)?.title }} </h1>
 </div>
 
-<!-- <div class="row"> -->
-<div *ngIf="tvSvc.getTvDetail$() | async as tv" class="row detail">
+
+<!-- ******************************************* -->
+<!-- *************** INFOS FICHE ***************-->
+<!-- ******************************************* -->
+
+<div *ngIf="detailTvService.serieDetail$ | async as serie" class="row detail">
 
     <div class="flex-container">
 
-    <!-- Affiche -->
+
     <div class="affiche">
-        <img [src]="getImgFullUrl(tv.image_portrait)" alt="">
+        <img [src]="getImgFullUrl(serie.posterPath)" alt="">
     </div>
 
 
-    <!-- video -->
-    <!-- <div class="col-12 col-lg-6">
-        <div class="video-container">
-            <iframe *ngIf="videoUrl != null" [src]="videoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <h2 *ngIf="videoUrl == null">Pas de video disponible</h2>
-        </div>
-    </div> -->
-
-    <!-- details -->
     <div>
         <button class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
             <span><i class="fa-regular fa-bookmark"></i></span>Wish
@@ -54,26 +49,96 @@
             <i class="fa-regular fa-face-grin-stars fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
             <i class="fa-regular fa-face-grin-hearts fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
         </p>
+
+        <h2>Popularité</h2>
+        <p>{{serie?.popularity}}</p>
+
+        <h2>Moyenne des votes</h2>
+        <p>{{serie?.voteAverage}}</p>
+
+        <h2>Nombre de votes</h2>
+        <p>{{serie?.voteCount}}</p>
+
         <h2>Date de sortie</h2>
-        <p>{{ tv?.date | date:'dd/MM/yyyy' }}</p>
+        <p>{{ serie?.firstAirDate | date:'dd-MM-yyyy' }}</p>
 
         <h2>Résumé</h2>
-        <p>{{tv?.resume}}</p>
+        <p>{{serie?.resume}}</p>
 
         <h2>Genres</h2>
         <p>
-            <span class="badge rounded-pill bg-primary" *ngFor="let genre of tv.genres">{{ genre.name}}</span>
+            <span class="badge rounded-pill bg-primary" *ngFor="let genre of serie.genres">{{ genre.name }}</span>
         </p>
 
-        <h2>Durée</h2>
-        <p>{{ tv.duration | printDuration }}</p>
-
-        <!-- <hr>
-        <h2>Commentaires</h2>
-        <app-comment-form [tv_id]="tv.id"></app-comment-form> -->
+        <h2>Statut</h2>
+        <p>{{serie?.status}}</p>
     </div>
 
-    </div> 
+    </div>
 
 
+</div>
+
+<!-- <div *ngIf="detailTvService.seasonDetail$ | async as seasons" class="row detail">
+    <div *ngFor="let season of detailSeasons">
+        <p>{{ season.name }}</p>
+    </div>
+</div> -->
+
+<!-- *************************************** -->
+<!-- *************** SAISONS ***************-->
+<!-- *************************************** -->
+
+<div *ngIf="detailTvService.seasonDetail$ | async as saisons" class="row detail">
+    <div class="flex-container-season">
+        <div class="accordion" id="accordion-saison">
+            <div *ngFor="let season of detailSeasons" class="accordion-item">
+              <h2 class="accordion-header" id="heading{{season.season_number}}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.season_number" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.season_number">
+                    Saison {{season.season_number}}
+                </button>
+              </h2>
+              <div id="collapse{{season.season_number}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + season.season_number" data-bs-parent="#accordion-saison">
+                <div class="accordion-body">
+
+                    <!-- INFO SAISON -->
+                    
+                    <div class="flex-container">
+                        <div class="affiche-season">
+                            <img [src]="getImgSeasonFullUrl(season.poster_path)" alt="">
+                        </div>
+                        <div>                     
+                            <p><strong>Date de sortie: </strong> {{season.air_date | date:'dd-MM-yyyy' }}</p>
+                            <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
+                            <p><strong>Résumé: </strong> {{season.overview}}</p>
+                        </div>
+                    </div>
+                        <!-- LISTE EPISODES -->
+                    <div>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">N°</th>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Durée</th>
+                                <th scope="col">Date de diffusion</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let episode of season.episodes">
+                                <th scope="row">{{ episode.episode_number }}</th>
+                                <td>{{ episode.name }}</td>
+                                <td>{{ episode.runtime }} min</td>
+                                <td>{{ episode.air_date | date:"dd-MM-yyyy"}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
 </div>

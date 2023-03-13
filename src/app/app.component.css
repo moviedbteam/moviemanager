@@ -3,9 +3,9 @@
   height: 16px;
 }
 
-/*
-  * Sidebar
-  */
+/*************************
+******** Side Bar ********
+**************************/
 
 .sidebar {
   position: fixed;
@@ -47,13 +47,17 @@
   color: #727272;
 }
 
-.sidebar .nav-link.active {
+/* .sidebar > .nav-link.active {
   color: #2470dc;
-}
+} */
 
-.sidebar .nav-link:hover .feather,
+.sidebar .feather,
 .sidebar .nav-link.active .feather {
   color: inherit;
+}
+
+.sidebar .nav-link:hover {
+  color: #2470dc;
 }
 
 .sidebar-heading {
@@ -64,9 +68,10 @@
   color: #2470dc;
 }
 
-/*
-  * Navbar
-  */
+
+/***********************
+******** Navbar ********
+************************/
 
 
 .navbar{

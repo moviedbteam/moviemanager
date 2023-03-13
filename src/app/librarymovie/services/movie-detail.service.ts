@@ -83,15 +83,15 @@ export class MovieDetailService {
 
   delWishMovie() {
     // return this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+idWishMovie, {observe: 'response', responseType: 'text'});
-    this.http.delete(this.apiBack+this.apiPostWishMovie+this.detailMovie.idWish)
+    this.http.delete(this.apiBack+this.apiPostWishMovie+this.detailMovie.idWish, {observe: 'response', responseType: 'text'})
     .subscribe({
       next: (response:any) => {
         console.log(response)
-        // console.log(response.status)
-        // if(response.status == "201") {
-        //   this.detailMovie.idWish = null;
-        //   this.detailMovie$.next(this.detailMovie);
-        // }
+        console.log(response.status)
+        if(response.status == "201") {
+          this.detailMovie.idWish = null;
+          this.detailMovie$.next(this.detailMovie);
+        }
       },
       error: error => console.error(error)
     });
@@ -100,15 +100,15 @@ export class MovieDetailService {
   delWatchMovie() {
     // return this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+idWatchMovie, {observe: 'response', responseType: 'text'} );
     console.log("delWatchMovie");
-    this.http.delete(this.apiBack+this.apiPostWatchMovie+this.detailMovie.idWatch)
+    this.http.delete(this.apiBack+this.apiPostWatchMovie+this.detailMovie.idWatch, {observe: 'response', responseType: 'text'} )
     .subscribe({
       next: (response:any) => {
         console.log(response);
-        // console.log(response.status);
-        // if(response.status == "200") {
-        //   this.detailMovie.idWatch = null;
-        //   this.detailMovie$.next(this.detailMovie);
-        // }
+        console.log(response.status);
+        if(response.status == "200") {
+          this.detailMovie.idWatch = null;
+          this.detailMovie$.next(this.detailMovie);
+        }
       },
       error: error => console.error(error)
     });

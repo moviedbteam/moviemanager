@@ -36,6 +36,8 @@ export class DetailTvService {
   getDetailsFromApiTmdb(idTv:number):void {
   // Infos générales de la série
 
+    this._seasonDetail$.next([]);
+
     let params = new HttpParams()
     .set('api_key', this.apiKeyTmdb)
     .set('language', 'fr-FR')

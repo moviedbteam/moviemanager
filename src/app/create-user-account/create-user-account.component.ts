@@ -167,39 +167,36 @@ export class CreateUserAccountComponent {
       next: (responseIam:any) => {
         console.log("responseIam");
         console.log(responseIam);
-        console.log("responseIam.status");
-        console.log(responseIam.status);
-        if(responseIam.status = "201") {
+        if(responseIam) {
           console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
-          console.log(responseIam.status);
-
           this.userService.postCreateUserToApi(userModelMma)
           .subscribe({
             next: (responseMma:any) => {
+              console.log("responseMma");
               console.log(responseMma);
-              console.log(responseMma.status);
-              if(responseMma.status = "201") {
+              if(responseMma) {
                 console.log("User MMA créé avec succès!");
-                console.log(responseMma.status);
                 this.router.navigate(['connexion']);
               }
               else {
                 console.log("Pb création user mma")
-                console.log(responseMma.status);
+                console.log("responseMma");
+                console.log(responseMma);
               }
             },
-            error:error => console.log("Error create user mma: " + error)
-            // error:error => console.log(error)
+            // error:error => console.log("Error create user mma: " + error)
+            error:error => console.log(error)
             
           })
 
         } else {
           console.log("Pb création user iam");
-          console.log(responseIam.status);
+          console.log("responseIam");
+          console.log(responseIam);
         }
       },
-      error: error => console.error("Error create user iam: " + error)
-      // error:error => console.log(error)
+      // error: error => console.error("Error create user iam: " + error)
+      error:error => console.log(error)
     });
   
   }

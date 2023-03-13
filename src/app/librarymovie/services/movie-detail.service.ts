@@ -87,11 +87,11 @@ export class MovieDetailService {
     .subscribe({
       next: (response:any) => {
         console.log(response)
-        console.log(response.status)
-        if(response.status == "201") {
-          this.detailMovie.idWish = null;
-          this.detailMovie$.next(this.detailMovie);
-        }
+        // console.log(response.status)
+        // if(response.status == "201") {
+        //   this.detailMovie.idWish = null;
+        //   this.detailMovie$.next(this.detailMovie);
+        // }
       },
       error: error => console.error(error)
     });
@@ -104,11 +104,11 @@ export class MovieDetailService {
     .subscribe({
       next: (response:any) => {
         console.log(response);
-        console.log(response.status);
-        if(response.status == "200") {
-          this.detailMovie.idWatch = null;
-          this.detailMovie$.next(this.detailMovie);
-        }
+        // console.log(response.status);
+        // if(response.status == "200") {
+        //   this.detailMovie.idWatch = null;
+        //   this.detailMovie$.next(this.detailMovie);
+        // }
       },
       error: error => console.error(error)
     });

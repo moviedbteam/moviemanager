@@ -58,12 +58,9 @@
   </button>
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-        <a routerLink="/connexion" class="nav-link btn">
-          <i class="fa-solid fa-user"></i>
-        </a>
-      <a routerLink="/inscription" class="nav-link btn">
-        <i class="fa-solid fa-pen-nib"></i>
-      </a>
+      <i>Email : {{ userData.email?userData.email:'' }}</i>
+      <i routerLink="/connexion" class="nav-link btn" class="fa-solid fa-user"></i>
+      <i routerLink="/inscription" class="nav-link btn" class="fa-solid fa-pen-nib"></i>
     </div>    
   </div>
 </header>

@@ -32,7 +32,6 @@ import { StatisticComponent } from './profil/statistic/statistic.component';
 import { PreferenceComponent } from './profil/preference/preference.component';
 
 import { ConnexionComponent } from './connexion/connexion.component';
-import { ConnexmodalComponent } from './connexmodal/connexmodal.component';
 
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
@@ -81,7 +80,6 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     StatisticComponent,
 
     ConnexionComponent,
-    ConnexmodalComponent,
 
     DetailsheetmovieComponent,
     DetailsheettvComponent,

@@ -3,14 +3,22 @@
 
     <div *ngFor="let movie of movies" class="col-12  col-lg-2 col-md-4">
 
-        <div [routerLink]="['/detailmovie',movie.id]" class="card" >
+        <!-- <div [routerLink]="['/detailmovie',movie.id]" class="card" >
             <img [src]="getImgFullUrl(movie.image_landscape)" alt="">
-
+        </div> -->
+        <div [routerLink]="['/detailmovie',movie.id]" class="card bg-dark flex">
+            <img [src]="getImgFullUrl(movie.image_landscape)" alt="">
+            <div class="mini-menu">
+                <i class="fa-regular fa-bookmark fa-lg" style="color: yellow;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+            </div>
+            
             <div class="card-body">
                 <h2>{{movie.titre}}</h2>
 
             </div>
         </div>
+
 
     </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
 import { MovieModel } from '../models/movie.model';
 
@@ -12,7 +13,7 @@ export class SeeallmovieComponent {
   movies:Array<MovieModel> =[];
   subscription:any;
 
-  constructor(private movieSvc:MovieService) {
+  constructor(private movieSvc:MovieService, private alerteService:AlertService) {
     console.log(this);
   }
 
@@ -33,6 +34,9 @@ export class SeeallmovieComponent {
     return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 
+  callTest(str:string) {
+    this.alerteService.showAlert("Ajouté aux " + str + "!!!");
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

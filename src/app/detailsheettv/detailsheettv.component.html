@@ -32,35 +32,31 @@
         
         <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
         <p>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star fa-lg"></i>
-            <i class="fa-solid fa-star-half-stroke fa-lg"></i>
-            <i class="fa-regular fa-star fa-lg"></i>
+            <i class="fa-solid fa-star fa-md"></i>
+            <i class="fa-solid fa-star fa-md"></i>
+            <i class="fa-solid fa-star fa-md"></i>
+            <i class="fa-solid fa-star-half-stroke fa-md"></i>
+            <i class="fa-regular fa-star fa-md"></i>
         </p>
         <p>
-            <i class="fa-regular fa-face-angry fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
-            <i class="fa-regular fa-face-frown fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
-            <i class="fa-regular fa-face-frown-open fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
-            <i class="fa-regular fa-face-meh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
-            <i class="fa-regular fa-face-grin fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
-            <i class="fa-regular fa-face-smile-beam fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
-            <i class="fa-regular fa-face-laugh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
-            <i class="fa-regular fa-face-grin-stars fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
-            <i class="fa-regular fa-face-grin-hearts fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
+            <i class="fa-regular fa-face-angry fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
+            <i class="fa-regular fa-face-frown fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
+            <i class="fa-regular fa-face-frown-open fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
+            <i class="fa-regular fa-face-meh fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
+            <i class="fa-regular fa-face-grin fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
+            <i class="fa-regular fa-face-smile-beam fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
+            <i class="fa-regular fa-face-laugh fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
+            <i class="fa-regular fa-face-grin-stars fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
+            <i class="fa-regular fa-face-grin-hearts fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
         </p>
 
-        <h2>Popularité</h2>
-        <p>{{serie?.popularity}}</p>
-
-        <h2>Moyenne des votes</h2>
-        <p>{{serie?.voteAverage}}</p>
-
-        <h2>Nombre de votes</h2>
-        <p>{{serie?.voteCount}}</p>
-
-        <h2>Date de sortie</h2>
-        <p>{{ serie?.firstAirDate | date:'dd-MM-yyyy' }}</p>
+        <h2>Popularité: <span>{{serie?.popularity}}</span></h2>
+        
+        <h2>Moyenne des votes: <span>{{serie?.voteAverage}}</span></h2>
+        
+        <h2>Nombre de votes: <span>{{serie?.voteCount}}</span></h2>
+        
+        <h2>Date de sortie: <span>{{ serie?.firstAirDate | date:'dd-MM-yyyy' }}</span></h2>
 
         <h2>Résumé</h2>
         <p>{{serie?.resume}}</p>
@@ -79,11 +75,6 @@
 
 </div>
 
-<!-- <div *ngIf="detailTvService.seasonDetail$ | async as seasons" class="row detail">
-    <div *ngFor="let season of detailSeasons">
-        <p>{{ season.name }}</p>
-    </div>
-</div> -->
 
 <!-- *************************************** -->
 <!-- *************** SAISONS ***************-->
@@ -107,10 +98,14 @@
                         <div class="affiche-season">
                             <img [src]="getImgSeasonFullUrl(season.poster_path)" alt="">
                         </div>
-                        <div>                     
+                        <div>
+                            <div class="mini-menu">
+                                <i class="fa-regular fa-bookmark fa-lg" style="color: yellow; margin-right: 10px;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                            </div>                     
                             <p><strong>Date de sortie: </strong> {{season.air_date | date:'dd-MM-yyyy' }}</p>
                             <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
-                            <p><strong>Résumé: </strong> {{season.overview}}</p>
+                            <p><strong>Résumé: </strong> {{season.overview?season.overview:"Non disponible"}}</p>
                         </div>
                     </div>
                         <!-- LISTE EPISODES -->
@@ -122,6 +117,7 @@
                                 <th scope="col">Titre</th>
                                 <th scope="col">Durée</th>
                                 <th scope="col">Date de diffusion</th>
+                                <th scope="col">Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -130,6 +126,10 @@
                                 <td>{{ episode.name }}</td>
                                 <td>{{ episode.runtime }} min</td>
                                 <td>{{ episode.air_date | date:"dd-MM-yyyy"}}</td>
+                                <td>
+                                    <i class="fa-regular fa-bookmark fa-lg" style="color: yellow; margin-right: 10px;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                                    <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                                </td>
                               </tr>
                             </tbody>
                           </table>

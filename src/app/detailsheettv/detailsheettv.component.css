@@ -16,6 +16,11 @@ h2 {
     margin-bottom: 0;
 }
 
+h2 > span {
+    color: rgb(140, 120, 160);
+    font-size: medium;
+}
+
 .flex-container {
     display: flex;
     justify-content:flex-start;
@@ -32,8 +37,9 @@ h2 {
 }
 
 .affiche-season {
-    width: 92px;
+    width: 154px;
     margin-right: 20px;
+    margin-bottom: 20px;;
 }
 
 .accordion-body {
@@ -79,4 +85,23 @@ div>button>span>i {
 
 .accordion {
     width: 800px;
+}
+
+.mini-menu {
+    margin-bottom: 10px;
+}
+
+.accordion-body{
+    background-color: #0D0D4E;
+    color: rgb(140, 120, 160);
+}
+
+.accordion-button {
+    background-color: #0D0D4E;
+    color: #5D1BEB;
+    font-weight: 500;
+}
+
+table {
+    color: rgb(140, 120, 160);
 }

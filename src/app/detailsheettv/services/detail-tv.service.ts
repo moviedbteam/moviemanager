@@ -18,11 +18,11 @@ export class DetailTvService {
   // APIs MMA
   apiBack = environment.base_url_apiBack;
 
-  apiGetWishMovies:string = '/wish/tv/all';
-  apiGetWatchMovies:string = '/watch/tv/all';
+  // apiGetWishMovies:string = '/wish/tv/all';
+  // apiGetWatchMovies:string = '/watch/tv/all';
 
-  apiPostWishMovie:string = '/tv/movie';
-  apiPostWatchMovie:string = '/tv/movie';
+  // apiPostWishMovie:string = '/tv/movie';
+  // apiPostWatchMovie:string = '/tv/movie';
 
   // Observables
   private _serieDetail$ = new BehaviorSubject<DetailTvTmdbModel | any>({});

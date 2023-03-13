@@ -76,6 +76,22 @@ export class WishService {
     return this.http.post(this.apiBack+this.apiPostWishTv, postWishTv, {observe: 'response', responseType: 'text'});
   }
 
+  getWishIdTv(){ 
+    return this.http.get(this.apiBack + "/tv/wishlist");
+      // .subscribe( (serie:DetailTvTmdbModel) => {
+      //   console.log("WishList récupéré de MMA : ");
+      //   console.log(serie);
+          
+      //     for (let i = 1; i <= serie.nbSeasons; i++ ) {
+      //       console.log("saison récupérée de TMDB : ");
+      //       this.getSeasonDetailsFromApiTmdb(idTv, i)
+      //     }
+      //     this._serieDetail$.next(serie);
+          
+      //   });
+    
+  }
+
 
 
 }

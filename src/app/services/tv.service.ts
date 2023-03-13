@@ -10,7 +10,7 @@ import { TvModel } from '../discovertv/models/tv.model';
 })
 export class TvService {
 
-  apitTmdb = environment.base_url_apiTmdb;
+  apiTmdb = environment.base_url_apiTmdb;
   apiKeyTmdb = environment.apiKey_apiTmdb;
 
   private tvs$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -30,7 +30,7 @@ export class TvService {
   //////////////
   
   getTvsFromApi():void {
-    let urlApi = this.apitTmdb+'/discover/tv';
+    let urlApi = this.apiTmdb+'/discover/tv';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -62,7 +62,7 @@ export class TvService {
   }
 
   getDetailsFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/tv/';
+    let urlApi = this.apiTmdb+'/tv/';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -86,7 +86,7 @@ export class TvService {
   }
 
   getDetailsWishFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/tv/';
+    let urlApi = this.apiTmdb+'/tv/';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -110,7 +110,7 @@ export class TvService {
   }
 
   getDetailsWatchFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/tv/';
+    let urlApi = this.apiTmdb+'/tv/';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -134,7 +134,7 @@ export class TvService {
   }
 
   searchTvsFromApi(userSearch:string):void{
-    let urlApi = this.apitTmdb+'/search/tv';
+    let urlApi = this.apiTmdb+'/search/tv';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -161,7 +161,7 @@ export class TvService {
   }
 
   getVideosFromApi(id:number){  
-    let urlApi = this.apitTmdb+'/tv/';
+    let urlApi = this.apiTmdb+'/tv/';
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -169,4 +169,6 @@ export class TvService {
     console.log (urlApi+id+'/videos'+'?api_key='+apiKey+'&language=fr');
     return this.http.get(urlApi+id+'/videos', {params});
   }
+
+
 }

@@ -24,8 +24,14 @@ div > img {
 }
 
 div.card {
-    border:none
+    border:none;
+    margin-bottom: 20px;
 }
+
+div.card:hover {
+    border: 3px solid rgba(93,27,235);
+}
+
 div.card-body {
     background: #19152f;
 }

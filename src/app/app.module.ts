@@ -40,8 +40,6 @@ import { OverviewWishTvComponent } from './librarytv/overview-wish-tv/overview-w
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
 
-import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,8 +72,6 @@ import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.com
 
     DetailsheetmovieComponent,
     DetailsheettvComponent,
-    
-    DetailmovieComponent,
   ],
   imports: [
     BrowserModule,

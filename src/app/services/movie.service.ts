@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MovieModel } from '../discovermovie/models/movie.model';
+import { TmdbDetailMovie } from '../detailsheetmovie/models/tmdb-detail-movie.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,9 @@ export class MovieService {
 
   apitTmdb = environment.base_url_apiTmdb;
   apiKeyTmdb = environment.apiKey_apiTmdb;
+  apigetDetailsFromApi = this.apitTmdb+'/movie/';
+  apiSearchMoviesFromApi = this.apitTmdb+'/search/movie';
+  apiGetMoviesFromApi = this.apitTmdb+'/discover/movie';
 
   private movies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -25,7 +28,7 @@ export class MovieService {
   ) {}
 
   getMoviesFromApi():void {
-    let urlApi = this.apitTmdb+'/discover/movie';
+    let urlApi = this.apiGetMoviesFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -37,11 +40,16 @@ export class MovieService {
   
     .pipe(
       map((apiResponse:any)=> {
-        return apiResponse.results.map( (movie: any) => new MovieModel(movie) )      
+        console.log(apiResponse)
+        return apiResponse.results.map( (movie: any) => {
+          console.log(movie);
+          return new TmdbDetailMovie(movie) ;
+          
+        })
       })
     )
     
-    .subscribe( (movies:MovieModel[]) => {
+    .subscribe( (movies:TmdbDetailMovie[]) => {
       let actualMovies = this.movies$.getValue();
       let allMovies:any = [...actualMovies, ...movies];
     
@@ -51,12 +59,12 @@ export class MovieService {
     this.indexPage++;
   }
 
-  getMovies$ ():Observable<MovieModel[]> {
+  getMovies$ ():Observable<TmdbDetailMovie[]> {
     return this.movies$.asObservable();
   }
 
   getDetailsFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/movie/';
+    let urlApi = this.apigetDetailsFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -66,21 +74,20 @@ export class MovieService {
     this.http.get(urlApi+id, {params})
     
     .pipe(
-      map((apiResponse:any)=> new MovieModel(apiResponse) )
+      map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
     )
 
-    .subscribe( (movie:MovieModel) => {
+    .subscribe( (movie:TmdbDetailMovie) => {
       this.movieDetail$.next(movie)
     });
   }
 
-  // getMovieDetail$ ():Observable<MovieModel[]> {
-  getMovieDetail$ ():Observable<MovieModel> {
+  getMovieDetail$ ():Observable<TmdbDetailMovie> {
     return this.movieDetail$.asObservable();
   }
 
   getDetailsWishFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/movie/';
+    let urlApi = this.apigetDetailsFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -90,21 +97,21 @@ export class MovieService {
     this.http.get(urlApi+id, {params})
     
     .pipe(
-      map((apiResponse:any)=> new MovieModel(apiResponse) )
+      map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
     )
 
-    .subscribe( (movie:MovieModel) => {
+    .subscribe( (movie:TmdbDetailMovie) => {
       this.movieDetailWish$.next(movie)
     })
     ;
   }
 
-  getMovieWishDetail$ ():Observable<MovieModel> {
+  getMovieWishDetail$ ():Observable<TmdbDetailMovie> {
     return this.movieDetailWish$.asObservable();
   }
 
   getDetailsWatchFromApi(id:number):void{
-    let urlApi = this.apitTmdb+'/movie/';
+    let urlApi = this.apigetDetailsFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -114,21 +121,21 @@ export class MovieService {
     this.http.get(urlApi+id, {params})
     
     .pipe(
-      map((apiResponse:any)=> new MovieModel(apiResponse) )
+      map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
     )
 
-    .subscribe( (movie:MovieModel) => {
+    .subscribe( (movie:TmdbDetailMovie) => {
       this.movieDetailWatch$.next(movie)
     })
     ;
   }
 
-  getMovieWatchDetail$ ():Observable<MovieModel> {
+  getMovieWatchDetail$ ():Observable<TmdbDetailMovie> {
     return this.movieDetailWatch$.asObservable();
   }
 
   searchMoviesFromApi(userSearch:string):void{
-    let urlApi = this.apitTmdb+'/search/movie';
+    let urlApi = this.apiSearchMoviesFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)
@@ -140,22 +147,22 @@ export class MovieService {
     
     .pipe(
       map((apiResponse:any)=> {
-        return apiResponse.results.map( (movie: any) => new MovieModel(movie) )
+        return apiResponse.results.map( (movie: any) => new TmdbDetailMovie(movie) )
       })
     )
-    .subscribe( (foundMovies:MovieModel[]) => this.searchedMovies$.next(foundMovies) );
+    .subscribe( (foundMovies:TmdbDetailMovie[]) => this.searchedMovies$.next(foundMovies) );
   }
 
-  getSearchedMovies$ ():Observable<MovieModel[]> {
+  getSearchedMovies$ ():Observable<TmdbDetailMovie[]> {
     return this.searchedMovies$.asObservable();
   }
 
-  setSearchMovies$ (movies:MovieModel[]):void {
+  setSearchMovies$ (movies:TmdbDetailMovie[]):void {
     this.searchedMovies$.next(movies);
   }
 
   getVideosFromApi(id:number){  
-    let urlApi = this.apitTmdb+'/movie/';
+    let urlApi = this.apigetDetailsFromApi;
     let apiKey = this.apiKeyTmdb;
     let params = new HttpParams()
     .set('api_key', apiKey)

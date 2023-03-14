@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { environment } from 'src/environments/environment';
-import { WatchesMovie } from '../models/watches-movie.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,11 @@ export class WatchesMovieService {
 
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (watch: any) => new WatchesMovie(watch) );
+        return apiResponse.map( (watch: any) => new BackDetailMovie(watch) );
       })
     )
     
-    .subscribe((watches:WatchesMovie[]) => {
+    .subscribe((watches:BackDetailMovie[]) => {
       let actualWatches = this._watchesMovie$.getValue();
       let allWatches:any = [...actualWatches, ...watches]
       if (allWatches.length !== 0){ 
@@ -36,7 +36,7 @@ export class WatchesMovieService {
     });    
   }
   
-  getWatchesMovie$ ():Observable<WatchesMovie[]> {
+  getWatchesMovie$ ():Observable<BackDetailMovie[]> {
     return this._watchesMovie$.asObservable();
   }
 

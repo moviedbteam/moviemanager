@@ -1,8 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { MovieService } from 'src/app/services/movie.service';
-import { WatchService } from 'src/app/services/watch.service';
-import { MovieModel } from '../../discovermovie/models/movie.model';
-import { WatchesMovie } from '../models/watches-movie.model';
 import { WatchesMovieService } from '../services/watches-movie.service';
 
 @Component({
@@ -15,7 +13,7 @@ import { WatchesMovieService } from '../services/watches-movie.service';
 })
 export class OverviewWatchMovieComponent {
 
-  watchMovies:Array<WatchesMovie> = [] ;
+  watchMovies:Array<BackDetailMovie> = [] ;
   subscriptionWatchesMovie:any;
 
   // moviesWatch:Array<MovieModel>=[];
@@ -30,11 +28,12 @@ export class OverviewWatchMovieComponent {
 
     this.subscriptionWatchesMovie = this.watchSvc.getWatchesMovie$()
       .subscribe(
-        (watchesArr:WatchesMovie[]) => {
+        (watchesArr:BackDetailMovie[]) => {
           if(watchesArr.length===0) {
             this.watchSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
+          console.log(this.watchMovies);
           // for (let watch of this.watchMovies) {
           //   this.movieSvcWatch.getDetailsWatchFromApi(watch.idMovie);
           // }

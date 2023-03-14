@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { environment } from 'src/environments/environment';
-import { WishesMovie } from '../models/wishes-movie.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,11 @@ export class WishesMovieService {
     
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (wish: any) => new WishesMovie(wish) )
+        return apiResponse.map( (wish: any) => new BackDetailMovie(wish) )
       })
     )
 
-    .subscribe((wishes:WishesMovie[]) => {
+    .subscribe((wishes:BackDetailMovie[]) => {
       let actualWishes = this._wishesMovie$.getValue();
       let allWishes:any = [...actualWishes, ...wishes]
       if (allWishes.length !== 0){
@@ -36,7 +36,7 @@ export class WishesMovieService {
     });
   }
 
-  getWishesMovie$ ():Observable<WishesMovie[]> {
+  getWishesMovie$ ():Observable<BackDetailMovie[]> {
     return this._wishesMovie$.asObservable();
   }
 }

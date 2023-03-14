@@ -3,11 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MaterialExampleModule } from 'src/material.module';
+
+import { ConnexionComponent } from './connexion/connexion.component';
+import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { PrintDurationPipe } from './shared/pipes/print-duration.pipe';
+
 import { RecommendationComponent } from './recommendation/recommendation.component';
 import { OverviewRecoTvComponent } from './recommendation/overview-reco-tv/overview-reco-tv.component';
 import { OverviewRecoMovieComponent } from './recommendation/overview-reco-movie/overview-reco-movie.component';
-
-import { DiscoverComponent } from './discover/discover.component';
 
 import { DiscovermovieComponent } from './discovermovie/discovermovie.component';
 import { ActionbarmovieComponent } from './discovermovie/actionbarmovie/actionbarmovie.component';
@@ -19,43 +29,28 @@ import { ActionbartvComponent } from './discovertv/actionbartv/actionbartv.compo
 import { SearchbartvComponent } from './discovertv/searchbartv/searchbartv.component';
 import { SeealltvComponent } from './discovertv/seealltv/seealltv.component';
 
-import { LibrarytvComponent } from './librarytv/librarytv.component';
-import { OverviewWatchTvComponent } from './librarytv/overview-watch-tv/overview-watch-tv.component';
-import { OverviewWishTvComponent } from './librarytv/overview-wish-tv/overview-wish-tv.component';
-
 import { LibrarymovieComponent } from './librarymovie/librarymovie.component';
 import { OverviewWatchMovieComponent } from './librarymovie/overview-watch-movie/overview-watch-movie.component';
 import { OverviewWishMovieComponent } from './librarymovie/overview-wish-movie/overview-wish-movie.component';
 
-import { ProfilComponent } from './profil/profil.component';
-import { StatisticComponent } from './profil/statistic/statistic.component';
-import { PreferenceComponent } from './profil/preference/preference.component';
-
-import { ConnexionComponent } from './connexion/connexion.component';
+import { LibrarytvComponent } from './librarytv/librarytv.component';
+import { OverviewWatchTvComponent } from './librarytv/overview-watch-tv/overview-watch-tv.component';
+import { OverviewWishTvComponent } from './librarytv/overview-wish-tv/overview-wish-tv.component';
 
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
-import { PrintDurationPipe } from './shared/pipes/print-duration.pipe';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MaterialExampleModule } from 'src/material.module';
-import { TokenInterceptor } from './shared/interceptors/token.interceptor';
-import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
-import { DetailmovieComponent } from './librarymovie/detailmovie/detailmovie.component';
-import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
 
+    ConnexionComponent,
+    CreateUserAccountComponent,
+    PrintDurationPipe,
+
     RecommendationComponent,
     OverviewRecoMovieComponent,
     OverviewRecoTvComponent,
-
-    DiscoverComponent,
 
     DiscovermovieComponent,
     ActionbarmovieComponent,
@@ -67,25 +62,16 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     SearchbartvComponent,
     SeealltvComponent,
 
+    LibrarymovieComponent,
+    OverviewWatchMovieComponent,
+    OverviewWishMovieComponent,
+    
     LibrarytvComponent,
     OverviewWatchTvComponent,
     OverviewWishTvComponent,
 
-    LibrarymovieComponent,
-    OverviewWatchMovieComponent,
-    OverviewWishMovieComponent,
-
-    ProfilComponent,
-    PreferenceComponent,
-    StatisticComponent,
-
-    ConnexionComponent,
-
     DetailsheetmovieComponent,
     DetailsheettvComponent,
-    PrintDurationPipe,
-    CreateUserAccountComponent,
-    DetailmovieComponent,
   ],
   imports: [
     BrowserModule,

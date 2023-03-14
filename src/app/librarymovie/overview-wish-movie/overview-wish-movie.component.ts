@@ -1,8 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { MovieService } from 'src/app/services/movie.service';
-import { WishService } from 'src/app/services/wish.service';
-import { MovieModel } from '../../discovermovie/models/movie.model';
-import { WishesMovie } from '../models/wishes-movie.model';
 import { WishesMovieService } from '../services/wishes-movie.service';
 
 @Component({
@@ -15,7 +13,7 @@ import { WishesMovieService } from '../services/wishes-movie.service';
 })
 export class OverviewWishMovieComponent {
 
-  wishMovies:Array<WishesMovie> = [];
+  wishMovies:Array<BackDetailMovie> = [];
   subscriptionWishesMovie:any;
 
   // moviesWish:Array<MovieModel>=[];
@@ -30,7 +28,7 @@ export class OverviewWishMovieComponent {
     
     this.subscriptionWishesMovie = this.wishSvc.getWishesMovie$()
     .subscribe(
-      (wishesArr:WishesMovie[]) => {        
+      (wishesArr:BackDetailMovie[]) => {        
           if(wishesArr.length===0) {
             this.wishSvc.getWishMoviesFromApi();
           }

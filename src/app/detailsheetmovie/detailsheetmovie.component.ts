@@ -21,8 +21,10 @@ export class DetailsheetmovieComponent {
   // MAJ Statuts des boutons Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
   wishTitleButton: string = "Ajouter à la Wish liste";
-  watchStatusButton: string = "btn btn-primary btn-sm";
+  watchStatusButton: string = "btn btn-outline-primary btn-sm";
   watchTitleButton: string = "Ajouter à la Watch liste";
+
+  subscriptionDetailMovie:any;
 
   // *ngIf="movie.idWatch == 0" 
   // "btn btn-primary btn-sm"
@@ -42,7 +44,19 @@ export class DetailsheetmovieComponent {
 
   ngOnInit() {
     this.idMovie = this.route.snapshot.params['id'];
-    this.detailMovieSvc.getDetailsFromApi(this.idMovie);
+    this.detailMovieSvc.getBackDetailsFromApi(this.idMovie);
+
+    this.subscriptionDetailMovie = this.detailMovieSvc.getMovieDetail$()
+    .subscribe({
+      next: (response:any)=>  {
+        console.log(response)
+        if (response.idWatch === null && response.idWish === null){
+          this.detailMovieSvc.getTmdbDetailsFromApi(this.idMovie);
+        }
+      },
+      error: error => console.error(error)
+    });
+    
 
     // MAJ du statut des boutons wish et watch
 
@@ -126,7 +140,10 @@ export class DetailsheetmovieComponent {
       },
       error: error => console.error(error)
     });
+  }
 
+  ngOnDestroy() {
+    this.subscriptionDetailMovie.unsubscribe();
   }
 
 }

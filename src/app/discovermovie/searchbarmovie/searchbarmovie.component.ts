@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { MovieService } from '../../services/movie.service';
-import { MovieModel } from '../models/movie.model';
 
 @Component({
   selector: 'app-searchbarmovie',
@@ -9,13 +9,13 @@ import { MovieModel } from '../models/movie.model';
 })
 export class SearchbarmovieComponent {
 
-  searchedMovies:MovieModel[] =[];
+  searchedMovies:BackDetailMovie[] =[];
 
   constructor(private movieSvc:MovieService) {  }
 
   ngOnInit() {
     this.movieSvc.getSearchedMovies$()
-    .subscribe ( (foundMovies:MovieModel[] ) => this.searchedMovies = foundMovies  );
+    .subscribe ( (foundMovies:BackDetailMovie[] ) => this.searchedMovies = foundMovies  );
   }
 
   onKeyupInput(userSearch:string) {

@@ -6,15 +6,15 @@
         <!-- <div [routerLink]="['/detailmovie',movie.id]" class="card" >
             <img [src]="getImgFullUrl(movie.image_landscape)" alt="">
         </div> -->
-        <div [routerLink]="['/detailmovie',movie.id]" class="card bg-dark flex">
-            <img [src]="getImgFullUrl(movie.image_landscape)" alt="">
+        <div [routerLink]="['/detailmovie',movie.idMovie]" class="card bg-dark flex">
+            <img [src]="getImgFullUrl(movie.posterPath)" alt="">
             <div class="mini-menu">
                 <i class="fa-regular fa-bookmark fa-lg" style="color: yellow;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
                 <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
             </div>
             
             <div class="card-body">
-                <h2>{{movie.titre}}</h2>
+                <h2>{{movie.title}}</h2>
 
             </div>
         </div>

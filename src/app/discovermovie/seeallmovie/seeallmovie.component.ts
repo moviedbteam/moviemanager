@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
-import { MovieModel } from '../models/movie.model';
 
 @Component({
   selector: 'app-seeallmovie',
@@ -10,7 +10,7 @@ import { MovieModel } from '../models/movie.model';
 })
 export class SeeallmovieComponent {
 
-  movies:Array<MovieModel> =[];
+  movies:Array<BackDetailMovie> =[];
   subscription:any;
 
   constructor(private movieSvc:MovieService, private alerteService:AlertService) {
@@ -18,15 +18,16 @@ export class SeeallmovieComponent {
   }
 
   ngOnInit() {
-    this.subscription =
-        this.movieSvc.getMovies$()
-            .subscribe(
-                (moviesArr:MovieModel[]) => {
-                  if(moviesArr.length===0) {
-                    this.movieSvc.getMoviesFromApi();
-                  }
-                  this.movies = moviesArr
-                });
+    this.subscription = this.movieSvc.getMovies$()
+      .subscribe(
+        (moviesArr:BackDetailMovie[]) => {
+          if(moviesArr.length===0) {
+            this.movieSvc.getMoviesFromApi();
+          }
+          this.movies = moviesArr
+          console.log(this.movies);
+        });
+                
   }
 
   getImgFullUrl(urlFragment:string):string {

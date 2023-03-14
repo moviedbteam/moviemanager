@@ -22,11 +22,11 @@
 
 
     <div>
-        <button class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter à la Wishlist" (click)="addWish()">
+        <button [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
             <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
 
-        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="checkWatch()">
+        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="callTest('WATCH')">
             <span><i class="fa-solid fa-check"></i></span>Watch
         </button>
         
@@ -100,8 +100,8 @@
                         </div>
                         <div>
                             <div class="mini-menu">
-                                <i class="fa-regular fa-bookmark fa-lg" style="color: yellow; margin-right: 10px;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
-                                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                                <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconOff" style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)"></i>
+                                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH')"></i>
                             </div>                     
                             <p><strong>Date de sortie: </strong> {{season.air_date | date:'dd-MM-yyyy' }}</p>
                             <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
@@ -115,7 +115,7 @@
                               <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">Titre</th>
-                                <th scope="col">Durée</th>
+                                <th scope="col">Durée (min)</th>
                                 <th scope="col">Date de diffusion</th>
                                 <th scope="col">Actions</th>
                               </tr>
@@ -123,12 +123,12 @@
                             <tbody>
                               <tr *ngFor="let episode of season.episodes">
                                 <th scope="row">{{ episode.episode_number }}</th>
-                                <td>{{ episode.name }}</td>
-                                <td>{{ episode.runtime }} min</td>
-                                <td>{{ episode.air_date | date:"dd-MM-yyyy"}}</td>
+                                <td>{{ episode.name?episode.name:"Non disponible" }}</td>
+                                <td>{{ episode.runtime?episode.runtime:"-" }}</td>
+                                <td>{{ episode.air_date?(episode.air_date | date:"dd-MM-yyyy"):"-"}}</td>
                                 <td>
-                                    <i class="fa-regular fa-bookmark fa-lg" style="color: yellow; margin-right: 10px;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
-                                    <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                                    <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconOff" style="color: yellow; margin-right: 10px;" (click)="updateStatusWishEpisode(season.idTmdb, episode.id)"></i>
+                                    <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH')"></i>
                                 </td>
                               </tr>
                             </tbody>

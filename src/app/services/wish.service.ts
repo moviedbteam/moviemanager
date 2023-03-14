@@ -13,37 +13,20 @@ export class WishService {
   apiBack = environment.base_url_apiBack;
   apiPostWishMovie:string = '/wish/movie';
   apiPostWishTv:string = '/wish/tv';
-  // apiGetWishMovies:string = '/wish/movie/all';
+  apiPostWishEpisode:string = '/wish/episode';
+  apiPostWishEpisodeOfSeason: string = "/wish/season";
+  apiDeleteWishEpisodeOfSeason: string = "/wish/season";
+  apiDeleteWishEpisode: string = "/wish/episode"
+
+  apiDelWishTv:string = '/wish/tv';
+
   apiGetWishTvs:string = '/wish/episode/all';
-  // private _wishesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
+
   private _wishesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient,
   ) {}
-
-  // getWishMoviesFromApi() {
-    
-  //   this.http.get(this.apiBack+this.apiGetWishMovies)
-    
-  //   .pipe(
-  //     map((apiResponse:any) => {
-  //       return apiResponse.map( (wish: any) => new WishesMovie(wish) )
-  //     })
-  //   )
-
-  //   .subscribe((wishes:WishesMovie[]) => {
-  //     let actualWishes = this._wishesMovie$.getValue();
-  //     let allWishes:any = [...actualWishes, ...wishes]
-  //     if (allWishes.length !== 0){
-  //       this._wishesMovie$.next(allWishes);
-  //     }
-  //   });
-  // }
-
-  // getWishesMovie$ ():Observable<WishesMovie[]> {
-  //   return this._wishesMovie$.asObservable();
-  // }
 
   postWishMovieToApi(postWishMovie: any) {
     return this.http.post(this.apiBack+this.apiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
@@ -72,24 +55,50 @@ export class WishService {
     return this._wishesTv$.asObservable();
   }
 
-  postWishTvToApi(postWishTv: any) {
-    return this.http.post(this.apiBack+this.apiPostWishTv, postWishTv, {observe: 'response', responseType: 'text'});
+  postAllWishEpisodesToApi(idTv:number) {
+    let data = {idTv:idTv}
+    return this.http.post(this.apiBack+this.apiPostWishTv, data);
   }
 
+  deleteAllWishEpisodesToApi(idTv:number) {
+    let data = {idTv:idTv}
+    return this.http.delete(this.apiBack+this.apiDelWishTv, {body: data});
+  }
+
+  postAllWishEpisodesOfSeasonToApi(idTv: number, idSeason: number) {
+    let data = {idTv: idTv, idSeason: idSeason}
+    return this.http.post(this.apiBack+this.apiPostWishEpisodeOfSeason, data);
+  }
+
+  deleteAllWishEpisodesOfSeasonToApi(idTv: number, idSeason: number) {
+    let data = {idTv: idTv, idSeason: idSeason}
+    return this.http.delete(this.apiBack+this.apiDeleteWishEpisodeOfSeason, {body: data});
+  }
+
+  postWishEpisodeToApi(idTv:number, idSeason: number, idEpisode: number) {
+    let data = {idTv:idTv, idSeason:idSeason, idEpisode:idEpisode}
+    return this.http.post(this.apiBack+this.apiPostWishEpisode, data);
+  }
+
+  deleteWishEpisodeToApi(idTv:number, idSeason: number, idEpisode: number) {
+    let data = {idTv:idTv, idSeason:idSeason, idEpisode:idEpisode}
+    return this.http.delete(this.apiBack+this.apiDeleteWishEpisode, {body: data} );
+  }
+
+
+
   getWishIdTv(){ 
-    return this.http.get(this.apiBack + "/tv/wishlist");
-      // .subscribe( (serie:DetailTvTmdbModel) => {
-      //   console.log("WishList récupéré de MMA : ");
-      //   console.log(serie);
-          
-      //     for (let i = 1; i <= serie.nbSeasons; i++ ) {
-      //       console.log("saison récupérée de TMDB : ");
-      //       this.getSeasonDetailsFromApiTmdb(idTv, i)
-      //     }
-      //     this._serieDetail$.next(serie);
-          
-      //   });
-    
+    // renvoie la liste des séries qui ont un WishId
+    return this.http.get(this.apiBack + "/tv/wishlist");    
+  }
+
+  getWatchIdTv(){ 
+    // renvoie la liste des séries qui ont un WatchId
+    return this.http.get(this.apiBack + "/tv/watchlist");    
+  }
+
+  getAllWishId(){
+    return this.http.get(this.apiBack + "/wish/episode/all"); 
   }
 
 

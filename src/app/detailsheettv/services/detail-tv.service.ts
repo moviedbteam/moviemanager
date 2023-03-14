@@ -70,8 +70,6 @@ export class DetailTvService {
       // console.log("getSeasonDetailsFromApiTmdb > http.get() ");
       this.http.get(this.apiSerieTmdb + idTv + "/season/" + seasonNum, {params})
       .pipe(
-        // map( (season:any) => 
-        //   new DetailSeasonTmdbModel(season))
         map((seasons:any) => {
           if (!Array.isArray(seasons)) {
             seasons = [seasons];

@@ -25,6 +25,7 @@ export class OverviewRecoTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr
+        console.log(this.recoTvs);
         }
     );
   }

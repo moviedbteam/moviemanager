@@ -10,7 +10,7 @@ import { TmdbMovie } from '../models/tmdb-movie.model';
 })
 export class MovieService {
 
-  detailMovie:any = {};
+  movie:any = {};
   private indexPage:number = 1;
 
   /// REQUETES TMDB ///
@@ -104,8 +104,8 @@ export class MovieService {
       map((apiResponse:any)=> new Movie(apiResponse))
     )
     .subscribe( (movie:Movie) => {
-      this.detailMovie = movie;
-      this._movieDetail$.next(this.detailMovie)
+      this.movie = movie;
+      this._movieDetail$.next(this.movie)
     });
   }
   getTmdbDetailsFromApi(id:number):void{
@@ -120,8 +120,8 @@ export class MovieService {
       map((apiResponse:any)=> new TmdbMovie(apiResponse))
     )
     .subscribe( (movie:TmdbMovie) => {
-      this.detailMovie = movie;
-      this._movieDetail$.next(this.detailMovie)
+      this.movie = movie;
+      this._movieDetail$.next(this.movie)
     });
   }
   getMovieDetail$ ():Observable<Movie> {
@@ -151,12 +151,13 @@ export class MovieService {
     return this._wishesMovie$.asObservable();
   }
   delWishMovie() {
-    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.detailMovie.idWish, {observe: 'response', responseType: 'text'})
+    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.movie.idWish, {observe: 'response', responseType: 'text'})
     .subscribe({
       next: (response:any) => {
+        console.log(response.status)
         if(response.status == "200") {
-          this.detailMovie.idWish = 0;
-          this._movieDetail$.next(this.detailMovie);
+          this.movie.idWish = 0;
+          this._movieDetail$.next(this.movie);
         }
       },
       error: error => console.error(error)
@@ -186,96 +187,16 @@ export class MovieService {
     return this._watchesMovie$.asObservable();
   }
   delWatchMovie() {
-    this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.detailMovie.idWatch, {observe: 'response', responseType: 'text'} )
+    this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.movie.idWatch, {observe: 'response', responseType: 'text'} )
     .subscribe({
       next: (response:any) => {
+        console.log(response.status)
         if(response.status == "200") {
-          this.detailMovie.idWatch = 0;
-          this._movieDetail$.next(this.detailMovie);
+          this.movie.idWatch = 0;
+          this._movieDetail$.next(this.movie);
         }
       },
       error: error => console.error(error)
     });
   }
 }
-
-
-
-
-// A SUPPRIMER ?
-  // private _tmdbMovieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
-  // private _movieDetailWish$:Subject<any> = new Subject();
-  // private _movieDetailWatch$:Subject<any> = new Subject();
-
-  ///////////////////////////// A SUPPRIMER ???
-  // getDetailsFromApi(id:number):void{
-  //   let urlApi = this.apiTmdb+this.apiTmdbGetDetailsFromApi;
-  //   let apiKey = this.apiKey;
-  //   let params = new HttpParams()
-  //   .set('api_key', apiKey)
-  //   .set('language', 'fr')
-    
-  //   console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
-  //   this.http.get(urlApi+id, {params})
-    
-  //   .pipe(
-  //     map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
-  //   )
-
-  //   .subscribe( (movie:TmdbDetailMovie) => {
-  //     this._tmdbMovieDetail$.next(movie)
-  //   });
-  // }
-  // getTmdbMovieDetail$ ():Observable<TmdbDetailMovie> {
-  //   return this._tmdbMovieDetail$.asObservable();
-  // }
-
-
-
-  /// service pour overview A SUPPRIMER ?
-  // getDetailsWishFromApi(id:number):void{
-  //   let urlApi = this.apiTmdb+this.apiTmdbGetDetailsFromApi;
-  //   let apiKey = this.apiKey;
-  //   let params = new HttpParams()
-  //   .set('api_key', apiKey)
-  //   .set('language', 'fr')
-    
-  //   console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
-  //   this.http.get(urlApi+id, {params})
-    
-  //   .pipe(
-  //     map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
-  //   )
-
-  //   .subscribe( (movie:TmdbDetailMovie) => {
-  //     this._movieDetailWish$.next(movie)
-  //   })
-  //   ;
-  // }
-  // getMovieWishDetail$ ():Observable<TmdbDetailMovie> {
-  //   return this._movieDetailWish$.asObservable();
-  // }
-
-  /// service pour overview A SUPPRIMER ?
-  // getDetailsWatchFromApi(id:number):void{
-  //   let urlApi = this.apiTmdb+this.apiTmdbGetDetailsFromApi;
-  //   let apiKey = this.apiKey;
-  //   let params = new HttpParams()
-  //   .set('api_key', apiKey)
-  //   .set('language', 'fr')
-    
-  //   console.log (urlApi+id+'?api_key='+apiKey+'&language=fr');
-  //   this.http.get(urlApi+id, {params})
-    
-  //   .pipe(
-  //     map((apiResponse:any)=> new TmdbDetailMovie(apiResponse) )
-  //   )
-
-  //   .subscribe( (movie:TmdbDetailMovie) => {
-  //     this._movieDetailWatch$.next(movie)
-  //   })
-  //   ;
-  // }
-  // getMovieWatchDetail$ ():Observable<TmdbDetailMovie> {
-  //   return this._movieDetailWatch$.asObservable();
-  // }

@@ -26,11 +26,11 @@
             <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
 
-        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marquer comme vu" (click)="callTest('WATCH')">
-            <span><i class="fa-solid fa-check"></i></span>Watch
+        <button [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton" (click)="updateStatusWatchButton()">
+            <span><i class="fa-solid fa-eye"></i></span>Watch
         </button>
         
-        <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
+        <!-- <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
         <p>
             <i class="fa-solid fa-star fa-md"></i>
             <i class="fa-solid fa-star fa-md"></i>
@@ -48,7 +48,7 @@
             <i class="fa-regular fa-face-laugh fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
             <i class="fa-regular fa-face-grin-stars fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
             <i class="fa-regular fa-face-grin-hearts fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
-        </p>
+        </p> -->
 
         <h2>Popularité: <span>{{serie?.popularity}}</span></h2>
         
@@ -86,7 +86,17 @@
             <div *ngFor="let season of detailSeasons" class="accordion-item">
               <h2 class="accordion-header" id="heading{{season.season_number}}">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.season_number" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.season_number">
-                    Saison {{season.season_number}}
+                    {{season.season_number == 0 ? "Episodes spéciaux":"Saison "+season.season_number }}
+                    <div class="menu-saison">
+                        <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconSeasonOff" 
+                            [title]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                            style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)">
+                        </i>
+                        <i [class]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? this.mapWatchSeason.get(season.idTmdb)?.cssIconOn:_watchStatusIconSeasonOff" 
+                            [title]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                            style="color: #0D6EFD;" (click)="updateStatusWatchSeason(season.idTmdb)">
+                        </i>
+                    </div>
                 </button>
               </h2>
               <div id="collapse{{season.season_number}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + season.season_number" data-bs-parent="#accordion-saison">
@@ -100,8 +110,14 @@
                         </div>
                         <div>
                             <div class="mini-menu">
-                                <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconOff" style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)"></i>
-                                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH')"></i>
+                                <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconSeasonOff" 
+                                    [title]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                                    style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)">
+                                </i>
+                                <i [class]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? this.mapWatchSeason.get(season.idTmdb)?.cssIconOn:_watchStatusIconSeasonOff" 
+                                    [title]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                                    style="color: #0D6EFD; margin-right: 10px;" (click)="updateStatusWatchSeason(season.idTmdb)">
+                                </i>
                             </div>                     
                             <p><strong>Date de sortie: </strong> {{season.air_date | date:'dd-MM-yyyy' }}</p>
                             <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
@@ -127,8 +143,16 @@
                                 <td>{{ episode.runtime?episode.runtime:"-" }}</td>
                                 <td>{{ episode.air_date?(episode.air_date | date:"dd-MM-yyyy"):"-"}}</td>
                                 <td>
-                                    <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconOff" style="color: yellow; margin-right: 10px;" (click)="updateStatusWishEpisode(season.idTmdb, episode.id)"></i>
-                                    <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH')"></i>
+                                    <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconEpisodeOff" 
+                                        [title]="this.mapWishEpisode.get(episode.id)?.cssIconOn? _wishTitleIconEpisodeOn:_wishTitleIconEpisodeOff"
+                                        style="color: yellow; margin-right: 10px;" 
+                                        (click)="updateStatusWishEpisode(season.idTmdb, episode.id)">
+                                    </i>
+                                    <i [class]="this.mapWatchEpisode.get(episode.id)?.cssIconOn?this.mapWatchEpisode.get(episode.id)?.cssIconOn:_watchStatusIconEpisodeOff" 
+                                    [title]="this.mapWatchEpisode.get(episode.id)?.cssIconOn? _watchTitleIconEpisodeOn:_watchTitleIconEpisodeOff"
+                                    style="color: #0D6EFD; margin-right: 10px;" 
+                                    (click)="updateStatusWatchEpisode(season.idTmdb, episode.id)">
+                                </i>
                                 </td>
                               </tr>
                             </tbody>

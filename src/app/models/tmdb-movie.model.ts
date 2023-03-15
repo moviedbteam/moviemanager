@@ -1,4 +1,4 @@
-export class TmdbDetailMovie {
+export class TmdbMovie {
 
   idMovie: number;
   title: string;

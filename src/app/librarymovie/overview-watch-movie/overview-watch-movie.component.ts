@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BackDetailMovie } from 'src/app/models/back-detail-movie.model';
-import { DetailMovieService } from 'src/app/services/detail-movie.service';
+import { Movie } from 'src/app/models/movie.model';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-overview-watch-movie',
@@ -9,18 +9,18 @@ import { DetailMovieService } from 'src/app/services/detail-movie.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class OverviewWatchMovieComponent {
-  watchMovies:Array<BackDetailMovie> = [] ;
+  watchMovies:Array<Movie> = [] ;
   subscriptionWatchesMovie:any;
   constructor(
-    public detailMovieSvc:DetailMovieService,
+    public movieSvc:MovieService,
   ) {}
 
   ngOnInit() {
-    this.subscriptionWatchesMovie = this.detailMovieSvc.getWatchesMovie$()
+    this.subscriptionWatchesMovie = this.movieSvc.getWatchesMovie$()
       .subscribe(
-        (watchesArr:BackDetailMovie[]) => {
+        (watchesArr:Movie[]) => {
           if(watchesArr.length===0) {
-            this.detailMovieSvc.getWatchMoviesFromApi();
+            this.movieSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
           console.log(this.watchMovies);

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
-import { DetailMovieService } from '../services/detail-movie.service';
+import { MovieService } from '../services/movie.service';
 // import { WishService } from '../services/wish.service';
 // import { WatchService } from '../services/watch.service';
 import { AlertService } from '../services/alert.service';
@@ -37,7 +37,7 @@ export class DetailsheetmovieComponent {
 
   constructor(
       private route:ActivatedRoute,
-      public detailMovieSvc:DetailMovieService,
+      public detailMovieSvc:MovieService,
       // private wishSvc:WishesMovieService,
       // private watchSvc:WatchesMovieService,
       private _location:Location,

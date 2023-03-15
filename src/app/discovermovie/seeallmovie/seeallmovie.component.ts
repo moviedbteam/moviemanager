@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BackDetailMovie } from 'src/app/models/back-detail-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
-import { DetailMovieService } from 'src/app/services/detail-movie.service';
+import { MovieService } from 'src/app/services/movie.service';
+import { Movie } from 'src/app/models/movie.model';
 
 @Component({
   selector: 'app-seeallmovie',
@@ -10,21 +10,21 @@ import { DetailMovieService } from 'src/app/services/detail-movie.service';
 })
 export class SeeallmovieComponent {
 
-  movies:Array<BackDetailMovie> =[];
+  movies:Array<Movie> =[];
   subscription:any;
 
   constructor(
-    public detailMovieSvc:DetailMovieService,
+    private movieSvc:MovieService,
     private alerteService:AlertService
     
     ) {console.log(this);}
 
   ngOnInit() {
-    this.subscription = this.detailMovieSvc.getMovies$()
+    this.subscription = this.movieSvc.getMovies$()
       .subscribe(
-        (moviesArr:BackDetailMovie[]) => {
+        (moviesArr:Movie[]) => {
           if(moviesArr.length===0) {
-            this.detailMovieSvc.getMoviesFromApi();
+            this.movieSvc.getMoviesFromApi();
           }
           this.movies = moviesArr
           console.log(this.movies);

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BackDetailMovie } from 'src/app/models/back-detail-movie.model';
-import { DetailMovieService } from 'src/app/services/detail-movie.service';
+import { Movie } from 'src/app/models/movie.model';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-searchbarmovie',
@@ -9,24 +9,22 @@ import { DetailMovieService } from 'src/app/services/detail-movie.service';
 })
 export class SearchbarmovieComponent {
 
-  searchedMovies:BackDetailMovie[] =[];
+  searchedMovies:Movie[] =[];
 
-  constructor(
-    public detailMovieSvc:DetailMovieService,
-    ) {  }
+  constructor(private movieSvc:MovieService) {  }
 
   ngOnInit() {
-    this.detailMovieSvc.getSearchedMovies$()
-    .subscribe ( (foundMovies:BackDetailMovie[] ) => this.searchedMovies = foundMovies  );
+    this.movieSvc.getSearchedMovies$()
+    .subscribe ( (foundMovies:Movie[] ) => this.searchedMovies = foundMovies  );
   }
 
   onKeyupInput(userSearch:string) {
     console.log(userSearch);
     if (userSearch.length == 0) {
-      this.detailMovieSvc.setSearchMovies$([]);
+      this.movieSvc.setSearchMovies$([]);
     }
     else {
-      this.detailMovieSvc.searchMoviesFromApi(userSearch);
+      this.movieSvc.searchMoviesFromApi(userSearch);
     }
   }
 
@@ -35,7 +33,7 @@ export class SearchbarmovieComponent {
   }
 
   ngOnDestroy() {
-    this.detailMovieSvc.setSearchMovies$([]);
+    this.movieSvc.setSearchMovies$([]);
   }
 
 }

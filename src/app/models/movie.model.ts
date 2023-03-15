@@ -1,4 +1,4 @@
-export class BackDetailMovie {
+export class Movie {
 
   idMovie: number;
   title: string;

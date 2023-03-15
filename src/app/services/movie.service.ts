@@ -2,13 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { BackDetailMovie } from '../models/back-detail-movie.model';
-import { TmdbDetailMovie } from '../models/tmdb-detail-movie.model';
+import { Movie } from '../models/movie.model';
+import { TmdbMovie } from '../models/tmdb-movie.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DetailMovieService {
+export class MovieService {
 
   detailMovie:any = {};
   private indexPage:number = 1;
@@ -52,15 +52,15 @@ export class DetailMovieService {
     this.http.get(urlApi, {params})
     .pipe(
       map((apiResponse:any)=> {
-        return apiResponse.results.map( (movie: any) => new TmdbDetailMovie(movie) )
+        return apiResponse.results.map( (movie: any) => new TmdbMovie(movie) )
       })
     )
-    .subscribe( (foundMovies:TmdbDetailMovie[]) => this._searchedMovies$.next(foundMovies) );
+    .subscribe( (foundMovies:TmdbMovie[]) => this._searchedMovies$.next(foundMovies) );
   }
-  getSearchedMovies$ ():Observable<TmdbDetailMovie[]> {
+  getSearchedMovies$ ():Observable<TmdbMovie[]> {
     return this._searchedMovies$.asObservable();
   }
-  setSearchMovies$ (movies:TmdbDetailMovie[]):void {
+  setSearchMovies$ (movies:TmdbMovie[]):void {
     this._searchedMovies$.next(movies);
   }
 
@@ -80,12 +80,12 @@ export class DetailMovieService {
         console.log(apiResponse)
         return apiResponse.results.map( (movie: any) => {
           console.log(movie);
-          return new TmdbDetailMovie(movie) ;
+          return new TmdbMovie(movie) ;
           
         })
       })
     )
-    .subscribe( (movies:TmdbDetailMovie[]) => {
+    .subscribe( (movies:TmdbMovie[]) => {
       let actualMovies = this._movies$.getValue();
       let allMovies:any = [...actualMovies, ...movies];
     
@@ -93,7 +93,7 @@ export class DetailMovieService {
     });
     this.indexPage++;
   }
-  getMovies$ ():Observable<TmdbDetailMovie[]> {
+  getMovies$ ():Observable<TmdbMovie[]> {
     return this._movies$.asObservable();
   }
 
@@ -101,9 +101,9 @@ export class DetailMovieService {
   getBackDetailsFromApi(id:number):void{
     this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+id)
     .pipe(
-      map((apiResponse:any)=> new BackDetailMovie(apiResponse))
+      map((apiResponse:any)=> new Movie(apiResponse))
     )
-    .subscribe( (movie:BackDetailMovie) => {
+    .subscribe( (movie:Movie) => {
       this.detailMovie = movie;
       this._movieDetail$.next(this.detailMovie)
     });
@@ -117,14 +117,14 @@ export class DetailMovieService {
 
     this.http.get(urlApi+id, {params})
     .pipe(
-      map((apiResponse:any)=> new TmdbDetailMovie(apiResponse))
+      map((apiResponse:any)=> new TmdbMovie(apiResponse))
     )
-    .subscribe( (movie:TmdbDetailMovie) => {
+    .subscribe( (movie:TmdbMovie) => {
       this.detailMovie = movie;
       this._movieDetail$.next(this.detailMovie)
     });
   }
-  getMovieDetail$ ():Observable<BackDetailMovie> {
+  getMovieDetail$ ():Observable<Movie> {
     return this._movieDetail$.asObservable();
   }
 
@@ -136,10 +136,10 @@ export class DetailMovieService {
     this.http.get(this.apiBack+this.apiGetWishMovies)
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (wish: any) => new BackDetailMovie(wish) )
+        return apiResponse.map( (wish: any) => new Movie(wish) )
       })
     )
-    .subscribe((wishes:BackDetailMovie[]) => {
+    .subscribe((wishes:Movie[]) => {
       let actualWishes = this._wishesMovie$.getValue();
       let allWishes:any = [...actualWishes, ...wishes]
       if (allWishes.length !== 0){
@@ -147,7 +147,7 @@ export class DetailMovieService {
       }
     });
   }
-  getWishesMovie$ ():Observable<BackDetailMovie[]> {
+  getWishesMovie$ ():Observable<Movie[]> {
     return this._wishesMovie$.asObservable();
   }
   delWishMovie() {
@@ -171,10 +171,10 @@ export class DetailMovieService {
     this.http.get(this.apiBack+this.apiGetWatchMovies)
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (watch: any) => new BackDetailMovie(watch) );
+        return apiResponse.map( (watch: any) => new Movie(watch) );
       })
     )
-    .subscribe((watches:BackDetailMovie[]) => {
+    .subscribe((watches:Movie[]) => {
       let actualWatches = this._watchesMovie$.getValue();
       let allWatches:any = [...actualWatches, ...watches]
       if (allWatches.length !== 0){ 
@@ -182,7 +182,7 @@ export class DetailMovieService {
       }
     });    
   }
-  getWatchesMovie$ ():Observable<BackDetailMovie[]> {
+  getWatchesMovie$ ():Observable<Movie[]> {
     return this._watchesMovie$.asObservable();
   }
   delWatchMovie() {

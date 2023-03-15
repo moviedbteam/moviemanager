@@ -29,7 +29,6 @@ export class SearchbartvComponent {
   }
 
   getImgFullUrl(urlFragment:string):string {
-    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
     return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 

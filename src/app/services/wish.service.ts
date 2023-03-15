@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-// import { WishesMovie } from '../librarymovie/models/wishes-movie.model';
 import { WishesTv } from '../librarytv/models/wishes-tv.model';
 
 @Injectable({
@@ -32,8 +31,6 @@ export class WishService {
   _apiDelWatchTv:string = '/watch/tv';
   _apiDeleteWatchEpisodeOfSeason:string = "/watch/season";
   _apiDeleteWatchEpisode:string = "/watch/episode"
-
-
 
   private _wishesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 

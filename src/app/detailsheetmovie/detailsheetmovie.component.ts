@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
-import { DetailMovieService } from './services/detail-movie.service';
-import { WishService } from '../services/wish.service';
-import { WatchService } from '../services/watch.service';
+import { MovieService } from '../services/movie.service';
 import { AlertService } from '../services/alert.service';
 
 @Component({
@@ -35,61 +33,75 @@ export class DetailsheetmovieComponent {
 
   constructor(
       private route:ActivatedRoute,
-      public detailMovieSvc:DetailMovieService,
-      private wishSvc:WishService,
-      private watchSvc:WatchService,
+      public movieSvc:MovieService,
       private _location:Location,
       private alerteSvc:AlertService
   ) {}
 
   ngOnInit() {
     this.idMovie = this.route.snapshot.params['id'];
-    this.detailMovieSvc.getBackDetailsFromApi(this.idMovie);
+    console.log(this.idMovie);
 
-    this.subscriptionDetailMovie = this.detailMovieSvc.getMovieDetail$()
+    this.movieSvc.getBackDetailsFromApi(this.idMovie);
+    
+    this.subscriptionDetailMovie = this.movieSvc.getMovieDetail$()
     .subscribe({
       next: (response:any)=>  {
-        console.log(response)
-        if (response.idWatch === null && response.idWish === null){
-          this.detailMovieSvc.getTmdbDetailsFromApi(this.idMovie);
-        }
+        if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
+        // INIT statut des boutons wish et watch
+        if (response.idWish > 0) this.setStatusWishButton(1) ;
+        if (response.idWatch > 0) this.setStatusWatchButton(1) ;
+        return;
       },
       error: error => console.error(error)
     });
-    
-
-    // MAJ du statut des boutons wish et watch
-
-
   }
 
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
       console.log("Appel à this.detailMovieSvc.delWishMovie()");
-      this.detailMovieSvc.delWishMovie();
-      this.wishStatusButton = "btn btn-outline-warning btn-sm";
-      this.wishTitleButton = "Ajouter à la Wish liste"
+      this.movieSvc.delWishMovie();
+      this.setStatusWishButton(0)
     }
     else {
       console.log("Appel à this.addWish()");
       this.addWish();
-      this.wishStatusButton = "btn btn-warning btn-sm";
-      this.wishTitleButton = "Supprimer de la Wish liste"
+      this.setStatusWishButton(1)
     }
   }
 
   updateStatusWatchButton() {
     if (this.watchStatusButton.includes('btn-primary')) {
       console.log("Appel à this.detailMovieSvc.delWatchMovie()");
-      this.detailMovieSvc.delWatchMovie();
-      this.watchStatusButton = "btn btn-outline-primary btn-sm";
-      this.watchTitleButton = "Ajouter à la Watch liste"
+      this.movieSvc.delWatchMovie();
+      this.setStatusWatchButton(0)
     }
     else {
       console.log("Appel à this.checkWatch()");
       this.checkWatch();
+      this.setStatusWatchButton(1)
+    }
+  }
+
+  setStatusWishButton(status: number) {
+    if (status) {
+      this.wishStatusButton = "btn btn-warning btn-sm";
+      this.wishTitleButton = "Supprimer de la Wish liste";
+    }
+    else {
+      this.wishStatusButton = "btn btn-outline-warning btn-sm";
+      this.wishTitleButton = "Ajouter à la Wish liste";
+    }
+  }
+
+  setStatusWatchButton(status: number) {
+    if (status) {
       this.watchStatusButton = "btn btn-primary btn-sm";
-      this.watchTitleButton = "Supprimer de la Watch liste"
+      this.watchTitleButton = "Supprimer de la Watch liste";
+    }
+    else {
+      this.watchStatusButton = "btn btn-outline-primary btn-sm";
+      this.watchTitleButton = "Ajouter à la Watch liste";
     }
   }
 
@@ -108,7 +120,7 @@ export class DetailsheetmovieComponent {
       idMovie:this.idMovie, 
     };
     
-    this.wishSvc.postWishMovieToApi(sendToApi)
+    this.movieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
@@ -130,7 +142,7 @@ export class DetailsheetmovieComponent {
     };
     console.log(sendToApi);
 
-    this.watchSvc.postWatchMovieToApi(sendToApi)
+    this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
         console.log(response)

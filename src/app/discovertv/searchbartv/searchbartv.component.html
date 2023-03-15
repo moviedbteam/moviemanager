@@ -3,17 +3,6 @@
 <ul *ngIf="searchedtvs.length>0"> 
   <li [routerLink]="['/detailtv', tv.id]" *ngFor="let tv of searchedtvs">
     <h5>{{tv?.titre}}</h5>
-    <!-- <div>
-      <div class="image-container col">
-        <img [src]="getImgFullUrl(tv.image_portrait)" alt="">
-      </div>
-      <div class="col">
-        <h6>Date de sortie</h6>  
-        <p>{{ tv?.date | date:'dd/MM/yyyy' }}</p>
-        <h6>Résumé</h6>
-        <p>{{tv?.resume}}</p>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col">
         <div class="image-container">

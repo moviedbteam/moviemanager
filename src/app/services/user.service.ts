@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { Router, RouterModule } from '@angular/router';
-import { CreateUserModel, CreateUserModelIam, UserModel } from '../shared/models/userlogin.model';
+import { CreateUserModel, CreateUserModelIam, UserModel } from '../models/userlogin.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

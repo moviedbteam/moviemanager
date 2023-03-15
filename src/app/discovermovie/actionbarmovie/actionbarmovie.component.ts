@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MovieService } from '../../services/movie.service';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-actionbarmovie',
@@ -10,9 +10,7 @@ export class ActionbarmovieComponent {
 
   movies:Array<any> =[];
 
-  constructor(private movieSvc:MovieService) {
-    console.log(this); 
-  }
+  constructor(public movieSvc:MovieService,) {}
 
   onClickSuivants() {
     this.movieSvc.getMoviesFromApi();

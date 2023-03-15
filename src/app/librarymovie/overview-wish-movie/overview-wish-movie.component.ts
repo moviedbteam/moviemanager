@@ -1,63 +1,39 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
+import { Movie } from 'src/app/models/movie.model';
 import { MovieService } from 'src/app/services/movie.service';
-import { WishesMovieService } from '../services/wishes-movie.service';
 
 @Component({
   selector: 'app-overview-wish-movie',
   templateUrl: './overview-wish-movie.component.html',
   styleUrls: ['./overview-wish-movie.component.css'],
   encapsulation: ViewEncapsulation.None,
-  // changeDetection: ChangeDetectionStrategy.OnPush,
-  // changeDetection: ChangeDetectionStrategy.Default,
 })
 export class OverviewWishMovieComponent {
-
-  wishMovies:Array<BackDetailMovie> = [];
+  wishMovies:Array<Movie> = [];
   subscriptionWishesMovie:any;
-
-  // moviesWish:Array<MovieModel>=[];
-  // subscriptionMovieWish:any;
-
   constructor(
-    private wishSvc:WishesMovieService,
-    public movieSvcWish:MovieService,
+    public movieSvc:MovieService,
   ){}
 
   ngOnInit() {
-    
-    this.subscriptionWishesMovie = this.wishSvc.getWishesMovie$()
+    this.subscriptionWishesMovie = this.movieSvc.getWishesMovie$()
     .subscribe(
-      (wishesArr:BackDetailMovie[]) => {        
+      (wishesArr:Movie[]) => {
           if(wishesArr.length===0) {
-            this.wishSvc.getWishMoviesFromApi();
+            this.movieSvc.getWishMoviesFromApi();
           }
           this.wishMovies = wishesArr
-          // for (let wish of this.wishMovies) {
-          //   this.movieSvcWish.getDetailsWishFromApi(wish.idMovie);
-          // }
+          console.log(this.wishMovies);
         }
       );
-    
-    // this.subscriptionMovieWish = this.movieSvcWish.getMovieWishDetail$()
-    //   .subscribe(
-    //     (movieWish:MovieModel) => {
-    //       if (movieWish.id ){
-    //         this.moviesWish.push(movieWish);
-    //       }
-    //     }
-    //   );
   }
 
   getImgFullUrl(urlFragment:string):string {
-    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
     return "https://image.tmdb.org/t/p/w500/"+urlFragment;
   }
 
   ngOnDestroy() {
     this.subscriptionWishesMovie.unsubscribe();
-    // this.subscriptionMovieWish.unsubscribe();
   }
-
 
 }

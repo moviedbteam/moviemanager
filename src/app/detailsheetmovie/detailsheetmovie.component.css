@@ -26,6 +26,11 @@ h2 {
     margin-right: 50px;
 }
 
+.affiche > img {
+    width: 300px;
+    height: 450px;
+}
+
 p.genre span{
     padding: 2px 5px;
     background: #fff;

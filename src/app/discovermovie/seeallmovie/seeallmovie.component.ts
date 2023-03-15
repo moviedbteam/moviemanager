@@ -17,7 +17,7 @@ export class SeeallmovieComponent {
     private movieSvc:MovieService,
     private alerteService:AlertService
     
-    ) {console.log(this);}
+    ) {}
 
   ngOnInit() {
     this.subscription = this.movieSvc.getMovies$()

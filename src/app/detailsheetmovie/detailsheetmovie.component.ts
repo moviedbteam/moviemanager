@@ -40,37 +40,33 @@ export class DetailsheetmovieComponent {
 
   ngOnInit() {
     this.idMovie = this.route.snapshot.params['id'];
-    this.movieSvc.getBackDetailsFromApi(this.idMovie);
+    console.log(this.idMovie);
 
+    this.movieSvc.getBackDetailsFromApi(this.idMovie);
+    
     this.subscriptionDetailMovie = this.movieSvc.getMovieDetail$()
     .subscribe({
       next: (response:any)=>  {
-        console.log(response)
-        if (response.idWatch === null && response.idWish === null){
-          this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
-        }
+        if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
+        // INIT statut des boutons wish et watch
+        if (response.idWish > 0) this.setStatusWishButton(1) ;
+        if (response.idWatch > 0) this.setStatusWatchButton(1) ;
+        return;
       },
       error: error => console.error(error)
     });
-    
-
-    // MAJ du statut des boutons wish et watch
-
-
   }
 
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
       console.log("Appel à this.detailMovieSvc.delWishMovie()");
       this.movieSvc.delWishMovie();
-      this.wishStatusButton = "btn btn-outline-warning btn-sm";
-      this.wishTitleButton = "Ajouter à la Wish liste"
+      this.setStatusWishButton(0)
     }
     else {
       console.log("Appel à this.addWish()");
       this.addWish();
-      this.wishStatusButton = "btn btn-warning btn-sm";
-      this.wishTitleButton = "Supprimer de la Wish liste"
+      this.setStatusWishButton(1)
     }
   }
 
@@ -78,14 +74,34 @@ export class DetailsheetmovieComponent {
     if (this.watchStatusButton.includes('btn-primary')) {
       console.log("Appel à this.detailMovieSvc.delWatchMovie()");
       this.movieSvc.delWatchMovie();
-      this.watchStatusButton = "btn btn-outline-primary btn-sm";
-      this.watchTitleButton = "Ajouter à la Watch liste"
+      this.setStatusWatchButton(0)
     }
     else {
       console.log("Appel à this.checkWatch()");
       this.checkWatch();
+      this.setStatusWatchButton(1)
+    }
+  }
+
+  setStatusWishButton(status: number) {
+    if (status) {
+      this.wishStatusButton = "btn btn-warning btn-sm";
+      this.wishTitleButton = "Supprimer de la Wish liste";
+    }
+    else {
+      this.wishStatusButton = "btn btn-outline-warning btn-sm";
+      this.wishTitleButton = "Ajouter à la Wish liste";
+    }
+  }
+
+  setStatusWatchButton(status: number) {
+    if (status) {
       this.watchStatusButton = "btn btn-primary btn-sm";
-      this.watchTitleButton = "Supprimer de la Watch liste"
+      this.watchTitleButton = "Supprimer de la Watch liste";
+    }
+    else {
+      this.watchStatusButton = "btn btn-outline-primary btn-sm";
+      this.watchTitleButton = "Ajouter à la Watch liste";
     }
   }
 

@@ -73,13 +73,13 @@ export class MovieService {
     .set('language', 'fr')
     .set('page', this.indexPage);
 
-    console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
+    // console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
     this.http.get(urlApi, {params})
     .pipe(
       map((apiResponse:any)=> {
-        console.log(apiResponse)
+        // console.log(apiResponse)
         return apiResponse.results.map( (movie: any) => {
-          console.log(movie);
+          // console.log(movie);
           return new TmdbMovie(movie) ;
           
         })

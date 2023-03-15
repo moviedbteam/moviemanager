@@ -10,9 +10,7 @@ export class ActionbarmovieComponent {
 
   movies:Array<any> =[];
 
-  constructor(public movieSvc:MovieService,) {
-    console.log(this); 
-  }
+  constructor(public movieSvc:MovieService,) {}
 
   onClickSuivants() {
     this.movieSvc.getMoviesFromApi();

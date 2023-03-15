@@ -16,20 +16,13 @@ export class DetailsheetmovieComponent {
   viewingRate:number = 0;
   viewingMood:number = 0;
 
-  // MAJ Statuts des boutons Wish et Watch
+  // Statuts des boutons Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
   wishTitleButton: string = "Ajouter à la Wish liste";
   watchStatusButton: string = "btn btn-outline-primary btn-sm";
   watchTitleButton: string = "Ajouter à la Watch liste";
 
-  subscriptionDetailMovie:any;
-
-  // *ngIf="movie.idWatch == 0" 
-  // "btn btn-primary btn-sm"
-  // "Marquer comme vu"
-  // "detailMovieSvc.delWatchMovie()"
-
-
+  subscription:any;
 
   constructor(
       private route:ActivatedRoute,
@@ -44,7 +37,7 @@ export class DetailsheetmovieComponent {
 
     this.movieSvc.getBackDetailsFromApi(this.idMovie);
     
-    this.subscriptionDetailMovie = this.movieSvc.getMovieDetail$()
+    this.subscription = this.movieSvc.getMovieDetail$()
     .subscribe({
       next: (response:any)=>  {
         if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
@@ -59,7 +52,7 @@ export class DetailsheetmovieComponent {
 
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
-      console.log("Appel à this.detailMovieSvc.delWishMovie()");
+      console.log("Appel à this.movieSvc.delWishMovie()");
       this.movieSvc.delWishMovie();
       this.setStatusWishButton(0)
     }
@@ -72,7 +65,7 @@ export class DetailsheetmovieComponent {
 
   updateStatusWatchButton() {
     if (this.watchStatusButton.includes('btn-primary')) {
-      console.log("Appel à this.detailMovieSvc.delWatchMovie()");
+      console.log("Appel à this.movieSvc.delWatchMovie()");
       this.movieSvc.delWatchMovie();
       this.setStatusWatchButton(0)
     }
@@ -114,9 +107,7 @@ export class DetailsheetmovieComponent {
   }
   
   addWish() {
-    // this.idCollection = 1313;
     let sendToApi = { 
-      // idCollection:this.idCollection,
       idMovie:this.idMovie, 
     };
     
@@ -131,21 +122,15 @@ export class DetailsheetmovieComponent {
   }
 
   checkWatch() {
-    this.viewingMood = 1;
-    this.viewingPlace = "cinéma";
-    this.viewingRate = 5;
     let sendToApi = { 
-      idMovie:this.idMovie, 
-      viewingPlace:this.viewingPlace, 
-      viewingRate:this.viewingRate, 
-      viewingMood:this.viewingMood
+      idMovie:this.idMovie
     };
     console.log(sendToApi);
 
     this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response)
+        console.log(response.status)
         if(response.status = "201") {
           
         }
@@ -155,7 +140,7 @@ export class DetailsheetmovieComponent {
   }
 
   ngOnDestroy() {
-    this.subscriptionDetailMovie.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

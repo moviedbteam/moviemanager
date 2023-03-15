@@ -50,7 +50,7 @@ export class DetailTvService {
       console.log("serie récupéré de TMDB : ");
       console.log(serie);
       
-      for (let i = 1; i <= serie.nbSeasons; i++ ) {
+      for (let i = 0; i <= serie.nbSeasons; i++ ) {
         console.log("saison récupérée de TMDB : ");
         this.getSeasonDetailsFromApiTmdb(idTv, i)
       }

@@ -88,6 +88,12 @@ div>button>span>i {
     width: 800px;
 }
 
+.menu-saison {
+    /* border: 1px solid white; */
+    text-align: right;
+    margin-left: 20px;
+}
+
 .mini-menu {
     margin-bottom: 10px;
 }

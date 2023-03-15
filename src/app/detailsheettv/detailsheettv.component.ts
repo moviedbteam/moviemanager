@@ -14,8 +14,21 @@ interface wishEpisodeInterface {
   cssIconOn: string;
   cssIconTitleOn: string;
   idWish: number;
+  seasonId: number;
 }
 interface wishSeasonInterface {
+  cssIconOn: string;
+  cssIconTitleOn: string;
+  seasonNumber: number;
+}
+
+interface watchEpisodeInterface {
+  cssIconOn: string;
+  cssIconTitleOn: string;
+  idWatch: number;
+  seasonId: number;
+}
+interface watchSeasonInterface {
   cssIconOn: string;
   cssIconTitleOn: string;
   seasonNumber: number;
@@ -39,32 +52,41 @@ export class DetailsheettvComponent {
   mapWishEpisode: Map<number,wishEpisodeInterface> = new Map<number,wishEpisodeInterface>(); // tous les episodes wish
   mapWishSeason: Map<number,wishSeasonInterface> = new Map<number,wishSeasonInterface>(); // toutes les saisons wish
   
-  mapWatchEpisode: Map<number,wishEpisodeInterface> = new Map<number,wishEpisodeInterface>(); // tous les episodes watch
-  mapWatchSeason: Map<number,wishEpisodeInterface> = new Map<number,wishEpisodeInterface>(); // tous les saisons watch
+  mapWatchEpisode: Map<number,watchEpisodeInterface> = new Map<number,watchEpisodeInterface>(); // tous les episodes watch
+  mapWatchSeason: Map<number,watchSeasonInterface> = new Map<number,watchSeasonInterface>(); // tous les saisons watch
 
   
   // Statuts des gros boutons généraux Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
-  wishTitleButton: string = "Ajouter tous les épisodes à la Wish liste";
+  wishTitleButton: string = "Ajouter tous les épisodes de la série à la Wish liste";
 
   watchStatusButton: string = "btn btn-primary btn-sm";
-  watchTitleButton: string = "Ajouter tous les épisodes à la Watch liste";
+  watchTitleButton: string = "Marquer tous les épisodes de la série comme 'Vus'";
 
   // Statut des icônes Wish de la saison
-  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
-  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
-  _wishTitleIconOn: string = "Supprimer de la Wish liste"
-  _wishTitleIconOff: string = "Ajouter à la Wish liste"
+  _wishStatusIconSeasonOn: string = "fa-solid fa-bookmark fa-lg"
+  _wishStatusIconSeasonOff: string = "fa-regular fa-bookmark fa-lg"
+  _wishTitleIconSeasonOn: string = "Supprimer tous les épisodes de cette saison de la Wish liste"
+  _wishTitleIconSeasonOff: string = "Ajouter tous les épisodes de cette saison à la Wish liste"
 
-    // Statut des icônes Watch de la saison
-    _watchStatusIconOn: string = "fa-sharp fa-solid fa-circle-check fa-lg"
-    _watchStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
-    _watchTitleIconOn: string = "Restaurer en Non Vu"
-    _watchTitleIconOff: string = "Ajouter comme Vu"
+  // Statut des icônes Wish d'un épisode'
+  _wishStatusIconEpisodeOn: string = "fa-solid fa-bookmark fa-lg"
+  _wishStatusIconEpisodeOff: string = "fa-regular fa-bookmark fa-lg"
+  _wishTitleIconEpisodeOn: string = "Supprimer cet épisode la Wish liste"
+  _wishTitleIconEpisodeOff: string = "Ajouter cet épisode la Wish liste"
 
+  // Statut des icônes Watch de la saison
+  _watchStatusIconSeasonOn: string = "fa-solid fa-eye fa-lg"
+  _watchStatusIconSeasonOff: string = "fa-regular fa-eye-slash fa-lg"
+  _watchTitleIconSeasonOn: string = "Restaurer tous les épisodes de cette saison en 'Non Vu'"
+  _watchTitleIconSeasonOff: string = "Marquer tous les épisodes de cette saison comme 'Vus'"
 
+  // Statut des icônes Watch d'un épisode'
+  _watchStatusIconEpisodeOn: string = "fa-sharp fa-solid fa-eye fa-lg"
+  _watchStatusIconEpisodeOff: string = "fa-regular fa-eye-slash fa-lg"
+  _watchTitleIconEpisodeOn: string = "Restaurer l'episode 'Non Vu'"
+  _watchTitleIconEpisodeOff: string = "Marquer l'episode' comme 'Vu'"
 
-  
   
   // Pas utilisé
   idEpisode:number = 0;
@@ -133,14 +155,15 @@ export class DetailsheettvComponent {
           // on ne prend que les wish de la série
           if(wish.idTv == this.idSerie) {
             this.mapWishEpisode.set(wish.idEpisode, {
-              cssIconOn: this._wishStatusIconOn,
-              cssIconTitleOn: this._wishTitleIconOn,
-              idWish: wish.idWish
+              cssIconOn: this._wishStatusIconEpisodeOn,
+              cssIconTitleOn: this._wishTitleIconEpisodeOn,
+              idWish: wish.idWish,
+              seasonId: wish.idSeason
             })
             // MAJ de la map des saisons
             this.mapWishSeason.set(wish.idSeason, {
-              cssIconOn: this._wishStatusIconOn,
-              cssIconTitleOn: this._wishTitleIconOn,
+              cssIconOn: this._wishStatusIconSeasonOn,
+              cssIconTitleOn: this._wishTitleIconSeasonOn,
               seasonNumber: wish.seasonNumber
             })
           }
@@ -150,10 +173,39 @@ export class DetailsheettvComponent {
       error: error => console.error(error)
     })
     
+    // API pour récupérer tous les episodes Watch
+    // https://redline.fr.nf/api/v1/watch/episode/all
+    this.wishSvc.getAllWatchId().subscribe({
+      next: (response:any) => {
+        console.log("buildMapBtnEpisodes > getAllWatchId ", response)
+        for (let watch of response) {
+          // on ne prend que les watch de la série
+          if(watch.idTv == this.idSerie) {
+            this.mapWatchEpisode.set(watch.idEpisode, {
+              cssIconOn: this._watchStatusIconEpisodeOn,
+              cssIconTitleOn: this._watchTitleIconEpisodeOn,
+              idWatch: watch.idWatch,
+              seasonId: watch.idSeason
+            })
+            // MAJ de la map des saisons
+            this.mapWatchSeason.set(watch.idSeason, {
+              cssIconOn: this._watchStatusIconSeasonOn,
+              cssIconTitleOn: this._watchTitleIconSeasonOn,
+              seasonNumber: watch.seasonNumber
+            })
+          }
+        }
+        console.log("this.mapWishEpisode = ", this.mapWishEpisode)
+        console.log("this.mapWatchEpisode = ", this.mapWatchEpisode)
+        console.log("this.mapWatchSeason = ", this.mapWatchSeason)
+      },
+      error: error => console.error(error)
+    })
+    
   }
 
   callTest(str:string) {
-    this.alerteService.showAlert("Ajouté aux " + str + "!!!");
+    this.alerteService.showAlert("TEST " + str + "!!!");
   }
 
   goBack() {
@@ -195,7 +247,7 @@ export class DetailsheettvComponent {
         }
       }
       console.log("this.idWatchSerie = " + this.idWatchSerie)
-      // this.initStatusWishButton();
+      this.initStatusWatchButton();
     }).catch((error: any) => {
       console.error(error);
     });
@@ -217,17 +269,20 @@ export class DetailsheettvComponent {
         for (let wish of response) {
           // MAJ de la map des episodes
           this.mapWishEpisode.set(wish.idEpisode, {
-            cssIconOn: this._wishStatusIconOn,
-            cssIconTitleOn: this._wishTitleIconOn,
-            idWish: wish.idWish
+            cssIconOn: this._wishStatusIconEpisodeOn,
+            cssIconTitleOn: this._wishTitleIconEpisodeOn,
+            idWish: wish.idWish,
+            seasonId: wish.idSeason
           })
           
           // MAJ de la map des saisons
           this.mapWishSeason.set(wish.idSeason, {
-            cssIconOn: this._wishStatusIconOn,
-            cssIconTitleOn: this._wishTitleIconOn,
+            cssIconOn: this._wishStatusIconSeasonOn,
+            cssIconTitleOn: this._wishTitleIconSeasonOn,
             seasonNumber: wish.seasonNumber
           })
+
+          this.alerteService.showAlert("Tous les épisodes de la série ont été ajoutés à la Wish liste")
         }
 
       },
@@ -249,6 +304,8 @@ export class DetailsheettvComponent {
           this.mapWishEpisode.clear();
           // MAJ de la map des saisons
           this.mapWishSeason.clear();
+
+          this.alerteService.showAlert("Tous les épisodes de la série ont été supprimés de la Wish liste")
         
       },
       error: error => console.error(error)
@@ -271,15 +328,16 @@ export class DetailsheettvComponent {
         for (let wish of response) {
             // MAJ de la map des episodes
             this.mapWishEpisode.set(wish.idEpisode, {
-              cssIconOn: this._wishStatusIconOn,
-              cssIconTitleOn: this._wishTitleIconOn,
-              idWish: wish.idWish
+              cssIconOn: this._wishStatusIconEpisodeOn,
+              cssIconTitleOn: this._wishTitleIconEpisodeOn,
+              idWish: wish.idWish,
+              seasonId: wish.idSeason
             })
 
             // MAJ de la map des saisons
             this.mapWishSeason.set(wish.idSeason, {
-              cssIconOn: this._wishStatusIconOn,
-              cssIconTitleOn: this._wishTitleIconOn,
+              cssIconOn: this._wishStatusIconSeasonOn,
+              cssIconTitleOn: this._wishTitleIconSeasonOn,
               seasonNumber: wish.seasonNumber
             })
 
@@ -291,6 +349,8 @@ export class DetailsheettvComponent {
             else {
               this.setStatusWishButton(0);
             }
+
+            this.alerteService.showAlert("Tous les épisodes de cette saison ont été ajoutés à la Wish liste");
         }
       },
       error: error => console.error(error)
@@ -325,6 +385,8 @@ export class DetailsheettvComponent {
           else {
             this.setStatusWishButton(0);
           }
+
+          this.alerteService.showAlert("Tous les épisodes de cette saison ont été supprimés de la Wish liste");
         }
       },
       error: error => console.error(error)
@@ -344,15 +406,18 @@ export class DetailsheettvComponent {
         console.log("addWishEpisode > wishSvc.postWishEpisodeToApi", wish)
           // MAJ de la map des episodes
           this.mapWishEpisode.set(wish.idEpisode, {
-            cssIconOn: this._wishStatusIconOn,
-            cssIconTitleOn: this._wishTitleIconOn,
-            idWish: wish.idWish
+            cssIconOn: this._wishStatusIconEpisodeOn,
+            cssIconTitleOn: this._wishTitleIconEpisodeOn,
+            idWish: wish.idWish,
+            seasonId: wish.idSeason
           })
+        console.log("mapWishEpisode ", this.mapWishEpisode)
+
           
           // MAJ de la map des saisons
           this.mapWishSeason.set(wish.idSeason, {
-            cssIconOn: this._wishStatusIconOn,
-            cssIconTitleOn: this._wishTitleIconOn,
+            cssIconOn: this._wishStatusIconSeasonOn,
+            cssIconTitleOn: this._wishTitleIconSeasonOn,
             seasonNumber: wish.seasonNumber
           })
 
@@ -365,6 +430,254 @@ export class DetailsheettvComponent {
             this.setStatusWishButton(0);
           }          
         
+          this.alerteService.showAlert("L'épisode a été ajouté à la Wish liste");
+
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+  delWishEpisode(idSeason: number, idEpisode: number) {
+
+    // Récupération de l'IdWish à supprimer
+    let wishIdToDelete:any;
+    if (this.mapWishEpisode.has(idEpisode)) {
+      wishIdToDelete = this.mapWishEpisode.get(idEpisode)?.idWish 
+      console.log("wishIdToDelete = " + wishIdToDelete)
+    }
+
+    this.wishSvc.deleteWishEpisodeToApi(wishIdToDelete)
+    .subscribe({
+      next: (wish:any)=> {
+        console.log("addWishEpisode > wishSvc.deleteWishEpisodeToApi", wish)
+        console.log("mapWishSeason au début de deleteWishEpisodeToApi", this.mapWishSeason)
+
+        // MAJ de la map des episodes
+        this.mapWishEpisode.delete(idEpisode)  
+        console.log("idEpisode " + idEpisode + " effacé de mapWishEpisode")
+        console.log("mapWishEpisode ", this.mapWishEpisode)
+          
+          
+          // MAJ de la map des saisons: s'il n'y a plus d'épisode de la saison => on supprime la saison de mapWatchSeason          
+          // const hasSeason = [...this.mapWishEpisode.values()].some((wishEpisode) => wishEpisode.seasonNumber === idSeason);
+          // if (!hasSeason) {
+          //   this.mapWishSeason.delete(idSeason)
+          //   console.log("idSeason " + idSeason + " effacé de mapWishSeason")
+          //   console.log("mapWishSeason ", this.mapWishSeason)
+          // }
+
+
+          let deleteIdSeason = true;
+          console.log("mapWishSeason au début de deleteWishEpisodeToApi avant : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishSeason)
+          console.log("mapWishEpisode au début de deleteWishEpisodeToApi avant : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishEpisode)
+          for (let wishEpisode of this.mapWishEpisode.entries()) {
+            console.log("wishEpisode[1].seasonId = " + wishEpisode[1].seasonId)
+            console.log("idSeason = " + idSeason)
+            if(wishEpisode[1].seasonId == idSeason) {
+              console.log("On est dans le : if(wishEpisode[0] == idSeason)")
+              deleteIdSeason = false;
+              break;
+            }
+          }
+          console.log("Après le for deleteIdSeason = " + deleteIdSeason)
+          console.log("mapWishSeason au début de deleteWishEpisodeToApi après : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishSeason)
+          console.log("mapWishEpisode au début de deleteWishEpisodeToApi après : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishEpisode)
+          
+          if(deleteIdSeason) {
+            this.mapWishSeason.delete(idSeason);
+          }
+
+        console.log("mapWishSeason à la fin de deleteWishEpisodeToApi", this.mapWishSeason)
+        console.log("mapWishEpisode à la fin de deleteWishEpisodeToApi", this.mapWishEpisode)
+
+
+          // MAJ le gros bouton Watch
+          console.log("this.mapWishEpisode.size " +  this.mapWatchEpisode.size)
+          if (this.mapWatchEpisode.size > 0) {
+            this.setStatusWishButton(1);
+          }
+          else {
+            this.setStatusWishButton(0);
+          }          
+        
+          this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
+
+      },
+      error: error => console.error(error)
+    });
+  }
+
+    /////////////////////
+  // ALL WATCH EPISODES
+  /////////////////////
+  addAllWatchEpisodes() {
+
+    this.wishSvc.postAllWatchEpisodesToApi(this.idSerie)
+    .subscribe({
+      next: (response:any)=> {
+        console.log("addAllWatchEpisodes > wishSvc.postAllWatchEpisodesToApi", response)
+        for (let watch of response) {
+          // MAJ de la map des episodes
+          this.mapWatchEpisode.set(watch.idEpisode, {
+            cssIconOn: this._watchStatusIconEpisodeOn,
+            cssIconTitleOn: this._watchTitleIconEpisodeOn,
+            idWatch: watch.idWatch,
+            seasonId: watch.idSeason
+          })
+          
+          // MAJ de la map des saisons
+          this.mapWatchSeason.set(watch.idSeason, {
+            cssIconOn: this._watchStatusIconSeasonOn,
+            cssIconTitleOn: this._watchTitleIconSeasonOn,
+            seasonNumber: watch.seasonNumber
+          })
+
+          this.alerteService.showAlert("Tous les épisodes de la série ont été marqués comme 'Vus'")
+        }
+
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+  deleteAllWatchEpisodes() {
+
+    this.wishSvc.deleteAllWatchEpisodesToApi(this.idSerie)
+    .subscribe({
+      next: (response:any)=> {
+        console.log("delAllWatchEpisodes > wishSvc.delAllWatchEpisodesToApi", response)
+
+          // MAJ de la map des episodes
+          this.mapWatchEpisode.clear();
+          // MAJ de la map des saisons
+          this.mapWatchSeason.clear();
+
+          this.alerteService.showAlert("Tous les épisodes de la série ont été restaurés en 'Non Vu'")
+        
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+  //////////////////////////////////
+  // ALL WATCH EPISODES OF A SEASON
+  //////////////////////////////////
+
+  addAllWatchEpisodesOfSeason(idSeason: number) {
+
+    console.log("Début addAllWatchEpisodesOfSeason")
+    this.wishSvc.postAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
+    .subscribe({
+      next: (response:any)=> {
+        console.log("addAllWatchEpisodesOfSeason > wishSvc.postAllWatchEpisodesOfSeasonToApi", response)
+        
+        for (let watch of response) {
+            // MAJ de la map des episodes
+            this.mapWatchEpisode.set(watch.idEpisode, {
+              cssIconOn: this._watchStatusIconEpisodeOn,
+              cssIconTitleOn: this._watchTitleIconEpisodeOn,
+              idWatch: watch.idWatch,
+              seasonId: watch.idSeason
+            })
+
+            // MAJ de la map des saisons
+            this.mapWatchSeason.set(watch.idSeason, {
+              cssIconOn: this._watchStatusIconSeasonOn,
+              cssIconTitleOn: this._watchTitleIconSeasonOn,
+              seasonNumber: watch.seasonNumber
+            })
+
+            // MAJ le gros bouton Watch
+            console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
+            if (this.mapWatchEpisode.size > 0) {
+              this.setStatusWatchButton(1);
+            }
+            else {
+              this.setStatusWatchButton(0);
+            }
+
+            this.alerteService.showAlert("Tous les épisodes de cette saison ont été marqués comme 'Vus'");
+        }
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+  delAllWatchEpisodesOfSeason(idSeason: number) {
+
+    console.log("Début delAllWatchEpisodesOfSeason")
+    this.wishSvc.deleteAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
+    .subscribe({
+      next: (response:any)=> {
+        console.log("delAllWatchEpisodesOfSeason > wishSvc.deleteAllWatchEpisodesOfSeasonToApi", response)
+        
+        for (let watch of response) {
+          // MAJ de la map des episodes
+          if (this.mapWatchEpisode.has(watch.idEpisode)) { 
+            this.mapWatchEpisode.delete(watch.idEpisode)
+          }
+
+          // MAJ de la map des saisons
+          if (this.mapWatchSeason.has(watch.idSeason)) {
+            this.mapWatchSeason.delete(watch.idSeason)
+          }
+
+          // MAJ le gros bouton Watch
+          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
+          if (this.mapWatchEpisode.size > 0) {
+            this.setStatusWatchButton(1);
+          }
+          else {
+            this.setStatusWatchButton(0);
+          }
+
+          this.alerteService.showAlert("Tous les épisodes de cette saison ont été restaurés en 'Non Vu'");
+        }
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+    ////////////////
+  // WATCH EPISODE
+  ////////////////
+
+  addWatchEpisode(idSeason: number, idEpisode: number) {
+
+    this.wishSvc.postWatchEpisodeToApi(this.idSerie, idSeason, idEpisode)
+    .subscribe({
+      next: (watch:any)=> {
+        console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)
+          // MAJ de la map des episodes
+          this.mapWatchEpisode.set(watch.idEpisode, {
+            cssIconOn: this._watchStatusIconEpisodeOn,
+            cssIconTitleOn: this._watchTitleIconEpisodeOn,
+            idWatch: watch.idWatch,
+            seasonId: watch.idSeason
+          })
+          
+          // MAJ de la map des saisons
+          this.mapWatchSeason.set(watch.idSeason, {
+            cssIconOn: this._watchStatusIconSeasonOn,
+            cssIconTitleOn: this._watchTitleIconSeasonOn,
+            seasonNumber: watch.seasonNumber
+          })
+
+          // MAJ le gros bouton Wish
+          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
+          if (this.mapWatchEpisode.size > 0) {
+            this.setStatusWatchButton(1);
+          }
+          else {
+            this.setStatusWatchButton(0);
+          }          
+        
+          this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
 
       },
       error: error => console.error(error)
@@ -373,12 +686,61 @@ export class DetailsheettvComponent {
   }
 
 
+  delWatchEpisode(idSeason: number, idEpisode: number) {
+
+    // Récupération de l'IdWatch à supprimer
+    let watchIdToDelete:any;
+    if (this.mapWatchEpisode.has(idEpisode)) {
+      watchIdToDelete = this.mapWatchEpisode.get(idEpisode)?.idWatch 
+      console.log("watchIdToDelete = " + watchIdToDelete)
+    }
+
+    this.wishSvc.deleteWatchEpisodeToApi(watchIdToDelete)
+    .subscribe({
+      next: (watch:any)=> {
+        console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)
+
+        // MAJ de la map des episodes
+        this.mapWatchEpisode.delete(idEpisode)  
+        console.log("idEpisode " + idEpisode + " effacé de mapWishEpisode")
+        console.log("mapWishEpisode ", this.mapWishEpisode)
+          
+          
+          // MAJ de la map des saisons: s'il n'y a plus d'épisode de la saison => on supprime la saison de mapWatchSeason          
+          const hasSeason = [...this.mapWatchEpisode.values()].some((watchEpisode) => watchEpisode.seasonId === idSeason);
+          if (!hasSeason) {
+            this.mapWatchSeason.delete(idSeason)
+            console.log("idSeason " + idSeason + " effacé de mapWatchSeason")
+            console.log("mapWatchSeason ", this.mapWatchSeason)
+
+          }
+          
+
+          // MAJ le gros bouton Watch
+          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
+          if (this.mapWatchEpisode.size > 0) {
+            this.setStatusWatchButton(1);
+          }
+          else {
+            this.setStatusWatchButton(0);
+          }          
+        
+          this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
+
+      },
+      error: error => console.error(error)
+    });
+
+  }
+
+  ///////////////////////////
+  // INIT STATUS ICON/BUTTON
+  //////////////////////////
+
   initStatusWishButton() {
     if (this.idWishSerie == 0) {
-      // console.log("IF idWish == 0")
       this.setStatusWishButton(1);
     } else {
-      // console.log("IF idWish != 0")
       this.setStatusWishButton(0);
     }
   }
@@ -394,6 +756,25 @@ export class DetailsheettvComponent {
     }
   }
 
+  initStatusWatchButton() {
+    if (this.idWatchSerie == 0) {
+      this.setStatusWatchButton(1);
+    } else {
+      this.setStatusWatchButton(0);
+    }
+  }
+
+  setStatusWatchButton(status: number) {
+    if (status) {
+      this.watchTitleButton = "Restaurer tous les épisodes de la série en 'Non Vu'";
+      this.watchStatusButton = "btn btn-primary btn-sm";
+    }
+    else {
+      this.watchTitleButton = "Marquer tous les épisodes de la série en 'Vu'";
+      this.watchStatusButton = "btn btn-outline-primary btn-sm";
+    }
+  }
+
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
       console.log("Appel à this.delAllWishEpisodes()");
@@ -404,6 +785,19 @@ export class DetailsheettvComponent {
       console.log("Appel à this.addAllWishEpisodes()");
       this.addAllWishEpisodes();
       this.setStatusWishButton(1);
+    }
+  }
+
+  updateStatusWatchButton() {
+    if (this.watchStatusButton.includes('btn-primary')) {
+      console.log("Appel à this.delAllWatchEpisodes()");
+      this.deleteAllWatchEpisodes();
+      this.setStatusWatchButton(0);
+    }
+    else {
+      console.log("Appel à this.addAllWatchEpisodes()");
+      this.addAllWatchEpisodes();
+      this.setStatusWatchButton(1);
     }
   }
 
@@ -421,17 +815,45 @@ export class DetailsheettvComponent {
     }
   }
 
+  updateStatusWatchSeason(idSeason: number) {
+
+    // Recherche du statut de l'icône dans la map saison
+    // => S'il n'est pas présent dans la map c'est que l'icône est à off
+    if ( this.mapWatchSeason.has(idSeason) ) {
+      console.log("Appel à this.delAllWishEpisodesOfSeason()");
+      this.delAllWatchEpisodesOfSeason(idSeason)
+    }
+    else {
+      console.log("Appel à this.addAllWishEpisodesOfSeason()");
+      this.addAllWatchEpisodesOfSeason(idSeason)
+    }
+  }
+
   updateStatusWishEpisode(idSeason: number, idEpisode: number) {
 
     // Recherche du statut de l'icône dans la map episode
     // => S'il n'est pas présent dans la map c'est que l'icône est à off
     if ( this.mapWishEpisode.has(idEpisode) ) {
       console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) VRAI");
-      // this.delAllWishEpisodesOfSeason(idSeason)
+      this.delWishEpisode(idSeason, idEpisode)
     }
     else {
       console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) FAUX");
       this.addWishEpisode(idSeason, idEpisode)
+    }
+  }
+
+  updateStatusWatchEpisode(idSeason: number, idEpisode: number) {
+
+    // Recherche du statut de l'icône dans la map episode
+    // => S'il n'est pas présent dans la map c'est que l'icône est à off
+    if ( this.mapWatchEpisode.has(idEpisode) ) {
+      console.log("Appel à this.updateStatusWatchEpisode() > this.mapWatchEpisode.has(idEpisode) VRAI");
+      this.delWatchEpisode(idSeason, idEpisode)
+    }
+    else {
+      console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) FAUX");
+      this.addWatchEpisode(idSeason, idEpisode)
     }
   }
 

@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 import { MovieService } from '../services/movie.service';
-// import { WishService } from '../services/wish.service';
-// import { WatchService } from '../services/watch.service';
 import { AlertService } from '../services/alert.service';
-// import { WishesMovieService } from '../services/wishes-movie.service';
-// import { WatchesMovieService } from '../services/watches-movie.service';
 
 @Component({
   selector: 'app-detailsheetmovie',
@@ -37,23 +33,21 @@ export class DetailsheetmovieComponent {
 
   constructor(
       private route:ActivatedRoute,
-      public detailMovieSvc:MovieService,
-      // private wishSvc:WishesMovieService,
-      // private watchSvc:WatchesMovieService,
+      public movieSvc:MovieService,
       private _location:Location,
       private alerteSvc:AlertService
   ) {}
 
   ngOnInit() {
     this.idMovie = this.route.snapshot.params['id'];
-    this.detailMovieSvc.getBackDetailsFromApi(this.idMovie);
+    this.movieSvc.getBackDetailsFromApi(this.idMovie);
 
-    this.subscriptionDetailMovie = this.detailMovieSvc.getMovieDetail$()
+    this.subscriptionDetailMovie = this.movieSvc.getMovieDetail$()
     .subscribe({
       next: (response:any)=>  {
         console.log(response)
         if (response.idWatch === null && response.idWish === null){
-          this.detailMovieSvc.getTmdbDetailsFromApi(this.idMovie);
+          this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
         }
       },
       error: error => console.error(error)
@@ -68,7 +62,7 @@ export class DetailsheetmovieComponent {
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
       console.log("Appel à this.detailMovieSvc.delWishMovie()");
-      this.detailMovieSvc.delWishMovie();
+      this.movieSvc.delWishMovie();
       this.wishStatusButton = "btn btn-outline-warning btn-sm";
       this.wishTitleButton = "Ajouter à la Wish liste"
     }
@@ -83,7 +77,7 @@ export class DetailsheetmovieComponent {
   updateStatusWatchButton() {
     if (this.watchStatusButton.includes('btn-primary')) {
       console.log("Appel à this.detailMovieSvc.delWatchMovie()");
-      this.detailMovieSvc.delWatchMovie();
+      this.movieSvc.delWatchMovie();
       this.watchStatusButton = "btn btn-outline-primary btn-sm";
       this.watchTitleButton = "Ajouter à la Watch liste"
     }
@@ -110,7 +104,7 @@ export class DetailsheetmovieComponent {
       idMovie:this.idMovie, 
     };
     
-    this.detailMovieSvc.postWishMovieToApi(sendToApi)
+    this.movieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
@@ -132,7 +126,7 @@ export class DetailsheetmovieComponent {
     };
     console.log(sendToApi);
 
-    this.detailMovieSvc.postWatchMovieToApi(sendToApi)
+    this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
         console.log(response)

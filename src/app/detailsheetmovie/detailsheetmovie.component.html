@@ -2,10 +2,10 @@
   <button class="btn btn-outline-light btn-sm" (click)="goBack()">
       <i class="fas fa-arrow-left"></i>
   </button>
-  <h1>{{ (detailMovieSvc.getMovieDetail$() | async )?.title }}</h1>
+  <h1>{{ (movieSvc.getMovieDetail$() | async )?.title }}</h1>
 </div>
 
-<div *ngIf="detailMovieSvc.getMovieDetail$() | async as movie" class="row detail">
+<div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
   <div class="flex-container">
     <div class="affiche">
       <img [src]="getImgFullUrl(movie.posterPath)" alt="">

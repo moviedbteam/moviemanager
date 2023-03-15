@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BackDetailMovie } from 'src/app/detailsheetmovie/models/back-detail-movie.model';
+import { BackDetailMovie } from 'src/app/models/back-detail-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
-import { MovieService } from 'src/app/services/movie.service';
+import { DetailMovieService } from 'src/app/services/detail-movie.service';
 
 @Component({
   selector: 'app-seeallmovie',
@@ -13,25 +13,25 @@ export class SeeallmovieComponent {
   movies:Array<BackDetailMovie> =[];
   subscription:any;
 
-  constructor(private movieSvc:MovieService, private alerteService:AlertService) {
-    console.log(this);
-  }
+  constructor(
+    public detailMovieSvc:DetailMovieService,
+    private alerteService:AlertService
+    
+    ) {console.log(this);}
 
   ngOnInit() {
-    this.subscription = this.movieSvc.getMovies$()
+    this.subscription = this.detailMovieSvc.getMovies$()
       .subscribe(
         (moviesArr:BackDetailMovie[]) => {
           if(moviesArr.length===0) {
-            this.movieSvc.getMoviesFromApi();
+            this.detailMovieSvc.getMoviesFromApi();
           }
           this.movies = moviesArr
           console.log(this.movies);
-        });
-                
+        });                
   }
 
   getImgFullUrl(urlFragment:string):string {
-    // https://image.tmdb.org/t/p/w500/faXT8V80JRhnArTAeYXz0Eutpv9.jpg
     return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 
@@ -41,7 +41,5 @@ export class SeeallmovieComponent {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-
 
 }

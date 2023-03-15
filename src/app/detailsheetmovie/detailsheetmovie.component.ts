@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
-import { DetailMovieService } from './services/detail-movie.service';
-import { WishService } from '../services/wish.service';
-import { WatchService } from '../services/watch.service';
+import { DetailMovieService } from '../services/detail-movie.service';
+// import { WishService } from '../services/wish.service';
+// import { WatchService } from '../services/watch.service';
 import { AlertService } from '../services/alert.service';
+// import { WishesMovieService } from '../services/wishes-movie.service';
+// import { WatchesMovieService } from '../services/watches-movie.service';
 
 @Component({
   selector: 'app-detailsheetmovie',
@@ -36,8 +38,8 @@ export class DetailsheetmovieComponent {
   constructor(
       private route:ActivatedRoute,
       public detailMovieSvc:DetailMovieService,
-      private wishSvc:WishService,
-      private watchSvc:WatchService,
+      // private wishSvc:WishesMovieService,
+      // private watchSvc:WatchesMovieService,
       private _location:Location,
       private alerteSvc:AlertService
   ) {}
@@ -108,7 +110,7 @@ export class DetailsheetmovieComponent {
       idMovie:this.idMovie, 
     };
     
-    this.wishSvc.postWishMovieToApi(sendToApi)
+    this.detailMovieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
@@ -130,7 +132,7 @@ export class DetailsheetmovieComponent {
     };
     console.log(sendToApi);
 
-    this.watchSvc.postWatchMovieToApi(sendToApi)
+    this.detailMovieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
         console.log(response)

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../services/alert.service';
 import { UserService } from '../services/user.service';
-import { CreateUserModel, CreateUserModelIam, UserModel } from '../shared/models/userlogin.model';
+import { CreateUserModel, CreateUserModelIam, UserModel } from '../models/userlogin.model';
 
 @Component({
   selector: 'app-create-user-account',

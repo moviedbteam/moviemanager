@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-// import { WishesMovie } from '../librarymovie/models/wishes-movie.model';
 import { WishesTv } from '../librarytv/models/wishes-tv.model';
 
 @Injectable({
@@ -11,7 +10,6 @@ import { WishesTv } from '../librarytv/models/wishes-tv.model';
 export class WishService {
 
   apiBack = environment.base_url_apiBack;
-  apiPostWishMovie:string = '/wish/movie';
   apiPostWishTv:string = '/wish/tv';
   apiPostWishEpisode:string = '/wish/episode';
   apiPostWishEpisodeOfSeason: string = "/wish/season";
@@ -20,17 +18,14 @@ export class WishService {
 
   apiDelWishTv:string = '/wish/tv';
 
-  apiGetWishTvs:string = '/wish/episode/all';
+  // apiGetWishTvs:string = '/wish/episode/all';
+  apiGetWishTvs:string = '/tv/wishlist';
 
   private _wishesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient,
   ) {}
-
-  postWishMovieToApi(postWishMovie: any) {
-    return this.http.post(this.apiBack+this.apiPostWishMovie, postWishMovie, {observe: 'response', responseType: 'text'});
-  }
 
   getWishTvsFromApi() {
     

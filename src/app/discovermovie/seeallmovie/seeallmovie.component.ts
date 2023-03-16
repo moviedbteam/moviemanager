@@ -117,23 +117,23 @@ export class SeeallmovieComponent {
 
   setStatusWishIcon(movie:Movie , status: number) {
     if (status) {
-      movie._wishStatusIcon = "fa-solid fa-bookmark fa-lg";
-      movie._wishTitleIcon = "Supprimer de la Wish liste";
+      movie._wishStatusIcon = this._wishStatusIconOn;
+      movie._wishTitleIcon = this._wishTitleIconOn;
     }
     else {
-      movie._wishStatusIcon = "fa-regular fa-bookmark fa-lg";
-      movie._wishTitleIcon = "Ajouter à la Wish liste";
+      movie._wishStatusIcon = this._wishStatusIconOff;
+      movie._wishTitleIcon = this._wishTitleIconOff;
     }
   }
 
   setStatusWatchIcon(movie:Movie , status: number) {
     if (status) {
-      movie._watchStatusIcon = "fa-sharp fa-solid fa-circle-check fa-lg";
-      movie._watchTitleIcon = "Restaurer en Non Vu";
+      movie._watchStatusIcon = this._watchStatusIconOn;
+      movie._watchTitleIcon = this._watchTitleIconOn;
     }
     else {
-      movie._watchStatusIcon = "fa-solid fa-check fa-lg";
-      movie._watchTitleIcon = "Ajouter comme Vu";
+      movie._watchStatusIcon = this._watchStatusIconOff;
+      movie._watchTitleIcon = this._watchTitleIconOff;
     }
   }
 

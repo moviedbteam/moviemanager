@@ -18,12 +18,14 @@
           <i [class]="movie._wishStatusIcon" 
             [title]="movie._wishTitleIcon"
             style="color: yellow; margin-right: 10px;"
-            (click)="updateStatusWishIcon(movie)">
+            (click)="updateStatusWishIcon(movie)
+            ; $event.preventDefault(); $event.stopPropagation()">
           </i>
           <i [class]="movie._watchStatusIcon" 
             [title]="movie._watchTitleIcon"
             style="color: #0D6EFD;"
-            (click)="updateStatusWatchIcon(movie)">
+            (click)="updateStatusWatchIcon(movie)
+            ; $event.preventDefault(); $event.stopPropagation()">
           </i>
         </div>            
         <div class="card-body">

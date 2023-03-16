@@ -44,6 +44,7 @@ export class DetailsheetmovieComponent {
         // INIT statut des boutons wish et watch
         if (response.idWish > 0) this.setStatusWishButton(1) ;
         if (response.idWatch > 0) this.setStatusWatchButton(1) ;
+        console.log(response)
         return;
       },
       error: error => console.error(error)

@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RecoMovie } from '../models/reco-movie.model';
-import { RecoMovieService } from '../services/reco-movie.service';
+import { Movie } from 'src/app/models/movie.model';
+import { AlertService } from 'src/app/services/alert.service';
+import { MovieService } from 'src/app/services/movie.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-overview-reco-movie',
@@ -9,25 +12,167 @@ import { RecoMovieService } from '../services/reco-movie.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class OverviewRecoMovieComponent {
+  
+  recoMovies:Array<Movie> = [];
 
-  recoMovies:Array<RecoMovie> = [];
+  // Statut des icônes Wish
+  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
+  _wishTitleIconOn: string = "Supprimer de la Wish liste"
+  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
+  _wishTitleIconOff: string = "Ajouter à la Wish liste"
+
+  // Statut des icônes Watch
+  _watchStatusIconOn: string = "fa-solid fa-eye fa-lg"
+  _watchTitleIconOn: string = "Restaurer 'Non Vu'"
+  _watchStatusIconOff: string = "fa-regular fa-eye-slash fa-lg"
+  _watchTitleIconOff: string = "Marquer comme 'Vus'"
+
   subscriptionRecoMovie:any;
 
+  apiBack = environment.base_url_apiBack;
+  apiBackGetDetailsFromApi = '/movie/detail/';
+
   constructor(
-    private recoMovieSvc:RecoMovieService,
+    private movieSvc:MovieService,
+    private alerteSvc:AlertService,
+    private http:HttpClient,
   ){}
   
-  ngOnInit() {
+  async ngOnInit() {
     
-    this.subscriptionRecoMovie = this.recoMovieSvc.getRecoMovie$()
-    .subscribe(
-      (recoArr:RecoMovie[]) => {        
+    // this.subscriptionRecoMovie = this.movieSvc.getRecoMovie$()
+    // .subscribe(
+    //   (recoArr:Movie[]) => {        
+    //     if(recoArr.length===0) {
+    //       this.movieSvc.getRecoMovieFromApi();
+    //     }
+    //     this.recoMovies = recoArr
+    //     }
+    // );
+
+    this.subscriptionRecoMovie = await this.movieSvc.getRecoMovie$()
+      .subscribe( async (recoArr:Movie[]) => {
         if(recoArr.length===0) {
-          this.recoMovieSvc.getRecoMovieFromApi();
+          this.movieSvc.getRecoMovieFromApi();
         }
         this.recoMovies = recoArr
+        console.log(this.recoMovies);
+
+        for (let movie of this.recoMovies){
+          await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
+          .toPromise()      
+          .then( (response:any) => {
+            console.log(response);
+            console.log(movie);
+            // INIT statut des icones wish et watch
+            if (response.idWish > 0) {
+              console.log(response.idWish);
+              movie.idWish = response.idWish;
+              movie._wishStatusIcon = this._wishStatusIconOn;
+              movie._wishTitleIcon = this._wishStatusIconOn;
+            } else {
+              movie._wishStatusIcon = this._wishStatusIconOff;
+              movie._wishTitleIcon = this._wishStatusIconOff;
+            };
+            if (response.idWatch > 0) {
+              console.log(response.idWatch);
+              movie.idWatch = response.idWatch;
+              movie._watchStatusIcon = this._watchStatusIconOn;
+              movie._watchTitleIcon = this._watchStatusIconOn;
+            } else {
+              movie._watchStatusIcon = this._watchStatusIconOff;
+              movie._watchTitleIcon = this._watchStatusIconOff;
+            };
+          });
+          
+        }  
+        console.log(this.recoMovies);
+        // return;
+      });
+
+  }
+
+  updateStatusWishIcon(movie:Movie) {
+    if (movie._wishStatusIcon === this._wishStatusIconOn) {
+      console.log("Appel à this.movieSvc.delWishMovie()");
+      this.movieSvc.delWishThisMovie(movie);
+      this.setStatusWishIcon(movie, 0)
+    }
+    else {
+      console.log("Appel à this.addWish()");
+      this.addWish(movie);
+      this.setStatusWishIcon(movie, 1)
+    }
+  }
+
+  updateStatusWatchIcon(movie:Movie) {
+    if (movie._watchStatusIcon === this._watchStatusIconOn) {
+      console.log("Appel à this.movieSvc.delWatchMovie()");
+      this.movieSvc.delWatchThisMovie(movie);
+      this.setStatusWatchIcon(movie, 0)
+    }
+    else {
+      console.log("Appel à this.checkWatch()");
+      this.checkWatch(movie);
+      this.setStatusWatchIcon(movie, 1)
+    }
+  }
+
+  setStatusWishIcon(movie:Movie , status: number) {
+    if (status) {
+      movie._wishStatusIcon = this._wishStatusIconOn;
+      movie._wishTitleIcon = this._wishTitleIconOn;
+    }
+    else {
+      movie._wishStatusIcon = this._wishStatusIconOff;
+      movie._wishTitleIcon = this._wishTitleIconOff;
+    }
+  }
+
+  setStatusWatchIcon(movie:Movie , status: number) {
+    if (status) {
+      movie._watchStatusIcon = this._watchStatusIconOn;
+      movie._watchTitleIcon = this._watchTitleIconOn;
+    }
+    else {
+      movie._watchStatusIcon = this._watchStatusIconOff;
+      movie._watchTitleIcon = this._watchTitleIconOff;
+    }
+  }
+
+  
+
+  callTest(str:string) {
+    this.alerteSvc.showAlert("Ajouté aux " + str + "!!!");
+  }
+
+  addWish(movie:Movie) {
+    let sendToApi = { idMovie:movie.idMovie, };
+    
+    this.movieSvc.postWishMovieToApi(sendToApi)
+    .subscribe({
+      next: (response:any)=>  {
+        console.log(response.status)
+        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+      },
+      error: error => console.error(error)
+    });
+  }
+
+  checkWatch(movie:Movie) {
+    let sendToApi = { idMovie:movie.idMovie,};
+    console.log(sendToApi);
+
+    this.movieSvc.postWatchMovieToApi(sendToApi)
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+        if(response.status = "201") {
+          
         }
-    );
+      },
+      error: error => console.error(error)
+    });
   }
             
   getImgFullUrl(urlFragment:string):string {

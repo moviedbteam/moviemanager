@@ -3,10 +3,24 @@
     
     <div class="cdk-virtual-scroll-data-source-example">
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-          <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
           <div [routerLink]="['/detailmovie', recoMovie.idMovie]"  *ngFor="let recoMovie of recoMovies" class="example-item">
             <div>
               <img [src]="getImgFullUrl(recoMovie.posterPath)" alt="">
+              <div class="mini-menu">
+                <i [class]="recoMovie._wishStatusIcon" 
+                  [title]="recoMovie._wishTitleIcon"
+                  style="color: yellow; margin-right: 10px;"
+                  (click)="updateStatusWishIcon(recoMovie)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="recoMovie._watchStatusIcon" 
+                  [title]="recoMovie._watchTitleIcon"
+                  style="color: #0D6EFD;"
+                  (click)="updateStatusWatchIcon(recoMovie)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+              </div>
+              
             </div>
             {{recoMovie.title}}
           </div>

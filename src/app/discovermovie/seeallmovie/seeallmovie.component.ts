@@ -12,27 +12,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SeeallmovieComponent {
 
-  // idMovie:number = 0; //recup de detailsheetmovie : A SUPPRIMER ??
   movies:Array<Movie> =[];
 
   // Statut des icônes Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
-  _wishTitleIconOn: string = "Supprimer tous les épisodes de cette saison de la Wish liste"
+  _wishTitleIconOn: string = "Supprimer de la Wish liste"
   _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
-  _wishTitleIconOff: string = "Ajouter tous les épisodes de cette saison à la Wish liste"
+  _wishTitleIconOff: string = "Ajouter à la Wish liste"
 
   // Statut des icônes Watch
   _watchStatusIconOn: string = "fa-solid fa-eye fa-lg"
-  _watchTitleIconOn: string = "Restaurer tous les épisodes de cette saison en 'Non Vu'"
+  _watchTitleIconOn: string = "Restaurer 'Non Vu'"
   _watchStatusIconOff: string = "fa-regular fa-eye-slash fa-lg"
-  _watchTitleIconOff: string = "Marquer tous les épisodes de cette saison comme 'Vus'"
-
-
-  // Statuts des icones à OFF
-  // wishStatusIcon: string = "fa-regular fa-bookmark fa-lg"
-  // wishTitleIcon: string = "Ajouter à la Wish liste"
-  // watchStatusIcon: string = "fa-solid fa-check fa-lg"
-  // watchTitleIcon: string = "Ajouter comme Vu"
+  _watchTitleIconOff: string = "Marquer comme 'Vus'"
 
   subscriptionMovie:any;
 
@@ -137,9 +129,7 @@ export class SeeallmovieComponent {
     }
   }
 
-  getImgFullUrl(urlFragment:string):string {
-    return "https://image.tmdb.org/t/p/w500"+urlFragment;
-  }
+  
 
   callTest(str:string) {
     this.alerteSvc.showAlert("Ajouté aux " + str + "!!!");
@@ -172,6 +162,10 @@ export class SeeallmovieComponent {
       },
       error: error => console.error(error)
     });
+  }
+
+  getImgFullUrl(urlFragment:string):string {
+    return "https://image.tmdb.org/t/p/w500"+urlFragment;
   }
 
   ngOnDestroy() {

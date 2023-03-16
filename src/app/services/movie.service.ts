@@ -4,6 +4,7 @@ import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Movie } from '../models/movie.model';
 import { TmdbMovie } from '../models/tmdb-movie.model';
+import { RecoTv } from '../recommendation/models/reco-tv.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,12 @@ export class MovieService {
   apiGetWishMovies:string = '/movie/wishlist';
   apiPostWatchMovie:string = '/watch/movie';
   apiGetWatchMovies:string = '/movie/watchlist';
+  apiGetRecoTvs:string = '/recommendation/tv';
+  apiGetRecoMovies:string = '/recommendation/movie';
   private _watchesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
   private _wishesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _recoTv$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _recoMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
   
   /// OBSERVABLE EN COMMUN TMDB/BACK ///
   private _movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -38,6 +43,50 @@ export class MovieService {
   constructor(
     private http:HttpClient
   ) { }
+
+
+  ////////////////////////////// SERVICES FOR RECO //////////////////////////////
+  getRecoMovieFromApi(){
+
+    this.http.get(this.apiBack+this.apiGetRecoMovies)
+    .pipe(
+      map((apiResponse:any) => {
+        return apiResponse.map( (reco: any) => new Movie(reco) );
+      })
+    )
+    .subscribe((recos:Movie[]) => {
+
+      let actualRecos = this._recoMovie$.getValue();
+      let allRecos:any = [...actualRecos, ...recos]
+      if (allRecos.length !== 0){
+        this._recoMovie$.next(allRecos);
+      }
+    });  
+  }
+  getRecoMovie$ ():Observable<Movie[]> {
+    return this._recoMovie$.asObservable();
+  }
+  getRecoTvFromApi(){
+
+    this.http.get(this.apiBack+this.apiGetRecoTvs)
+    .pipe(
+      map((apiResponse:any) => {
+        return apiResponse.map( (reco: any) => new RecoTv(reco) );
+      })
+    )
+    .subscribe((recos:RecoTv[]) => {
+
+      let actualRecos = this._recoTv$.getValue();
+      let allRecos:any = [...actualRecos, ...recos]
+      if (allRecos.length !== 0){
+        this._recoTv$.next(allRecos);
+      }
+    });  
+  }
+
+  getRecoTv$ ():Observable<RecoTv[]> {
+    return this._recoTv$.asObservable();
+  }
 
   ////////////////////////////// SERVICES FOR SEARCHBAR //////////////////////////////
   searchMoviesFromApi(userSearch:string):void{

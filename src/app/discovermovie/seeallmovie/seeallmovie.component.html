@@ -6,15 +6,6 @@
     <div [routerLink]="['/detailmovie',movie.idMovie]" class="card bg-dark flex">
       <img [src]="getImgFullUrl(movie.backdropPath)" alt="">
       <div class="mini-menu">
-          <!-- <i class="fa-regular fa-bookmark fa-lg" style="color: yellow;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i> -->
-          <!-- <i [class]="wishStatusIcon"
-            style="color: yellow;"
-            (click)="updateStatusWishIcon(movie.idMovie)">
-          </i>
-          <i [class]="watchStatusIcon"
-            style="color: blue;" 
-            (click)="updateStatusWatchIcon(movie.idMovie)">
-          </i> -->
           <i [class]="movie._wishStatusIcon" 
             [title]="movie._wishTitleIcon"
             style="color: yellow; margin-right: 10px;"

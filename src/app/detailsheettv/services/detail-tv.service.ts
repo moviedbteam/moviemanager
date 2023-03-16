@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, ɵisObservable } from '@angular/core';
-import { Observable, BehaviorSubject, forkJoin, Subject, of} from 'rxjs';
-import { concatMap, map, take } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject} from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { DetailSeasonTmdbModel, DetailTvTmdbModel } from '../models/detail-tv-tmdb.model';
+import { DetailTvMmaModel } from '../models/detail-tv-mma.model';
+import { DetailEpisodeTmdbModel, DetailSeasonTmdbModel, DetailTvTmdbModel } from '../models/detail-tv-tmdb.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,14 @@ import { DetailSeasonTmdbModel, DetailTvTmdbModel } from '../models/detail-tv-tm
 export class DetailTvService {
 
 
+  
   // API TMDB
   apiKeyTmdb = environment.apiKey_apiTmdb;
   apiSerieTmdb = environment.base_url_apiTmdb+'/tv/';
   
   // APIs MMA
   apiBack = environment.base_url_apiBack;
-
-  // apiGetWishMovies:string = '/wish/tv/all';
-  // apiGetWatchMovies:string = '/watch/tv/all';
-
-  // apiPostWishMovie:string = '/tv/movie';
-  // apiPostWatchMovie:string = '/tv/movie';
+  apiSerieMma = this.apiBack + "/tv/detail/"
 
   // Observables
   private _serieDetail$ = new BehaviorSubject<DetailTvTmdbModel | any>({});
@@ -31,7 +28,37 @@ export class DetailTvService {
 
   constructor(private http:HttpClient) {}
 
-  // METHODES
+  getDetailsFromApiMma(idTv:number):void {
+
+    this._seasonDetail$.next([]);
+
+    // this.http.get(this.apiSerieMma + idTv)
+    // .pipe(
+    //   map((apiSerieMmaResponse:any)=> new DetailTvMmaModel(apiSerieMmaResponse)),
+    //   tap((serie:DetailTvMmaModel) => {
+    //     console.log("serie récupérée de MMA : ");
+    //     console.log(serie);
+    //     // Stocker la variable serie dans une variable de classe
+    //     this._serieDetail$.next(serie);
+    //   })
+    // );
+
+    this.http.get(this.apiSerieMma + idTv)
+    .pipe(
+      map((apiSerieMmaResponse:any)=> new DetailTvMmaModel(apiSerieMmaResponse))
+    )
+    .subscribe( (serie:DetailTvMmaModel) => {
+      console.log("serie récupérée de MMA : ");
+      console.log(serie);
+      
+      this._serieDetail$.next(serie);
+      this._seasonDetail$.next(serie.seasons);
+      console.log("_serieDetail$", this._serieDetail$);
+      console.log("_saisonDetail$", this._seasonDetail$);
+
+    });
+
+  }
 
   getDetailsFromApiTmdb(idTv:number):void {
   // Infos générales de la série
@@ -50,11 +77,12 @@ export class DetailTvService {
       console.log("serie récupéré de TMDB : ");
       console.log(serie);
       
-      for (let i = 0; i <= serie.nbSeasons; i++ ) {
+      for (let i = serie.numFirstSeason; i <= serie.nbSeasons; i++ ) {
         console.log("saison récupérée de TMDB : ");
         this.getSeasonDetailsFromApiTmdb(idTv, i)
       }
       this._serieDetail$.next(serie);
+      
       
     });
 
@@ -77,6 +105,8 @@ export class DetailTvService {
           return seasons.map( (season: any) => new DetailSeasonTmdbModel(season)) })
       )
       .subscribe( (seasons:DetailSeasonTmdbModel[]) => {
+        next:
+        
         console.log("getSeasonDetailsFromApiTmdb > subscribe > season: ", seasons);
         let actualSeasons = this._seasonDetail$.getValue();
         let allSeasons:any = [...actualSeasons, ...seasons];

@@ -1,3 +1,5 @@
+<h2><i>API chargés: {{ origineAPI }}</i></h2>
+
 <div class="d-flex mt-5 py-2 title">
     
     <button class="btn btn-outline-light btn-sm" (click)="goBack()">
@@ -12,6 +14,7 @@
 <!-- ******************************************* -->
 
 <div *ngIf="detailTvService.serieDetail$ | async as serie" class="row detail">
+<!-- <div *ngIf="((this.idWishSerie == 0) || (this.idWatchSerie == 0))? (detailTvService.serieDetail$ | async as serie)" class="row detail"> -->
 
     <div class="flex-container">
 
@@ -84,42 +87,42 @@
     <div class="flex-container-season">
         <div class="accordion" id="accordion-saison">
             <div *ngFor="let season of detailSeasons" class="accordion-item">
-              <h2 class="accordion-header" id="heading{{season.season_number}}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.season_number" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.season_number">
-                    {{season.season_number == 0 ? "Episodes spéciaux":"Saison "+season.season_number }}
+              <h2 class="accordion-header" id="heading{{season.seasonNumber}}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.seasonNumber" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.seasonNumber">
+                    {{season.seasonNumber == 0 ? "Episodes spéciaux":"Saison "+season.seasonNumber }}
                     <div class="menu-saison">
-                        <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconSeasonOff" 
-                            [title]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
-                            style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)">
+                        <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
+                            [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                            style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
                         </i>
-                        <i [class]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? this.mapWatchSeason.get(season.idTmdb)?.cssIconOn:_watchStatusIconSeasonOff" 
-                            [title]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
-                            style="color: #0D6EFD;" (click)="updateStatusWatchSeason(season.idTmdb)">
+                        <i [class]="this.mapWatchSeason.get(season.id)?.cssIconOn? this.mapWatchSeason.get(season.id)?.cssIconOn:_watchStatusIconSeasonOff" 
+                            [title]="this.mapWatchSeason.get(season.id)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                            style="color: #0D6EFD;" (click)="updateStatusWatchSeason(season.id)">
                         </i>
                     </div>
                 </button>
               </h2>
-              <div id="collapse{{season.season_number}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + season.season_number" data-bs-parent="#accordion-saison">
+              <div id="collapse{{season.seasonNumber}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + season.seasonNumber" data-bs-parent="#accordion-saison">
                 <div class="accordion-body">
 
                     <!-- INFO SAISON -->
                     
                     <div class="flex-container">
                         <div class="affiche-season">
-                            <img [src]="getImgSeasonFullUrl(season.poster_path)" alt="">
+                            <img [src]="getImgSeasonFullUrl(season.posterPath)" alt="">
                         </div>
                         <div>
                             <div class="mini-menu">
-                                <i [class]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? this.mapWishSeason.get(season.idTmdb)?.cssIconOn:_wishStatusIconSeasonOff" 
-                                    [title]="this.mapWishSeason.get(season.idTmdb)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
-                                    style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.idTmdb)">
+                                <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
+                                    [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                                    style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
                                 </i>
-                                <i [class]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? this.mapWatchSeason.get(season.idTmdb)?.cssIconOn:_watchStatusIconSeasonOff" 
-                                    [title]="this.mapWatchSeason.get(season.idTmdb)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
-                                    style="color: #0D6EFD; margin-right: 10px;" (click)="updateStatusWatchSeason(season.idTmdb)">
+                                <i [class]="this.mapWatchSeason.get(season.id)?.cssIconOn? this.mapWatchSeason.get(season.id)?.cssIconOn:_watchStatusIconSeasonOff" 
+                                    [title]="this.mapWatchSeason.get(season.id)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                                    style="color: #0D6EFD; margin-right: 10px;" (click)="updateStatusWatchSeason(season.id)">
                                 </i>
                             </div>                     
-                            <p><strong>Date de sortie: </strong> {{season.air_date | date:'dd-MM-yyyy' }}</p>
+                            <p><strong>Date de sortie: </strong> {{season.airDate | date:'dd-MM-yyyy' }}</p>
                             <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
                             <p><strong>Résumé: </strong> {{season.overview?season.overview:"Non disponible"}}</p>
                         </div>
@@ -129,29 +132,31 @@
                         <table class="table">
                             <thead>
                               <tr>
+                                <th scope="col"></th>
                                 <th scope="col">N°</th>
-                                <th scope="col">Titre</th>
-                                <th scope="col">Durée (min)</th>
-                                <th scope="col">Date de diffusion</th>
+                                <th scope="col">Diffusion</th>
+                                <th scope="col">Note</th>
+                                <th scope="col">Résumé</th>
                                 <th scope="col">Actions</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let episode of season.episodes">
-                                <th scope="row">{{ episode.episode_number }}</th>
-                                <td>{{ episode.name?episode.name:"Non disponible" }}</td>
-                                <td>{{ episode.runtime?episode.runtime:"-" }}</td>
-                                <td>{{ episode.air_date?(episode.air_date | date:"dd-MM-yyyy"):"-"}}</td>
-                                <td>
+                                <td class="align-middle"><img src="https://image.tmdb.org/t/p/w92{{ episode.stillPath }}"></td>
+                                <th class="align-middle" scope="row">{{ episode.episodeNumber }}</th>
+                                <td class="align-middle" style="width: 100px;">{{ episode.airDate?(episode.airDate | date:"dd-MM-yyyy"):"-" }}</td>
+                                <td class="align-middle">{{ episode.voteAverage?episode.voteAverage:"-" }}</td>
+                                <td class="align-middle">{{ episode.overview?episode.overview:"Non disponible"}}</td>
+                                <td class="align-middle" style="width: 100px;">
                                     <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconEpisodeOff" 
                                         [title]="this.mapWishEpisode.get(episode.id)?.cssIconOn? _wishTitleIconEpisodeOn:_wishTitleIconEpisodeOff"
                                         style="color: yellow; margin-right: 10px;" 
-                                        (click)="updateStatusWishEpisode(season.idTmdb, episode.id)">
+                                        (click)="updateStatusWishEpisode(season.id, episode.id)">
                                     </i>
                                     <i [class]="this.mapWatchEpisode.get(episode.id)?.cssIconOn?this.mapWatchEpisode.get(episode.id)?.cssIconOn:_watchStatusIconEpisodeOff" 
                                     [title]="this.mapWatchEpisode.get(episode.id)?.cssIconOn? _watchTitleIconEpisodeOn:_watchTitleIconEpisodeOff"
                                     style="color: #0D6EFD; margin-right: 10px;" 
-                                    (click)="updateStatusWatchEpisode(season.idTmdb, episode.id)">
+                                    (click)="updateStatusWatchEpisode(season.id, episode.id)">
                                 </i>
                                 </td>
                               </tr>

@@ -10,27 +10,18 @@ import { WishesTv } from '../librarytv/models/wishes-tv.model';
 export class WishService {
 
   _apiBack = environment.base_url_apiBack;
-  
-  // _apiGetWishTvs:string = '/wish/episode/all';
-  _apiGetAllWishTv:string = "/wish/episode/all";
-  _apiGetAllWatchTv:string = "/watch/episode/all";
+
   _apiGetListWishTv:string = "/tv/wishlist";
-  _apiGetListWatchTv:string = "/tv/watchlist"; 
+  _apiGetAllWishTv:string = "/wish/episode/all";
   
   _apiPostWishMovie:string = '/wish/movie';
   _apiPostWishTv:string = '/wish/tv';
-  _apiPostWatchTv:string = '/watch/tv';
-  _apiPostWatchEpisodeOfSeason:string = "/watch/season"
   _apiPostWishEpisode:string = '/wish/episode';
   _apiPostWishEpisodeOfSeason: string = "/wish/season";
-  _apiPostWatchEpisode: string = "/watch/episode"
 
   _apiDeleteWishEpisodeOfSeason: string = "/wish/season";
   _apiDeleteWishEpisode: string = "/wish/episode"
   _apiDelWishTv:string = '/wish/tv';
-  _apiDelWatchTv:string = '/watch/tv';
-  _apiDeleteWatchEpisodeOfSeason:string = "/watch/season";
-  _apiDeleteWatchEpisode:string = "/watch/episode"
 
   private _wishesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
@@ -104,48 +95,5 @@ export class WishService {
   getAllWishId(){
     return this.http.get(this._apiBack + this._apiGetAllWishTv); 
   }
-  
-
-
-  postAllWatchEpisodesToApi(idTv:number) {
-    let data = {idTv:idTv}
-    return this.http.post(this._apiBack+this._apiPostWatchTv, data);
-  }
-
-  deleteAllWatchEpisodesToApi(idTv:number) {
-    let data = {idTv:idTv}
-    return this.http.delete(this._apiBack+this._apiDelWatchTv, {body: data});
-  }
-
-  postAllWatchEpisodesOfSeasonToApi(idTv: number, idSeason: number) {
-    let data = {idTv: idTv, idSeason: idSeason}
-    return this.http.post(this._apiBack+this._apiPostWatchEpisodeOfSeason, data);
-  }
-
-  deleteAllWatchEpisodesOfSeasonToApi(idTv: number, idSeason: number) {
-    let data = {idTv: idTv, idSeason: idSeason}
-    return this.http.delete(this._apiBack+this._apiDeleteWatchEpisodeOfSeason, {body: data});
-  }
-
-  postWatchEpisodeToApi(idTv:number, idSeason: number, idEpisode: number) {
-    let data = {idTv:idTv, idSeason:idSeason, idEpisode:idEpisode}
-    return this.http.post(this._apiBack+this._apiPostWatchEpisode, data);
-  }
-
-  deleteWatchEpisodeToApi(watchIdToDelete:number) {
-    let data = {watchIdToDelete}
-    return this.http.delete(this._apiBack+this._apiDeleteWatchEpisode, {body: data} );
-  }
-
-  getWatchIdTv(){ 
-    // renvoie la liste des séries qui ont un WatchId
-    return this.http.get(this._apiBack + this._apiGetListWatchTv);    
-  }
-
-  getAllWatchId(){
-    return this.http.get(this._apiBack + this._apiGetAllWatchTv); 
-  }
-
-
 
 }

@@ -9,6 +9,7 @@ import {Location} from '@angular/common';
 import { DetailTvService } from './services/detail-tv.service';
 import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
 import { AlertService } from '../services/alert.service';
+import { DetailSeasonMmaModel } from './models/detail-tv-mma.model';
 
 interface wishEpisodeInterface {
   cssIconOn: string;
@@ -45,9 +46,10 @@ export class DetailsheettvComponent {
   idSerie:number = 0;
   idWishSerie:number = -1; // ID propre à la série non présent en BDD => vaut 0 si au moins un episode est en Wish
   idWatchSerie:number = -1;
+  origineAPI:string = "";
 
   subscriptionDetailSeasons:any;
-  detailSeasons: Array<DetailSeasonTmdbModel> = [];
+  detailSeasons: Array<DetailSeasonMmaModel> = [];
 
   mapWishEpisode: Map<number,wishEpisodeInterface> = new Map<number,wishEpisodeInterface>(); // tous les episodes wish
   mapWishSeason: Map<number,wishSeasonInterface> = new Map<number,wishSeasonInterface>(); // toutes les saisons wish
@@ -89,11 +91,11 @@ export class DetailsheettvComponent {
 
   
   // Pas utilisé
-  idEpisode:number = 0;
-  idSeason:number = 0;
-  viewingPlace:string = "";
-  viewingRate:number = 0;
-  viewingMood:number = 0;
+  // idEpisode:number = 0;
+  // idSeason:number = 0;
+  // viewingPlace:string = "";
+  // viewingRate:number = 0;
+  // viewingMood:number = 0;
 
 
 
@@ -121,30 +123,56 @@ export class DetailsheettvComponent {
     
     // récupère tous les wish de la série
     this.buildMapIconesEpisodesSaisons();
+
+    if((this.idWishSerie == 0) || (this.idWatchSerie == 0)) {
+      this.origineAPI = "MMA";
+      // Les infos de la  série sont à récupérer dans le back
+      console.log("Appel de this.detailTvService.getDetailsFromApiMma")
+      this.detailTvService.getDetailsFromApiMma(this.idSerie)
+
+      this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
+      .subscribe( (arrDetailSeasons:any) => {
+          this.detailSeasons = arrDetailSeasons
+          // tri du tableau des saisons par ordre chronologique
+          this.detailSeasons.sort(
+            (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
+          )
+  
+          console.log("detailSeasons :", this.detailSeasons);
+        }  
+  
+      )
+    }
+    else {
+      // Les infos de la  série sont à récupérer sur TMDB
+      // GET infos Série (TMDB)
+      this.origineAPI = "TMDB";
+
+      this.detailTvService.getDetailsFromApiTmdb(this.idSerie);
+  
+      // GET infos Saisons (TMDB)
+      this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
+      .subscribe( (arrDetailSeasons:any) => {
+          this.detailSeasons = arrDetailSeasons
+          // tri du tableau des saisons par ordre chronologique
+          this.detailSeasons.sort(
+            (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
+          )
+  
+          console.log("detailSeasons :", this.detailSeasons);
+        }  
+  
+      )
+
+    }
     
 
-    // GET infos Série (TMDB)
-    this.detailTvService.getDetailsFromApiTmdb(this.idSerie);
-
-    // GET infos Saisons (TMDB)
-    this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
-    .subscribe( (arrDetailSeasons:any) => {
-        this.detailSeasons = arrDetailSeasons
-        // tri du tableau des saisons par ordre chronologique
-        this.detailSeasons.sort(
-          (a,b) => ( a.season_number < b.season_number ? -1 : 1)
-        )
-
-        console.log("detailSeasons :", this.detailSeasons);
-      }  
-
-    )
 
   }
 
 
+  
   // BUILD map Wish Episode <-> Btn css active
-
   buildMapIconesEpisodesSaisons() {
     // API pour récupérer tous les episodes Wish
     // https://redline.fr.nf/api/v1/wish/episode/all
@@ -175,7 +203,7 @@ export class DetailsheettvComponent {
     
     // API pour récupérer tous les episodes Watch
     // https://redline.fr.nf/api/v1/watch/episode/all
-    this.wishSvc.getAllWatchId().subscribe({
+    this.watchSvc.getAllWatchId().subscribe({
       next: (response:any) => {
         console.log("buildMapBtnEpisodes > getAllWatchId ", response)
         for (let watch of response) {
@@ -202,10 +230,6 @@ export class DetailsheettvComponent {
       error: error => console.error(error)
     })
     
-  }
-
-  callTest(str:string) {
-    this.alerteService.showAlert("TEST " + str + "!!!");
   }
 
   goBack() {
@@ -238,7 +262,7 @@ export class DetailsheettvComponent {
     });
 
   // vérifie si la série a un WatchId
-  await this.wishSvc.getWatchIdTv().toPromise().then((response:any) => {
+  await this.watchSvc.getWatchIdTv().toPromise().then((response:any) => {
       console.log("getWatchIdTv ", response)
       for (let watch of response) {
         if(watch.idTv == this.idSerie) {
@@ -513,7 +537,7 @@ export class DetailsheettvComponent {
   /////////////////////
   addAllWatchEpisodes() {
 
-    this.wishSvc.postAllWatchEpisodesToApi(this.idSerie)
+    this.watchSvc.postAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
         console.log("addAllWatchEpisodes > wishSvc.postAllWatchEpisodesToApi", response)
@@ -544,7 +568,7 @@ export class DetailsheettvComponent {
 
   deleteAllWatchEpisodes() {
 
-    this.wishSvc.deleteAllWatchEpisodesToApi(this.idSerie)
+    this.watchSvc.deleteAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
         console.log("delAllWatchEpisodes > wishSvc.delAllWatchEpisodesToApi", response)
@@ -569,7 +593,7 @@ export class DetailsheettvComponent {
   addAllWatchEpisodesOfSeason(idSeason: number) {
 
     console.log("Début addAllWatchEpisodesOfSeason")
-    this.wishSvc.postAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
+    this.watchSvc.postAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
         console.log("addAllWatchEpisodesOfSeason > wishSvc.postAllWatchEpisodesOfSeasonToApi", response)
@@ -610,7 +634,7 @@ export class DetailsheettvComponent {
   delAllWatchEpisodesOfSeason(idSeason: number) {
 
     console.log("Début delAllWatchEpisodesOfSeason")
-    this.wishSvc.deleteAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
+    this.watchSvc.deleteAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
         console.log("delAllWatchEpisodesOfSeason > wishSvc.deleteAllWatchEpisodesOfSeasonToApi", response)
@@ -649,7 +673,7 @@ export class DetailsheettvComponent {
 
   addWatchEpisode(idSeason: number, idEpisode: number) {
 
-    this.wishSvc.postWatchEpisodeToApi(this.idSerie, idSeason, idEpisode)
+    this.watchSvc.postWatchEpisodeToApi(this.idSerie, idSeason, idEpisode)
     .subscribe({
       next: (watch:any)=> {
         console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)
@@ -695,7 +719,7 @@ export class DetailsheettvComponent {
       console.log("watchIdToDelete = " + watchIdToDelete)
     }
 
-    this.wishSvc.deleteWatchEpisodeToApi(watchIdToDelete)
+    this.watchSvc.deleteWatchEpisodeToApi(watchIdToDelete)
     .subscribe({
       next: (watch:any)=> {
         console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)

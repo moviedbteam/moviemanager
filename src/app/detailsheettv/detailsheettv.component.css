@@ -100,7 +100,7 @@ div>button>span>i {
 }
 
 .accordion {
-    width: 800px;
+    width: 1000px;
 }
 
 .menu-saison {
@@ -126,4 +126,9 @@ div>button>span>i {
 
 table {
     color: rgb(140, 120, 160);
+}
+
+td > img {
+    width: 92px;
+    height: 52px;
 }

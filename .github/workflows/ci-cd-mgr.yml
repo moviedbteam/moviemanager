@@ -38,15 +38,17 @@ jobs:
 
     # - run: npm test
   
-  ###############
-  ## PACKAGING ##
-  ###############
+  #####################################################
+  ## CI : INTEGRATION                                ##
+  ## npm install, build, and test                    ##
+  ## archive dist-without-markdown dist/moviemanager ##
+  #####################################################
   
   #name: Node CI
   #on: [push]
   #jobs:
   
-  build_and_test:
+  CI_install_build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -71,9 +73,11 @@ jobs:
       #     path: output/test/code-coverage.html
 
 
-  #################################
-  ## Build and Deploy to Netlify ##
-  #################################
+  ######################################################
+  ## CD : DEPLOYMENT                                  ##
+  ## Download dist-without-markdown dist/moviemanager ##
+  ## Deploy to Netlify                                ##
+  ######################################################
 
   # .github/workflows/netlify.yml
   #name: Build and Deploy to Netlify
@@ -81,10 +85,11 @@ jobs:
   #  push:
   #  pull_request:
   #jobs:
-  build_to_netlify:
+  CD_deploy_to_netlify:
     # needs: build_on_github
     needs: build_and_test
-    runs-on: ubuntu-18.04
+    # runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       
       
@@ -99,6 +104,9 @@ jobs:
           name: dist-without-markdown
           #path: dist
           path: dist/moviemanager
+      - name: Create _redirects netlify file
+        run: |
+          echo "${{ secrets._REDIRECTS }}" > dist/moviemanager/_redirects
 
       # ( Build to ./dist or other directory... )
 

@@ -12,14 +12,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SeeallmovieComponent {
 
-  idMovie:number = 0; //recup de detailsheetmovie : A SUPPRIMER ??
+  // idMovie:number = 0; //recup de detailsheetmovie : A SUPPRIMER ??
   movies:Array<Movie> =[];
 
+  // Statut des icônes Wish
+  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
+  _wishTitleIconOn: string = "Supprimer tous les épisodes de cette saison de la Wish liste"
+  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
+  _wishTitleIconOff: string = "Ajouter tous les épisodes de cette saison à la Wish liste"
+
+  // Statut des icônes Watch
+  _watchStatusIconOn: string = "fa-solid fa-eye fa-lg"
+  _watchTitleIconOn: string = "Restaurer tous les épisodes de cette saison en 'Non Vu'"
+  _watchStatusIconOff: string = "fa-regular fa-eye-slash fa-lg"
+  _watchTitleIconOff: string = "Marquer tous les épisodes de cette saison comme 'Vus'"
+
+
   // Statuts des icones à OFF
-  wishStatusIcon: string = "fa-regular fa-bookmark fa-lg"
-  wishTitleIcon: string = "Ajouter à la Wish liste"
-  watchStatusIcon: string = "fa-solid fa-check fa-lg"
-  watchTitleIcon: string = "Ajouter comme Vu"
+  // wishStatusIcon: string = "fa-regular fa-bookmark fa-lg"
+  // wishTitleIcon: string = "Ajouter à la Wish liste"
+  // watchStatusIcon: string = "fa-solid fa-check fa-lg"
+  // watchTitleIcon: string = "Ajouter comme Vu"
 
   subscriptionMovie:any;
 
@@ -42,27 +55,31 @@ export class SeeallmovieComponent {
         this.movies = moviesArr
         console.log(this.movies);
 
-
-
         for (let movie of this.movies){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
           .toPromise()      
           .then( (response:any) => {
             console.log(response);
-            // INIT statut des iconess wish et watch
             console.log(movie);
-            // INIT statut des boutons wish et watch
+            // INIT statut des icones wish et watch
             if (response.idWish > 0) {
               console.log(response.idWish);
               movie.idWish = response.idWish;
-              this.setStatusWishIcon(1) ;
+              movie._wishStatusIcon = this._wishStatusIconOn;
+              movie._wishTitleIcon = this._wishStatusIconOn;
+            } else {
+              movie._wishStatusIcon = this._wishStatusIconOff;
+              movie._wishTitleIcon = this._wishStatusIconOff;
             };
             if (response.idWatch > 0) {
               console.log(response.idWatch);
               movie.idWatch = response.idWatch;
-              this.setStatusWatchIcon(1) ;
+              movie._watchStatusIcon = this._watchStatusIconOn;
+              movie._watchTitleIcon = this._watchStatusIconOn;
+            } else {
+              movie._watchStatusIcon = this._watchStatusIconOff;
+              movie._watchTitleIcon = this._watchStatusIconOff;
             };
-       
           });
           
         }  
@@ -72,51 +89,51 @@ export class SeeallmovieComponent {
 
   }
 
-  updateStatusWishIcon(idMovie:any) {
-    if (this.wishStatusIcon.includes('fa-solid')) {
+  updateStatusWishIcon(movie:Movie) {
+    if (movie._wishStatusIcon === this._wishStatusIconOn) {
       console.log("Appel à this.movieSvc.delWishMovie()");
-      this.movieSvc.delWishMovie();
-      this.setStatusWishIcon(0)
+      this.movieSvc.delWishThisMovie(movie);
+      this.setStatusWishIcon(movie, 0)
     }
     else {
       console.log("Appel à this.addWish()");
-      this.addWish();
-      this.setStatusWishIcon(1)
+      this.addWish(movie);
+      this.setStatusWishIcon(movie, 1)
     }
   }
 
-  updateStatusWatchIcon(idMovie:any) {
-    if (this.watchStatusIcon.includes('fa-circle-check')) {
+  updateStatusWatchIcon(movie:Movie) {
+    if (movie._watchStatusIcon === this._watchStatusIconOn) {
       console.log("Appel à this.movieSvc.delWatchMovie()");
-      this.movieSvc.delWatchMovie();
-      this.setStatusWatchIcon(0)
+      this.movieSvc.delWatchThisMovie(movie);
+      this.setStatusWatchIcon(movie, 0)
     }
     else {
       console.log("Appel à this.checkWatch()");
-      this.checkWatch();
-      this.setStatusWatchIcon(1)
+      this.checkWatch(movie);
+      this.setStatusWatchIcon(movie, 1)
     }
   }
 
-  setStatusWishIcon(status: number) {
+  setStatusWishIcon(movie:Movie , status: number) {
     if (status) {
-      this.wishStatusIcon = "fa-solid fa-bookmark fa-lg";
-      this.wishTitleIcon = "Supprimer de la Wish liste";
+      movie._wishStatusIcon = "fa-solid fa-bookmark fa-lg";
+      movie._wishTitleIcon = "Supprimer de la Wish liste";
     }
     else {
-      this.wishStatusIcon = "fa-regular fa-bookmark fa-lg";
-      this.wishTitleIcon = "Ajouter à la Wish liste";
+      movie._wishStatusIcon = "fa-regular fa-bookmark fa-lg";
+      movie._wishTitleIcon = "Ajouter à la Wish liste";
     }
   }
 
-  setStatusWatchIcon(status: number) {
+  setStatusWatchIcon(movie:Movie , status: number) {
     if (status) {
-      this.watchStatusIcon = "fa-sharp fa-solid fa-circle-check fa-lg";
-      this.watchTitleIcon = "Restaurer en Non Vu";
+      movie._watchStatusIcon = "fa-sharp fa-solid fa-circle-check fa-lg";
+      movie._watchTitleIcon = "Restaurer en Non Vu";
     }
     else {
-      this.watchStatusIcon = "fa-solid fa-check fa-lg";
-      this.watchTitleIcon = "Ajouter comme Vu";
+      movie._watchStatusIcon = "fa-solid fa-check fa-lg";
+      movie._watchTitleIcon = "Ajouter comme Vu";
     }
   }
 
@@ -128,10 +145,8 @@ export class SeeallmovieComponent {
     this.alerteSvc.showAlert("Ajouté aux " + str + "!!!");
   }
 
-  addWish() {
-    let sendToApi = { 
-      idMovie:this.idMovie, 
-    };
+  addWish(movie:Movie) {
+    let sendToApi = { idMovie:movie.idMovie, };
     
     this.movieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
@@ -143,10 +158,8 @@ export class SeeallmovieComponent {
     });
   }
 
-  checkWatch() {
-    let sendToApi = { 
-      idMovie:this.idMovie
-    };
+  checkWatch(movie:Movie) {
+    let sendToApi = { idMovie:movie.idMovie,};
     console.log(sendToApi);
 
     this.movieSvc.postWatchMovieToApi(sendToApi)

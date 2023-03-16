@@ -25,6 +25,10 @@ export class TmdbMovie {
   viewingMood: number = 0;
   dateWatch: Date;
   idWish: number = 0;
+  _wishStatusIcon: string = "fa-regular fa-bookmark fa-lg";
+  _wishTitleIcon: string = "Ajouter à la Wish liste";
+  _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";
+  _watchTitleIcon: string = "Marquer comme 'Vus'";
 
   constructor(movieFromApi:any) {
     /// DIFFRENTS DE BACK ///

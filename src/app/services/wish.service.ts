@@ -11,7 +11,7 @@ export class WishService {
 
   _apiBack = environment.base_url_apiBack;
   
-  _apiGetWishTvs:string = '/wish/episode/all';
+  // _apiGetWishTvs:string = '/wish/episode/all';
   _apiGetAllWishTv:string = "/wish/episode/all";
   _apiGetAllWatchTv:string = "/watch/episode/all";
   _apiGetListWishTv:string = "/tv/wishlist";
@@ -44,7 +44,7 @@ export class WishService {
 
   getWishTvsFromApi() {
     
-    this.http.get(this._apiBack+this._apiGetWishTvs)
+    this.http.get(this._apiBack+this._apiGetListWishTv)
     
     .pipe(
       map((apiResponse:any) => {

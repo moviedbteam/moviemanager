@@ -25,6 +25,11 @@ export class Movie {
   viewingMood: number = 0;
   dateWatch: Date;
   idWish: number = 0;
+  _wishStatusIcon: string = "fa-regular fa-bookmark fa-lg";
+  _wishTitleIcon: string = "Ajouter à la Wish liste";
+  _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";
+  _watchTitleIcon: string = "Marquer comme 'Vus'";
+
 
   constructor(movieFromApi:any) {
     /// DIFFRENTS DE TMDB ///
@@ -54,6 +59,10 @@ export class Movie {
     this.tagline = movieFromApi.tagline;
     this.voteCount = movieFromApi.voteCount;
     this.status = movieFromApi.status;
+    // this._wishStatusIcon = movieFromApi._wishStatusIcon;
+    // this._wishTitleIcon = movieFromApi._wishTitleIcon;
+    // this._watchStatusIcon = movieFromApi._watchStatusIcon;
+    // this._watchTitleIcon = movieFromApi._watchTitleIcon;
   } 
 }
 

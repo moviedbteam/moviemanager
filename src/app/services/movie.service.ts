@@ -151,7 +151,9 @@ export class MovieService {
     return this._wishesMovie$.asObservable();
   }
   delWishMovie() {
-    this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.movie.idWish, {observe: 'response', responseType: 'text'})
+    let sendToApi = {wishIdToDelete:this.movie.idWish,};
+    // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.movie.idWish, {observe: 'response', responseType:'text'})
+    this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
@@ -163,6 +165,23 @@ export class MovieService {
       error: error => console.error(error)
     });
   }
+  delWishThisMovie(wishMovieToDel: Movie) {
+    let sendToApi = {wishIdToDelete:wishMovieToDel.idWish,};
+    // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
+    this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+        if(response.status == "200") {
+          wishMovieToDel.idWish = 0;
+          this._movieDetail$.next(this.movie);
+        }
+      },
+      error: error => console.error(error)
+    });
+  }
+
+  
 
   ////////////////////////////// SERVICES WATCH //////////////////////////////
   postWatchMovieToApi(postWatchMovie: any) {
@@ -187,12 +206,29 @@ export class MovieService {
     return this._watchesMovie$.asObservable();
   }
   delWatchMovie() {
-    this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.movie.idWatch, {observe: 'response', responseType: 'text'} )
+    let sendToApi = {watchIdToDelete:this.movie.idWatch,};
+    // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.movie.idWatch, {observe: 'response', responseType: 'text'} )
+    this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
         if(response.status == "200") {
           this.movie.idWatch = 0;
+          this._movieDetail$.next(this.movie);
+        }
+      },
+      error: error => console.error(error)
+    });
+  }
+  delWatchThisMovie(watchMovieToDel:Movie) {
+    let sendToApi = {watchIdToDelete:watchMovieToDel.idWatch,};
+    // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
+    this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+        if(response.status == "200") {
+          watchMovieToDel.idWatch = 0;
           this._movieDetail$.next(this.movie);
         }
       },

@@ -24,8 +24,8 @@ export class OverviewWatchMovieComponent {
           }
           this.watchMovies = watchesArr
           console.log(this.watchMovies);
-        }
-      );    
+          return;
+        });    
   }
 
   getImgFullUrl(urlFragment:string):string {

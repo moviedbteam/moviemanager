@@ -289,7 +289,10 @@ export class MovieService {
 ////////////////////////////// SERVICES BLACKLIST //////////////////////////////
   postBlackListMovie(movieToBlackList:Movie) {
     let sendToApi = {idContent:movieToBlackList.idMovie,};
-    this.http.delete(this.apiBack+this.apiPostBlackListMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
+    console.log(sendToApi);
+    console.log(this.apiBack+this.apiPostBlackListMovie);
+    // this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi)
+    this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi ,{observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
         console.log(response.status)

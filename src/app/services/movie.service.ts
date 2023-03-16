@@ -32,6 +32,7 @@ export class MovieService {
   apiGetWatchMovies:string = '/movie/watchlist';
   apiGetRecoTvs:string = '/recommendation/tv';
   apiGetRecoMovies:string = '/recommendation/movie';
+  apiPostBlackListMovie:string = '/blacklist/movie';
   private _watchesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
   private _wishesMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
   private _recoTv$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -283,5 +284,18 @@ export class MovieService {
       },
       error: error => console.error(error)
     });
+  }
+
+////////////////////////////// SERVICES BLACKLIST //////////////////////////////
+  postBlackListMovie(movieToBlackList:Movie) {
+    let sendToApi = {idContent:movieToBlackList.idMovie,};
+    this.http.delete(this.apiBack+this.apiPostBlackListMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+      },
+      error: error => console.error(error)
+    });
+
   }
 }

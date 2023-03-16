@@ -24,8 +24,9 @@ export class OverviewWishMovieComponent {
           }
           this.wishMovies = wishesArr
           console.log(this.wishMovies);
-        }
-      );
+          return;
+
+        });
   }
 
   getImgFullUrl(urlFragment:string):string {

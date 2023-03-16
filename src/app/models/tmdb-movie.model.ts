@@ -29,6 +29,8 @@ export class TmdbMovie {
   _wishTitleIcon: string = "Ajouter à la Wish liste";
   _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";
   _watchTitleIcon: string = "Marquer comme 'Vus'";
+  _blackStatusIcon: string = "fa-solid fa-ban fa-lg";
+  _blackTitleIcon: string = "Ne plus recommander";
 
   constructor(movieFromApi:any) {
     /// DIFFRENTS DE BACK ///

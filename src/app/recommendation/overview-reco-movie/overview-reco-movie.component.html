@@ -9,14 +9,20 @@
               <div class="mini-menu">
                 <i [class]="recoMovie._wishStatusIcon" 
                   [title]="recoMovie._wishTitleIcon"
-                  style="color: yellow; margin-right: 10px;"
+                  style="color: yellow; margin-right: 5px; margin-left: 10px;"
                   (click)="updateStatusWishIcon(recoMovie)
                   ; $event.preventDefault(); $event.stopPropagation()">
                 </i>
                 <i [class]="recoMovie._watchStatusIcon" 
                   [title]="recoMovie._watchTitleIcon"
-                  style="color: #0D6EFD;"
+                  style="color: #0D6EFD; margin-right: 5px; margin-left: 10px;"
                   (click)="updateStatusWatchIcon(recoMovie)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="recoMovie._blackStatusIcon" 
+                  [title]="recoMovie._blackTitleIcon"
+                  style="color: #ffffff; margin-right: 5px; margin-left: 10px;"
+                  (click)="postBlackList(recoMovie)
                   ; $event.preventDefault(); $event.stopPropagation()">
                 </i>
               </div>

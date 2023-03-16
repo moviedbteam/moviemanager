@@ -15,17 +15,21 @@ export class OverviewRecoMovieComponent {
   
   recoMovies:Array<Movie> = [];
 
-  // Statut des icônes Wish
-  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
-  _wishTitleIconOn: string = "Supprimer de la Wish liste"
-  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
-  _wishTitleIconOff: string = "Ajouter à la Wish liste"
+  // Statut icône Wish
+  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
+  _wishTitleIconOn: string = "Supprimer de la Wish liste";
+  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg";
+  _wishTitleIconOff: string = "Ajouter à la Wish liste";
 
-  // Statut des icônes Watch
+  // Statut icône Watch
   _watchStatusIconOn: string = "fa-solid fa-eye fa-lg"
   _watchTitleIconOn: string = "Restaurer 'Non Vu'"
   _watchStatusIconOff: string = "fa-regular fa-eye-slash fa-lg"
   _watchTitleIconOff: string = "Marquer comme 'Vus'"
+
+  // Statut icône BlackList
+  _blackStatusIconOn: string = "fa-solid fa-ban fa-lg";
+  _blackTitleIconOn: string = "Ne plus recommander";
 
   subscriptionRecoMovie:any;
 
@@ -40,16 +44,6 @@ export class OverviewRecoMovieComponent {
   
   async ngOnInit() {
     
-    // this.subscriptionRecoMovie = this.movieSvc.getRecoMovie$()
-    // .subscribe(
-    //   (recoArr:Movie[]) => {        
-    //     if(recoArr.length===0) {
-    //       this.movieSvc.getRecoMovieFromApi();
-    //     }
-    //     this.recoMovies = recoArr
-    //     }
-    // );
-
     this.subscriptionRecoMovie = await this.movieSvc.getRecoMovie$()
       .subscribe( async (recoArr:Movie[]) => {
         if(recoArr.length===0) {
@@ -64,32 +58,38 @@ export class OverviewRecoMovieComponent {
           .then( (response:any) => {
             console.log(response);
             console.log(movie);
-            // INIT statut des icones wish et watch
+            // INIT icones wish, watch, blackList
             if (response.idWish > 0) {
               console.log(response.idWish);
               movie.idWish = response.idWish;
               movie._wishStatusIcon = this._wishStatusIconOn;
-              movie._wishTitleIcon = this._wishStatusIconOn;
+              movie._wishTitleIcon = this._wishTitleIconOn;
             } else {
               movie._wishStatusIcon = this._wishStatusIconOff;
-              movie._wishTitleIcon = this._wishStatusIconOff;
+              movie._wishTitleIcon = this._wishTitleIconOff;
             };
             if (response.idWatch > 0) {
               console.log(response.idWatch);
               movie.idWatch = response.idWatch;
               movie._watchStatusIcon = this._watchStatusIconOn;
-              movie._watchTitleIcon = this._watchStatusIconOn;
+              movie._watchTitleIcon = this._watchTitleIconOn;
             } else {
               movie._watchStatusIcon = this._watchStatusIconOff;
-              movie._watchTitleIcon = this._watchStatusIconOff;
+              movie._watchTitleIcon = this._watchTitleIconOff;
             };
+            movie._blackStatusIcon = this._blackStatusIconOn;
+            movie._blackTitleIcon = this._blackTitleIconOn;
           });
           
         }  
         console.log(this.recoMovies);
-        // return;
+        return;
       });
 
+  }
+
+  postBlackList(movie:Movie) {
+    this.movieSvc.postBlackListMovie(movie);
   }
 
   updateStatusWishIcon(movie:Movie) {

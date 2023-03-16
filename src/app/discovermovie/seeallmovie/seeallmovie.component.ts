@@ -76,7 +76,7 @@ export class SeeallmovieComponent {
           
         }  
         console.log(this.movies);
-        // return;
+        return;
       });
 
   }

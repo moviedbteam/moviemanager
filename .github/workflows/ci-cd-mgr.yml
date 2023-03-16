@@ -87,7 +87,7 @@ jobs:
   #jobs:
   CD_deploy_to_netlify:
     # needs: build_on_github
-    needs: build_and_test
+    needs: CI_install_build
     # runs-on: ubuntu-18.04
     runs-on: ubuntu-latest
     steps:

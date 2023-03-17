@@ -23,6 +23,7 @@ export class WishService {
   _apiDeleteWishEpisode: string = "/wish/episode"
   _apiDelWishTv:string = '/wish/tv';
 
+
   private _wishesTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(

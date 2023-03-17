@@ -61,6 +61,7 @@ export class TvService {
     return this.tvs$.asObservable();
   }
 
+
   getDetailsFromApi(id:number):void{
     let urlApi = this.apiTmdb+'/tv/';
     let apiKey = this.apiKeyTmdb;
@@ -80,7 +81,6 @@ export class TvService {
     });
   }
 
-  // gettvDetail$ ():Observable<tvModel[]> {
   getTvDetail$ ():Observable<TvModel> {
     return this.tvDetail$.asObservable();
   }

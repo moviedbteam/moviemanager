@@ -4,6 +4,7 @@ interface Genre {
 }
 
 export class TvModel {
+
     id: number;
     titre: string;
     resume: string;
@@ -13,6 +14,9 @@ export class TvModel {
     date: Date;
     duration: number;
     genres: Genre[] | any[];
+
+    idWish: any;
+    idWatch: any;
 
     constructor(tvFromApi:any) {
         this.id = tvFromApi.id;
@@ -24,6 +28,17 @@ export class TvModel {
         this.date = tvFromApi.release_date;
         this.duration = tvFromApi.runtime? tvFromApi.runtime : 0;
         this.genres = tvFromApi.genres?tvFromApi.genres:[];
+
+        this.idWish = null;
+        this.idWatch = null;
+    }
+
+    set setIdWish(idWish:any) {
+        this.idWish = idWish;
+    }
+
+    set setIdWatch(idWatch:any) {
+        this.idWatch = idWatch;
     }
 }
 

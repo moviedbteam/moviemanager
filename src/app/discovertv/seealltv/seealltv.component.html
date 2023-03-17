@@ -6,8 +6,14 @@
         <div [routerLink]="['/detailtv',tv.id]" class="card bg-dark flex">
             <img [src]="getImgFullUrl(tv.image_landscape)" alt="">
             <div class="mini-menu">
-                <i class="fa-regular fa-bookmark fa-lg" style="color: yellow;" (click)="callTest('WISH'); $event.preventDefault(); $event.stopPropagation()"></i>
-                <i class="fa-solid fa-check fa-lg" style="color: blue;" (click)="callTest('WATCH'); $event.preventDefault(); $event.stopPropagation()"></i>
+                <i [class]="this.mapWishSerie.get(tv.id)?.cssIconOn? this.mapWishSerie.get(tv.id)?.cssIconOn:_wishStatusIconSerieOff" 
+                    style="color: yellow;" 
+                    (click)="updateStatusWishSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="this.mapWatchSerie.get(tv.id)?.cssIconOn? this.mapWatchSerie.get(tv.id)?.cssIconOn:_watchStatusIconSerieOff" 
+                    style="color: blue;" 
+                    (click)="updateStatusWatchSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
+                </i>
             </div>
             <div class="card-body">
                 <h2>{{tv.titre}}</h2>

@@ -48,15 +48,6 @@ export class SeealltvComponent {
 
   ngOnInit() {
 
-    // this.subscription = this.tvSvc.getTvs$()
-    //   .subscribe(
-    //     (tvsArr:TvModel[]) => {
-    //       if(tvsArr.length===0) {
-    //         this.tvSvc.getTvsFromApi();
-    //       }
-    //       this.tvs = tvsArr
-    //     });
-
     this.subscription = this.tvSvc.getTvs$()
       .subscribe( (tvsArr:TvModel[]) => {
 

@@ -49,18 +49,15 @@ export class OverviewRecoMovieComponent {
         if(recoArr.length===0) {
           this.movieSvc.getRecoMovieFromApi();
         }
-        this.recoMovies = recoArr
+        this.recoMovies = recoArr;
         console.log(this.recoMovies);
 
         for (let movie of this.recoMovies){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
           .toPromise()      
           .then( (response:any) => {
-            console.log(response);
-            console.log(movie);
             // INIT icones wish, watch, blackList
             if (response.idWish > 0) {
-              console.log(response.idWish);
               movie.idWish = response.idWish;
               movie._wishStatusIcon = this._wishStatusIconOn;
               movie._wishTitleIcon = this._wishTitleIconOn;
@@ -69,7 +66,6 @@ export class OverviewRecoMovieComponent {
               movie._wishTitleIcon = this._wishTitleIconOff;
             };
             if (response.idWatch > 0) {
-              console.log(response.idWatch);
               movie.idWatch = response.idWatch;
               movie._watchStatusIcon = this._watchStatusIconOn;
               movie._watchTitleIcon = this._watchTitleIconOn;
@@ -82,7 +78,6 @@ export class OverviewRecoMovieComponent {
           });
           
         }  
-        console.log(this.recoMovies);
         return;
       });
 

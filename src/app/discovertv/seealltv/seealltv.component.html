@@ -7,10 +7,12 @@
             <img [src]="getImgFullUrl(tv.image_landscape)" alt="">
             <div class="mini-menu">
                 <i [class]="this.mapWishSerie.get(tv.id)?.cssIconOn? this.mapWishSerie.get(tv.id)?.cssIconOn:_wishStatusIconSerieOff" 
+                    [title]="this.mapWishSerie.get(tv.id)?.cssIconOn? _wishTitleIconSerieOn:_wishTitleIconSerieOff"
                     style="color: yellow;" 
                     (click)="updateStatusWishSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
                 </i>
                 <i [class]="this.mapWatchSerie.get(tv.id)?.cssIconOn? this.mapWatchSerie.get(tv.id)?.cssIconOn:_watchStatusIconSerieOff" 
+                    [title]="this.mapWatchSerie.get(tv.id)?.cssIconOn? _watchTitleIconSerieOn:_watchTitleIconSerieOff"
                     style="color: blue;" 
                     (click)="updateStatusWatchSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
                 </i>

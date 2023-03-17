@@ -121,6 +121,8 @@ export class MovieService {
     let params = new HttpParams()
     .set('api_key', apiKey)
     .set('language', 'fr')
+    .set('vote_average.gte', '7')
+    .set('vote_count.gte', '1000')
     .set('page', this.indexPage);
 
     // console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
@@ -224,7 +226,8 @@ export class MovieService {
         console.log(response.status)
         if(response.status == "200") {
           wishMovieToDel.idWish = 0;
-          this._movieDetail$.next(this.movie);
+          /////// A VERIFIER !!! ///////
+          // this._movieDetail$.next(wishMovieToDel);
         }
       },
       error: error => console.error(error)

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AlertService } from '../services/alert.service';
-import { UserService } from '../services/user.service';
-import { CreateUserModel, CreateUserModelIam, UserModel } from '../models/userlogin.model';
+import { AlertService } from '../../services/alert.service';
+import { UserService } from '../../services/user.service';
+import { CreateUserModel, CreateUserModelIam, UserModel } from '../../models/userlogin.model';
 
 @Component({
   selector: 'app-create-user-account',

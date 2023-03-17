@@ -8,7 +8,14 @@ p {
 
 div > img {
     position: relative;
+    width: 100%;
+    
 }
+
+/* img {
+    height: 150px;
+    width: 300px;
+} */
 
 .mini-menu {
     /* display: block; */

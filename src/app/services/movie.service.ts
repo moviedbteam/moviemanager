@@ -226,7 +226,8 @@ export class MovieService {
         console.log(response.status)
         if(response.status == "200") {
           wishMovieToDel.idWish = 0;
-          this._movieDetail$.next(this.movie);
+          /////// A VERIFIER !!! ///////
+          // this._movieDetail$.next(wishMovieToDel);
         }
       },
       error: error => console.error(error)

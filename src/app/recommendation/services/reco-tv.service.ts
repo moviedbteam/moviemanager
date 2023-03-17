@@ -11,6 +11,9 @@ export class RecoTvService {
   
   apiBack = environment.base_url_apiBack;
   apiGetRecoTvs:string = '/recommendation/tv';
+  apiPostBlackListTv:string = '/blacklist/tv';
+  apiPostWishTv:string = '/wish/tv';
+  apiPostWatchTv:string = '/watch/tv';
   private _recoTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
@@ -34,9 +37,72 @@ export class RecoTvService {
       }
     });  
   }
-
   getRecoTv$ ():Observable<RecoTv[]> {
     return this._recoTv$.asObservable();
+  }
+
+ ////////////////////////////// SERVICES WISH //////////////////////////////
+
+
+  postWishTvToApi(postWishTv: any) {
+    return this.http.post(this.apiBack+this.apiPostWishTv, postWishTv, {observe: 'response', responseType: 'text'});
+  }
+
+  delWishThisTv(wishTvToDel: RecoTv) {
+   let sendToApi = {wishIdToDelete:wishTvToDel.idWish,};
+    // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
+    this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+        if(response.status == "200") {
+          wishTvToDel.idWish = 0;
+          /////// A VERIFIER !!! ///////
+          // this._tvDetail$.next(wishTvToDel);
+        }
+      },
+      error: error => console.error(error)
+    });
+  }
+
+  ////////////////////////////// SERVICES WATCH //////////////////////////////
+
+  postWatchTvToApi(postWatchTv: any) {
+    return this.http.post(this.apiBack+this.apiPostWatchTv, postWatchTv, {observe: 'response', responseType: 'text'} );
+  }
+
+  delWatchThisTv(watchTvToDel:RecoTv) {
+    let sendToApi = {watchIdToDelete:watchTvToDel.idWatch,};
+    // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
+    this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+        if(response.status == "200") {
+          watchTvToDel.idWatch = 0;
+          /////// A VERIFIER !!! ///////
+          // this._tvDetail$.next(watchTvToDel);
+        }
+      },
+      error: error => console.error(error)
+    });
+  }
+
+
+  ////////////////////////////// SERVICES BLACKLIST //////////////////////////////
+  postBlackListTv(tvToBlackList:RecoTv) {
+    let sendToApi = {idContent:tvToBlackList.idTv,};
+    console.log(sendToApi);
+    console.log(this.apiBack+this.apiPostBlackListTv);
+    // this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi)
+    this.http.post(this.apiBack+this.apiPostBlackListTv, sendToApi ,{observe: 'response', responseType:'text'} )
+    .subscribe({
+      next: (response:any) => {
+        console.log(response.status)
+      },
+      error: error => console.error(error)
+    });
+
   }
 
 }

@@ -10,7 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MaterialExampleModule } from 'src/material.module';
 
 import { ConnexionComponent } from './connexion/connexion.component';
-import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
+import { CreateUserAccountComponent } from './connexion/create-user-account/create-user-account.component';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { PrintDurationPipe } from './shared/pipes/print-duration.pipe';

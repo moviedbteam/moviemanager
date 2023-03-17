@@ -101,7 +101,7 @@
 
 .navbar-nav{
   /* background-color: rgb(15, 15, 50) !important; */
-  font-size: 2em;
+  /* font-size: 2em; */
   /* color: rgb(140, 120, 160); */
   /* color: rgb(113 13 253); */
   /* color: rgb(140, 120, 160); */
@@ -109,13 +109,15 @@
 }
 
 .navbar .navbar-toggler {
-  top: .25rem;
+  top: .5rem;
   left: 10rem;
+  right: 10rem;
   /* color: rgb(140, 120, 160); */
   /* background-color: rgb(15, 15, 50) !important; */
 }
 
 .navbar i{
+  font-size: 1.5em;
   color: rgb(140, 120, 160);
 }
 

@@ -8,7 +8,7 @@ import { LibrarytvComponent } from './librarytv/librarytv.component';
 import { RecommendationComponent } from './recommendation/recommendation.component';
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
-import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
+import { CreateUserAccountComponent } from './connexion/create-user-account/create-user-account.component';
 
 const routes: Routes = [
   {

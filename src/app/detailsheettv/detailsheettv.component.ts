@@ -11,6 +11,7 @@ import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
 import { AlertService } from '../services/alert.service';
 import { DetailSeasonMmaModel } from './models/detail-tv-mma.model';
 import { UserService } from '../services/user.service';
+import { BehaviorSubject } from 'rxjs';
 
 interface wishEpisodeInterface {
   cssIconOn: string;
@@ -50,6 +51,9 @@ export class DetailsheettvComponent {
   origineAPI:string = "";
   isAuth = this.userService.isAuth();
   
+  loading$ = new BehaviorSubject<boolean>(true);
+  loadingAllWishEpisodes$ = new BehaviorSubject<boolean>(true);
+  loadingAllWatchEpisodes$ = new BehaviorSubject<boolean>(true);
 
   subscriptionDetailSeasons:any;
   detailSeasons: Array<DetailSeasonMmaModel> = [];
@@ -109,9 +113,14 @@ export class DetailsheettvComponent {
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,
-      private alerteService:AlertService,
+      public alerteService:AlertService,
       public userService: UserService
-  ) {}
+  ) { 
+    console.log("========== this.loading$.next(true)")
+    this.loading$.next(true);
+    this.loadingAllWishEpisodes$.next(false);
+    this.loadingAllWatchEpisodes$.next(false);
+  }
 
   async ngOnInit() {
 
@@ -141,7 +150,7 @@ export class DetailsheettvComponent {
           this.detailSeasons.sort(
             (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
           )
-  
+          this.loading$.next(false);
           console.log("detailSeasons :", this.detailSeasons);
         }  
   
@@ -162,18 +171,17 @@ export class DetailsheettvComponent {
           this.detailSeasons.sort(
             (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
           )
-  
+          console.log("========== this.loading$.next(false)")
+          this.loading$.next(false);
           console.log("detailSeasons :", this.detailSeasons);
+          console.log("this.loading$ ", this.loading$.getValue())
         }  
   
       )
 
     }
-    
-
 
   }
-
 
   
   // BUILD map Wish Episode <-> Btn css active
@@ -290,6 +298,8 @@ export class DetailsheettvComponent {
 
     this.idSerie = this.route.snapshot.params['id'];
 
+    this.loadingAllWishEpisodes$.next(true);
+
     this.wishSvc.postAllWishEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
@@ -309,7 +319,7 @@ export class DetailsheettvComponent {
             cssIconTitleOn: this._wishTitleIconSeasonOn,
             seasonNumber: wish.seasonNumber
           })
-
+          this.loadingAllWishEpisodes$.next(false);
           this.alerteService.showAlert("Tous les épisodes de la série ont été ajoutés à la Wish liste")
         }
 
@@ -322,6 +332,7 @@ export class DetailsheettvComponent {
   deleteAllWishEpisodes() {
 
     this.idSerie = this.route.snapshot.params['id'];
+    this.loadingAllWishEpisodes$.next(true);
 
     this.wishSvc.deleteAllWishEpisodesToApi(this.idSerie)
     .subscribe({
@@ -333,6 +344,7 @@ export class DetailsheettvComponent {
           // MAJ de la map des saisons
           this.mapWishSeason.clear();
 
+          this.loadingAllWishEpisodes$.next(false);
           this.alerteService.showAlert("Tous les épisodes de la série ont été supprimés de la Wish liste")
         
       },
@@ -541,6 +553,8 @@ export class DetailsheettvComponent {
   /////////////////////
   addAllWatchEpisodes() {
 
+    this.loadingAllWatchEpisodes$.next(true);
+
     this.watchSvc.postAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
@@ -561,6 +575,7 @@ export class DetailsheettvComponent {
             seasonNumber: watch.seasonNumber
           })
 
+          this.loadingAllWatchEpisodes$.next(false);
           this.alerteService.showAlert("Tous les épisodes de la série ont été marqués comme 'Vus'")
         }
 
@@ -572,6 +587,8 @@ export class DetailsheettvComponent {
 
   deleteAllWatchEpisodes() {
 
+    this.loadingAllWatchEpisodes$.next(true);
+
     this.watchSvc.deleteAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
@@ -582,6 +599,7 @@ export class DetailsheettvComponent {
           // MAJ de la map des saisons
           this.mapWatchSeason.clear();
 
+          this.loadingAllWatchEpisodes$.next(false);
           this.alerteService.showAlert("Tous les épisodes de la série ont été restaurés en 'Non Vu'")
         
       },

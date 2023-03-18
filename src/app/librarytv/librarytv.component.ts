@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-librarytv',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./librarytv.component.css']
 })
 export class LibrarytvComponent {
+
+  isAuth: boolean = this.userService.isAuth();
+
+  constructor(public userService:UserService) {}
 
 }

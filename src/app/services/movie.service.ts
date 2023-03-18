@@ -19,6 +19,7 @@ export class MovieService {
   apiKey = environment.apiKey_apiTmdb;
   apiTmdbSearchMoviesFromApi = '/search/movie';
   apiTmdbGetMoviesFromApi = '/discover/movie';
+  apiGetTrendTvs:string = '/trending/movie/week';
   apiTmdbGetDetailsFromApi = '/movie/';
   private _searchedMovies$:BehaviorSubject<any> = new BehaviorSubject([]);
   private _movies$:BehaviorSubject<any> = new BehaviorSubject([]);
@@ -40,11 +41,41 @@ export class MovieService {
   
   /// OBSERVABLE EN COMMUN TMDB/BACK ///
   private _movieDetail$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _trendMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient
   ) { }
 
+  ////////////////////////////// SERVICES FOR TREND //////////////////////////////
+  getTrendMovieFromApi(){
+
+
+    let urlApi = this.apiTmdb+this.apiGetTrendTvs;
+    let apiKey = this.apiKey;
+    let params = new HttpParams()
+    .set('api_key', apiKey)
+    .set('page', '1')
+
+    // this.http.get(this.apiBack+this.apiGetTrendTvs)
+    this.http.get(urlApi, {params})
+    .pipe(
+      map((apiResponse:any) => {
+        return apiResponse.results.map( (reco: any) => new TmdbMovie(reco) );
+      })
+    )
+    .subscribe((recos:TmdbMovie[]) => {
+
+      let actualRecos = this._trendMovie$.getValue();
+      let allRecos:any = [...actualRecos, ...recos]
+      if (allRecos.length !== 0){
+        this._trendMovie$.next(allRecos);
+      }
+    });  
+  }
+  getTrendMovie$ ():Observable<TmdbMovie[]> {
+    return this._trendMovie$.asObservable();
+  }
 
   ////////////////////////////// SERVICES FOR RECO //////////////////////////////
   getRecoMovieFromApi(){
@@ -210,14 +241,14 @@ export class MovieService {
       next: (response:any) => {
         console.log(response.status)
         if(response.status == "200") {
-          this.movie.idWish = 0;
+          this.movie.idWish = null;
           this._movieDetail$.next(this.movie);
         }
       },
       error: error => console.error(error)
     });
   }
-  delWishThisMovie(wishMovieToDel: Movie) {
+  delWishThisMovie(wishMovieToDel: any) {
     let sendToApi = {wishIdToDelete:wishMovieToDel.idWish,};
     // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
     this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
@@ -225,7 +256,7 @@ export class MovieService {
       next: (response:any) => {
         console.log(response.status)
         if(response.status == "200") {
-          wishMovieToDel.idWish = 0;
+          wishMovieToDel.idWish = null;
           /////// A VERIFIER !!! ///////
           // this._movieDetail$.next(wishMovieToDel);
         }
@@ -266,14 +297,14 @@ export class MovieService {
       next: (response:any) => {
         console.log(response.status)
         if(response.status == "200") {
-          this.movie.idWatch = 0;
+          this.movie.idWatch = null;
           this._movieDetail$.next(this.movie);
         }
       },
       error: error => console.error(error)
     });
   }
-  delWatchThisMovie(watchMovieToDel:Movie) {
+  delWatchThisMovie(watchMovieToDel:any) {
     let sendToApi = {watchIdToDelete:watchMovieToDel.idWatch,};
     // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
     this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
@@ -281,7 +312,7 @@ export class MovieService {
       next: (response:any) => {
         console.log(response.status)
         if(response.status == "200") {
-          watchMovieToDel.idWatch = 0;
+          watchMovieToDel.idWatch = null;
           this._movieDetail$.next(this.movie);
         }
       },

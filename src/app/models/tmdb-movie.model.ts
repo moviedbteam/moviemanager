@@ -19,12 +19,12 @@ export class TmdbMovie {
   voteCount: number;
   status: string;
   genres: Genre[] | any[];
-  idWatch: number = 0;
+  idWatch: number;
   viewingPlace: string = "";
   viewingRate: number = 0;
   viewingMood: number = 0;
   dateWatch: Date;
-  idWish: number = 0;
+  idWish: number;
   _wishStatusIcon: string = "fa-regular fa-bookmark fa-lg";
   _wishTitleIcon: string = "Ajouter à la Wish liste";
   _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";
@@ -40,6 +40,9 @@ export class TmdbMovie {
     this.releaseDate = movieFromApi.release_date;
     this.voteAverage = movieFromApi.vote_average;
     this.genres = movieFromApi.genres?movieFromApi.genres:[];
+    this.originalLanguage = movieFromApi.original_language;
+    this.originalTitle = movieFromApi.original_title;
+    this.voteCount = movieFromApi.vote_ount;
     /// IDENTIQUES A BACK ///
     this.idWatch = movieFromApi.idWatch;
     this.idWish = movieFromApi.idWish;
@@ -48,17 +51,14 @@ export class TmdbMovie {
     this.viewingMood = movieFromApi.viewingMood;
     this.dateWatch = movieFromApi.dateWatch;
     this.title = movieFromApi.title;
-    this.originalTitle = movieFromApi.originalTitle;
     this.popularity = movieFromApi.popularity;
     this.adult = movieFromApi.adult;
     this.budget = movieFromApi.budget;
     this.homepage = movieFromApi.homepage;
     this.overview = movieFromApi.overview;
     this.imdbID = movieFromApi.imdbID;
-    this.originalLanguage = movieFromApi.originalLanguage;
     this.runtime = movieFromApi.runtime? movieFromApi.runtime : 0;
     this.tagline = movieFromApi.tagline;
-    this.voteCount = movieFromApi.voteCount;
     this.status = movieFromApi.status;
   }
 }

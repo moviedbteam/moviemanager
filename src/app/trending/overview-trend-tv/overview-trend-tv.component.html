@@ -1,0 +1,29 @@
+<div class="overviewContainer">
+<p>Série TV</p>
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+          <div [routerLink]="['/detailtv', recoTv.idTv]"  *ngFor="let recoTv of recoTvs" class="example-item">
+            <div>
+              <div class="mini-menu1">
+                <i [class]="recoTv._wishStatusIcon" 
+                  [title]="recoTv._wishTitleIcon"
+                  style="color: yellow; margin-right: 0px; margin-left: 55px;"
+                  (click)="updateStatusWishIcon(recoTv)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="recoTv._watchStatusIcon" 
+                  [title]="recoTv._watchTitleIcon"
+                  style="color: #0D6EFD; margin-right: 5px; margin-left: 5px;"
+                  (click)="updateStatusWatchIcon(recoTv)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+              </div>
+              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
+            </div>
+            {{recoTv.originalName}}
+          </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+      
+  </div>

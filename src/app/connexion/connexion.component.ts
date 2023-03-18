@@ -55,7 +55,7 @@ export class ConnexionComponent {
             localStorage.setItem('userData', JSON.stringify(userData));
 
             if(response.jwt){  
-              this.router.navigate(['/']);
+              this.router.navigate(['/recommendation']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
             }
           },

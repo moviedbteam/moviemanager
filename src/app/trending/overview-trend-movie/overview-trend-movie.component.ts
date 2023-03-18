@@ -1,32 +1,38 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { Movie } from 'src/app/models/movie.model';
+import { TmdbMovie } from 'src/app/models/tmdb-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
-import { Movie } from 'src/app/models/movie.model';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-seeallmovie',
-  templateUrl: './seeallmovie.component.html',
-  styleUrls: ['./seeallmovie.component.css']
+  selector: 'app-overview-trend-movie',
+  templateUrl: './overview-trend-movie.component.html',
+  styleUrls: ['./overview-trend-movie.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class SeeallmovieComponent {
+export class OverviewTrendMovieComponent {
 
-  movies:Array<Movie> =[];
+  recoMovies:Array<TmdbMovie> = [];
 
-  // Statut des icônes Wish
-  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
-  _wishTitleIconOn: string = "Supprimer de la Wish liste"
-  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg"
-  _wishTitleIconOff: string = "Ajouter à la Wish liste"
+  // Statut icône Wish
+  _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
+  _wishTitleIconOn: string = "Supprimer de la Wish liste";
+  _wishStatusIconOff: string = "fa-regular fa-bookmark fa-lg";
+  _wishTitleIconOff: string = "Ajouter à la Wish liste";
 
-  // Statut des icônes Watch
+  // Statut icône Watch
   _watchStatusIconOn: string = "fa-solid fa-eye fa-lg"
   _watchTitleIconOn: string = "Restaurer 'Non Vu'"
   _watchStatusIconOff: string = "fa-regular fa-eye-slash fa-lg"
   _watchTitleIconOff: string = "Marquer comme 'Vus'"
 
-  subscriptionMovie:any;
+  // Statut icône BlackList
+  _blackStatusIconOn: string = "fa-solid fa-ban fa-lg";
+  _blackTitleIconOn: string = "Ne plus recommander";
+
+  subscriptionRecoMovie:any;
 
   apiBack = environment.base_url_apiBack;
   apiBackGetDetailsFromApi = '/movie/detail/';
@@ -35,27 +41,24 @@ export class SeeallmovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
-    ) {}
-
+  ){}
+  
   async ngOnInit() {
     
-    this.subscriptionMovie = await this.movieSvc.getMovies$()
-      .subscribe( async (moviesArr:Movie[]) => {
-        if(moviesArr.length===0) {
-          this.movieSvc.getMoviesFromApi();
+    this.subscriptionRecoMovie = await this.movieSvc.getTrendMovie$()
+      .subscribe( async (recoArr:Movie[]) => {
+        if(recoArr.length===0) {
+          this.movieSvc.getTrendMovieFromApi();
         }
-        this.movies = moviesArr
-        console.log(this.movies);
+        this.recoMovies = recoArr;
+        console.log(this.recoMovies);
 
-        for (let movie of this.movies){
+        for (let movie of this.recoMovies){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
           .toPromise()      
           .then( (response:any) => {
-            console.log(response);
-            console.log(movie);
-            // INIT statut des icones wish et watch
+            // INIT icones wish, watch, blackList
             if (response.idWish !== null) {
-              console.log(response.idWish);
               movie.idWish = response.idWish;
               movie._wishStatusIcon = this._wishStatusIconOn;
               movie._wishTitleIcon = this._wishTitleIconOn;
@@ -64,7 +67,6 @@ export class SeeallmovieComponent {
               movie._wishTitleIcon = this._wishTitleIconOff;
             };
             if (response.idWatch !== null) {
-              console.log(response.idWatch);
               movie.idWatch = response.idWatch;
               movie._watchStatusIcon = this._watchStatusIconOn;
               movie._watchTitleIcon = this._watchTitleIconOn;
@@ -72,10 +74,10 @@ export class SeeallmovieComponent {
               movie._watchStatusIcon = this._watchStatusIconOff;
               movie._watchTitleIcon = this._watchTitleIconOff;
             };
+            
           });
           
         }  
-        console.log(this.movies);
         return;
       });
 
@@ -163,13 +165,15 @@ export class SeeallmovieComponent {
       error: error => console.error(error)
     });
   }
-
+            
   getImgFullUrl(urlFragment:string):string {
-    return "https://image.tmdb.org/t/p/w500"+urlFragment;
+    return "https://image.tmdb.org/t/p/w500/"+urlFragment;
+  }
+  
+  ngOnDestroy() {
+    this.subscriptionRecoMovie.unsubscribe();
   }
 
-  ngOnDestroy() {
-    this.subscriptionMovie.unsubscribe();
-  }
+
 
 }

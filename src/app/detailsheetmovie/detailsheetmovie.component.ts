@@ -31,24 +31,51 @@ export class DetailsheetmovieComponent {
       private alerteSvc:AlertService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+
     this.idMovie = this.route.snapshot.params['id'];
     console.log(this.idMovie);
 
     this.movieSvc.getBackDetailsFromApi(this.idMovie);
     
-    this.subscription = this.movieSvc.getMovieDetail$()
-    .subscribe({
-      next: (response:any)=>  {
+    this.subscription = await this.movieSvc.getMovieDetail$()
+      .subscribe( async (response:any)=>  {
         if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
         // INIT statut des boutons wish et watch
-        if (response.idWish > 0) this.setStatusWishButton(1) ;
-        if (response.idWatch > 0) this.setStatusWatchButton(1) ;
+        console.log(response)
+        if (response.idWish !== null && response.idWish !== undefined) {
+          console.log(response.idWish)
+          this.setStatusWishButton(1) ;
+        }
+        if (response.idWatch !== null && response.idWish !== undefined) {
+          console.log(response.idWatch)
+          this.setStatusWatchButton(1) ;
+        }
         console.log(response)
         return;
-      },
-      error: error => console.error(error)
+      
     });
+
+    // this.subscription = await this.movieSvc.getMovieDetail$()
+    // .subscribe({
+    //   next: (response:any)=>  {
+    //     if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
+    //     // INIT statut des boutons wish et watch
+    //     console.log(response)
+    //     if (response.idWish !== null) {
+    //       console.log(response.idWish)
+    //       this.setStatusWishButton(1) ;
+    //     }
+    //     if (response.idWatch !== null) {
+    //       console.log(response.idWatch)
+    //       this.setStatusWatchButton(1) ;
+    //     }
+    //     console.log(response)
+    //     return;
+    //   },
+    //   error: error => console.error(error)
+    // });
+
   }
 
   updateStatusWishButton() {

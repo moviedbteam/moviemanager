@@ -1,20 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { RecoTv } from '../models/reco-tv.model';
+import { TrendTv } from '../models/trend-tv.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecoTvService {
-  
+export class TrendTvService {
+
+  apiTmdb = environment.base_url_apiTmdb;
+  apiKey = environment.apiKey_apiTmdb;
   apiBack = environment.base_url_apiBack;
-  apiGetRecoTvs:string = '/recommendation/tv';
-  apiPostBlackListTv:string = '/blacklist/tv';
+  apiGetTrendTvs:string = '/trending/tv/week';
   apiPostWishTv:string = '/wish/tv';
   apiPostWatchTv:string = '/watch/tv';
-  private _recoTv$:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _trendTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http:HttpClient
@@ -22,23 +23,31 @@ export class RecoTvService {
 
   getRecoTvFromApi(){
 
-    this.http.get(this.apiBack+this.apiGetRecoTvs)
+
+    let urlApi = this.apiTmdb+this.apiGetTrendTvs;
+    let apiKey = this.apiKey;
+    let params = new HttpParams()
+    .set('api_key', apiKey)
+    .set('page', '1')
+
+    // this.http.get(this.apiBack+this.apiGetTrendTvs)
+    this.http.get(urlApi, {params})
     .pipe(
       map((apiResponse:any) => {
-        return apiResponse.map( (reco: any) => new RecoTv(reco) );
+        return apiResponse.results.map( (reco: any) => new TrendTv(reco) );
       })
     )
-    .subscribe((recos:RecoTv[]) => {
+    .subscribe((recos:TrendTv[]) => {
 
-      let actualRecos = this._recoTv$.getValue();
+      let actualRecos = this._trendTv$.getValue();
       let allRecos:any = [...actualRecos, ...recos]
       if (allRecos.length !== 0){
-        this._recoTv$.next(allRecos);
+        this._trendTv$.next(allRecos);
       }
     });  
   }
-  getRecoTv$ ():Observable<RecoTv[]> {
-    return this._recoTv$.asObservable();
+  getRecoTv$ ():Observable<TrendTv[]> {
+    return this._trendTv$.asObservable();
   }
 
  ////////////////////////////// SERVICES WISH //////////////////////////////
@@ -48,8 +57,9 @@ export class RecoTvService {
     return this.http.post(this.apiBack+this.apiPostWishTv, postWishTv, {observe: 'response', responseType: 'text'});
   }
 
-  delWishThisTv(wishTvToDel: RecoTv) {
+  delWishThisTv(wishTvToDel: any) {
    let sendToApi = {idTv:wishTvToDel.idTv,};
+   console.log(sendToApi);
     // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
     this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
@@ -71,8 +81,8 @@ export class RecoTvService {
     return this.http.post(this.apiBack+this.apiPostWatchTv, postWatchTv, {observe: 'response', responseType: 'text'} );
   }
 
-  delWatchThisTv(watchTvToDel:RecoTv) {
-    let sendToApi = {IdTv:watchTvToDel.idTv,};
+  delWatchThisTv(watchTvToDel:any) {
+    let sendToApi = {idTv:watchTvToDel.idTv,};
     // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
@@ -86,23 +96,6 @@ export class RecoTvService {
       },
       error: error => console.error(error)
     });
-  }
-
-
-  ////////////////////////////// SERVICES BLACKLIST //////////////////////////////
-  postBlackListTv(tvToBlackList:RecoTv) {
-    let sendToApi = {idContent:tvToBlackList.idTv,};
-    console.log(sendToApi);
-    console.log(this.apiBack+this.apiPostBlackListTv);
-    // this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi)
-    this.http.post(this.apiBack+this.apiPostBlackListTv, sendToApi ,{observe: 'response', responseType:'text'} )
-    .subscribe({
-      next: (response:any) => {
-        console.log(response.status)
-      },
-      error: error => console.error(error)
-    });
-
   }
 
 }

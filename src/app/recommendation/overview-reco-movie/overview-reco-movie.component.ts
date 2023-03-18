@@ -57,7 +57,7 @@ export class OverviewRecoMovieComponent {
           .toPromise()      
           .then( (response:any) => {
             // INIT icones wish, watch, blackList
-            if (response.idWish > 0) {
+            if (response.idWish !== null) {
               movie.idWish = response.idWish;
               movie._wishStatusIcon = this._wishStatusIconOn;
               movie._wishTitleIcon = this._wishTitleIconOn;
@@ -65,7 +65,7 @@ export class OverviewRecoMovieComponent {
               movie._wishStatusIcon = this._wishStatusIconOff;
               movie._wishTitleIcon = this._wishTitleIconOff;
             };
-            if (response.idWatch > 0) {
+            if (response.idWatch !== null) {
               movie.idWatch = response.idWatch;
               movie._watchStatusIcon = this._watchStatusIconOn;
               movie._watchTitleIcon = this._watchTitleIconOn;

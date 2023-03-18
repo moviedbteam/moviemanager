@@ -34,13 +34,13 @@
   writing-mode: horizontal-tb;    
 }
 
-img {
+.cdk-virtual-scroll-data-source-example > img {
   height: 150px;
   width: 100px;
   border:1px solid #0D6CFD;
 }
 
-img:hover {
+.cdk-virtual-scroll-data-source-example img:hover {
   opacity: 40%;
   transition: 0.5s;
   cursor: pointer;

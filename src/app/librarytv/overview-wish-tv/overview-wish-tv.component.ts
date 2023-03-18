@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { TvService } from 'src/app/services/tv.service';
 import { WishService } from 'src/app/services/wish.service';
 import { TvModel } from '../../discovertv/models/tv.model';
@@ -23,7 +24,8 @@ export class OverviewWishTvComponent {
   constructor(
     private wishSvc:WishService,
     public tvSvcWish:TvService,
-  ){}
+  ){
+  }
 
   ngOnInit() {
     

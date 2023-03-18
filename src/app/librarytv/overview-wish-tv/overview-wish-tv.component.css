@@ -37,8 +37,15 @@
 img {
   height: 150px;
   width: 100px;
+  border:1px solid #0D6CFD;
 }
 
+img:hover {
+  opacity: 40%;
+  transition: 0.5s;
+  cursor: pointer;
+  /* border: 3px solid rgba(93,27,235); */
+}
   
   
   

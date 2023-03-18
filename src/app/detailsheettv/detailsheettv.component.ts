@@ -10,6 +10,7 @@ import { DetailTvService } from './services/detail-tv.service';
 import { DetailSeasonTmdbModel } from './models/detail-tv-tmdb.model';
 import { AlertService } from '../services/alert.service';
 import { DetailSeasonMmaModel } from './models/detail-tv-mma.model';
+import { UserService } from '../services/user.service';
 
 interface wishEpisodeInterface {
   cssIconOn: string;
@@ -47,6 +48,8 @@ export class DetailsheettvComponent {
   idWishSerie:number = -1; // ID propre à la série non présent en BDD => vaut 0 si au moins un episode est en Wish
   idWatchSerie:number = -1;
   origineAPI:string = "";
+  isAuth = this.userService.isAuth();
+  
 
   subscriptionDetailSeasons:any;
   detailSeasons: Array<DetailSeasonMmaModel> = [];
@@ -106,7 +109,8 @@ export class DetailsheettvComponent {
       private wishSvc:WishService,
       private watchSvc:WatchService,
       private _location:Location,
-      private alerteService:AlertService
+      private alerteService:AlertService,
+      public userService: UserService
   ) {}
 
   async ngOnInit() {
@@ -115,14 +119,14 @@ export class DetailsheettvComponent {
     this.idSerie = this.route.snapshot.params['id'];
 
     // vérifie si la série n'est pas dans une Wish/Watch List
-    await this.checkWishWatchSerie();
+    if(this.isAuth) await this.checkWishWatchSerie();
 
     console.log("======== Après checkWishWatch ===========")
     console.log("this.idWishSerie = " + this.idWishSerie)
     console.log("this.idWatchSerie = " + this.idWatchSerie)
     
     // récupère tous les wish de la série
-    this.buildMapIconesEpisodesSaisons();
+    if(this.isAuth) this.buildMapIconesEpisodesSaisons();
 
     if((this.idWishSerie == 0) || (this.idWatchSerie == 0)) {
       this.origineAPI = "MMA";

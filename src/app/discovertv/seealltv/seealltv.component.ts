@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { TvService } from 'src/app/services/tv.service';
+import { UserService } from 'src/app/services/user.service';
 import { WatchService } from 'src/app/services/watch.service';
 import { WishService } from 'src/app/services/wish.service';
 import { TvModel } from '../models/tv.model';
@@ -22,6 +23,7 @@ export class SeealltvComponent {
 
   tvs:Array<TvModel> =[];
   subscription:any;
+  isAuth: boolean = this.userService.isAuth();
   
   mapWatchSerie: Map<number,watchSerieInterface> = new Map<number,watchSerieInterface>(); // tous les series watch
   mapWishSerie: Map<number,wishSerieInterface> = new Map<number,wishSerieInterface>(); // tous les series wish
@@ -42,20 +44,12 @@ export class SeealltvComponent {
     private tvSvc:TvService, 
     private alerteService:AlertService,
     public wishService: WishService,
-    public watchService: WatchService) {
+    public watchService: WatchService,
+    public userService: UserService) {
     // console.log(this);
   }
 
   ngOnInit() {
-
-    // this.subscription = this.tvSvc.getTvs$()
-    //   .subscribe(
-    //     (tvsArr:TvModel[]) => {
-    //       if(tvsArr.length===0) {
-    //         this.tvSvc.getTvsFromApi();
-    //       }
-    //       this.tvs = tvsArr
-    //     });
 
     this.subscription = this.tvSvc.getTvs$()
       .subscribe( (tvsArr:TvModel[]) => {
@@ -65,7 +59,8 @@ export class SeealltvComponent {
             // récupère tous les wish de la série
           }
           this.tvs = tvsArr
-          this.buildMapIconesSeries();
+
+          if (this.isAuth) this.buildMapIconesSeries();
     });
 
 

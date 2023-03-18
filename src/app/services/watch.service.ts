@@ -50,7 +50,8 @@ export class WatchService {
     });    
   }
   
-  getWatchesTv$ ():Observable<WatchesTv[]> {
+  getWatchesTv$():Observable<WatchesTv[]> {
+    this._watchesTv$.next([])
     return this._watchesTv$.asObservable();
   }
   

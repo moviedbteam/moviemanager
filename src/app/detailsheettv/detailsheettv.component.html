@@ -25,33 +25,13 @@
 
 
     <div>
-        <button [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
+        <button *ngIf="this.isAuth" [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
             <span><i class="fa-regular fa-bookmark"></i></span>Wish
         </button>
 
-        <button [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton" (click)="updateStatusWatchButton()">
+        <button *ngIf="this.isAuth" [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton" (click)="updateStatusWatchButton()">
             <span><i class="fa-solid fa-eye"></i></span>Watch
         </button>
-        
-        <!-- <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
-        <p>
-            <i class="fa-solid fa-star fa-md"></i>
-            <i class="fa-solid fa-star fa-md"></i>
-            <i class="fa-solid fa-star fa-md"></i>
-            <i class="fa-solid fa-star-half-stroke fa-md"></i>
-            <i class="fa-regular fa-star fa-md"></i>
-        </p>
-        <p>
-            <i class="fa-regular fa-face-angry fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
-            <i class="fa-regular fa-face-frown fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
-            <i class="fa-regular fa-face-frown-open fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
-            <i class="fa-regular fa-face-meh fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
-            <i class="fa-regular fa-face-grin fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
-            <i class="fa-regular fa-face-smile-beam fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
-            <i class="fa-regular fa-face-laugh fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
-            <i class="fa-regular fa-face-grin-stars fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
-            <i class="fa-regular fa-face-grin-hearts fa-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
-        </p> -->
 
         <h2>Popularité: <span>{{serie?.popularity}}</span></h2>
         
@@ -90,7 +70,7 @@
               <h2 class="accordion-header" id="heading{{season.seasonNumber}}">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.seasonNumber" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.seasonNumber">
                     {{season.seasonNumber == 0 ? "Episodes spéciaux":"Saison "+season.seasonNumber }}
-                    <div class="menu-saison">
+                    <div *ngIf="this.isAuth" class="menu-saison">
                         <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
                             [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
                             style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
@@ -112,7 +92,7 @@
                             <img [src]="getImgSeasonFullUrl(season.posterPath)" alt="">
                         </div>
                         <div>
-                            <div class="mini-menu">
+                            <div *ngIf="this.isAuth" class="mini-menu">
                                 <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
                                     [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
                                     style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
@@ -137,7 +117,7 @@
                                 <th scope="col">Diffusion</th>
                                 <th scope="col">Note</th>
                                 <th scope="col">Résumé</th>
-                                <th scope="col">Actions</th>
+                                <th *ngIf="this.isAuth" scope="col">Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -147,7 +127,7 @@
                                 <td class="align-middle" style="width: 100px;">{{ episode.airDate?(episode.airDate | date:"dd-MM-yyyy"):"-" }}</td>
                                 <td class="align-middle">{{ episode.voteAverage?episode.voteAverage:"-" }}</td>
                                 <td class="align-middle">{{ episode.overview?episode.overview:"Non disponible"}}</td>
-                                <td class="align-middle" style="width: 100px;">
+                                <td *ngIf="this.isAuth" class="align-middle" style="width: 100px;">
                                     <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconEpisodeOff" 
                                         [title]="this.mapWishEpisode.get(episode.id)?.cssIconOn? _wishTitleIconEpisodeOn:_wishTitleIconEpisodeOff"
                                         style="color: yellow; margin-right: 10px;" 

@@ -45,7 +45,9 @@ export class WishService {
     )
 
     .subscribe((wishes:WishesTv[]) => {
+
       let actualWishes = this._wishesTv$.getValue();
+
       let allWishes:any = [...actualWishes, ...wishes]
       if (allWishes.length !== 0){
         this._wishesTv$.next(allWishes);
@@ -54,6 +56,7 @@ export class WishService {
   }
 
   getWishesTv$ ():Observable<WishesTv[]> {
+    this._wishesTv$.next([])
     return this._wishesTv$.asObservable();
   }
 

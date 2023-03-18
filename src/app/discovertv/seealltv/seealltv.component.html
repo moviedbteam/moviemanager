@@ -5,7 +5,7 @@
 
         <div [routerLink]="['/detailtv',tv.id]" class="card bg-dark flex">
             <img [src]="getImgFullUrl(tv.image_landscape)" alt="">
-            <div class="mini-menu">
+            <div *ngIf="this.isAuth" class="mini-menu">
                 <i [class]="this.mapWishSerie.get(tv.id)?.cssIconOn? this.mapWishSerie.get(tv.id)?.cssIconOn:_wishStatusIconSerieOff" 
                     [title]="this.mapWishSerie.get(tv.id)?.cssIconOn? _wishTitleIconSerieOn:_wishTitleIconSerieOff"
                     style="color: yellow;" 

@@ -11,7 +11,6 @@ export class ActionbartvComponent {
   tvs:Array<any> =[];
 
   constructor(private tvSvc:TvService) {
-    console.log(this); 
   }
 
   onClickSuivants() {

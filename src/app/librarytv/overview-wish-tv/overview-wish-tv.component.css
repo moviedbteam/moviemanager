@@ -18,12 +18,12 @@
   /* height: 300px;   */
   height: 220px;
   /* width: 200px; */
-  border: 1px solid black;
 }
   
 .cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
   display: flex;
   flex-direction: row;
+  border:none;
 }
   
 .cdk-virtual-scroll-data-source-example .example-item {

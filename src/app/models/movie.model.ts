@@ -19,12 +19,12 @@ export class Movie {
   voteCount: number;
   status: string;
   genres: Genre[] | any[];
-  idWatch: number = 0;
+  idWatch: number;
   viewingPlace: string = "";
   viewingRate: number = 0;
   viewingMood: number = 0;
   dateWatch: Date;
-  idWish: number = 0;
+  idWish: number;
   _wishStatusIcon: string = "fa-regular fa-bookmark fa-lg";
   _wishTitleIcon: string = "Ajouter à la Wish liste";
   _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";

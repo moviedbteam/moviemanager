@@ -10,31 +10,24 @@ import { UserService } from './services/user.service';
 export class AppComponent {
   title = 'moviemanager';
   userData:any;
+  isAuth = this.userService.isAuth();
+  _cssLoginIcon: string =""
   _cssLoginIconOn: string = "fa-solid fa-user"
   _cssLoginIconOff: string = "fa-regular fa-user"
 
   constructor (
-    private userSvc:UserService,
+    public userService: UserService,
     private router:Router,
   ){}
 
   ngOnInit() {
-   
-  
-    console.log (this.userSvc.isAuth())
 
-    // if (this.userSvc.isAuth()){
-
-
-      
       let userDataInStorage = localStorage.getItem('userData');
       this.userData = userDataInStorage!=null?JSON.parse(userDataInStorage):{};
-      
-    // // } else {
-    //   this.router.navigate(['/connexion']);
-    // }
-    
 
+      if (this.isAuth) this._cssLoginIcon = this._cssLoginIconOn;
+      else  this._cssLoginIcon = this._cssLoginIconOff;
+    
   }
 
   

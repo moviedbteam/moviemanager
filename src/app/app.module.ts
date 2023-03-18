@@ -39,6 +39,9 @@ import { OverviewWishTvComponent } from './librarytv/overview-wish-tv/overview-w
 
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
+import { TrendingComponent } from './trending/trending.component';
+import { OverviewTrendMovieComponent } from './trending/overview-trend-movie/overview-trend-movie.component';
+import { OverviewTrendTvComponent } from './trending/overview-trend-tv/overview-trend-tv.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +75,9 @@ import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component'
 
     DetailsheetmovieComponent,
     DetailsheettvComponent,
+    TrendingComponent,
+    OverviewTrendMovieComponent,
+    OverviewTrendTvComponent,
   ],
   imports: [
     BrowserModule,

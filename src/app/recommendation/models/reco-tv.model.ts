@@ -7,8 +7,8 @@ export class RecoTv {
   numberOfEpisodes: number;
   numberOfSeasons: number;
 
-  idWatch: number = 0;
-  idWish: number = 0;
+  idWatch: any;
+  idWish: any;
   _wishStatusIcon: string = "fa-regular fa-bookmark fa-lg";
   _wishTitleIcon: string = "Ajouter à la Wish liste";
   _watchStatusIcon: string = "fa-regular fa-eye-slash fa-lg";
@@ -24,5 +24,7 @@ export class RecoTv {
     this.popularity = tvFromApi.popularity;
     this.numberOfEpisodes = tvFromApi.numberOfEpisodes;
     this.numberOfSeasons = tvFromApi.numberOfSeasons;
+    this.idWish = null;
+    this.idWatch = null;
   } 
 }

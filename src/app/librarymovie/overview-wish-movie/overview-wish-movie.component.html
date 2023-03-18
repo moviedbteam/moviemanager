@@ -1,11 +1,21 @@
 <div class="overviewContainer">
-    <p>Films à voir</p>
+  <div class="titre">
+    <div><p>Films à voir</p></div>
+    <div><h2>Bibliothèque de films</h2></div>
+  </div>
+    
     
     <div class="cdk-virtual-scroll-data-source-example">
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-        <!-- <div *cdkVirtualFor="let wishMovie of wishMovies" class="example-item">{{movies[ wishMovie.idMovie].titre}}</div> -->
-        <!-- <div *cdkVirtualFor="let wishMovie of wishMovies" class="example-item">{{wishMovie.idMovie}}</div> -->
         <div [routerLink]="['/detailmovie', movieWish.idMovie]"  *ngFor="let movieWish of wishMovies" class="example-item">
+          <div class="mini-menu1">
+            <i [class]="movieWish._watchStatusIcon" 
+              [title]="movieWish._watchTitleIcon"
+              style="color: #0D6EFD; margin-right: 5px; margin-left: 75px;"
+              (click)="updateStatusWatchIcon(movieWish)
+              ; $event.preventDefault(); $event.stopPropagation()">
+            </i>
+          </div>
             <div>
               <img [src]="getImgFullUrl(movieWish.posterPath)" alt="">
             </div>

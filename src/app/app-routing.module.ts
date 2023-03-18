@@ -9,16 +9,20 @@ import { RecommendationComponent } from './recommendation/recommendation.compone
 import { DetailsheetmovieComponent } from './detailsheetmovie/detailsheetmovie.component';
 import { DetailsheettvComponent } from './detailsheettv/detailsheettv.component';
 import { CreateUserAccountComponent } from './connexion/create-user-account/create-user-account.component';
+import { TrendingComponent } from './trending/trending.component';
 
 const routes: Routes = [
   {
-    path:'', component:DiscovermovieComponent
+    path:'', component:TrendingComponent
   },
   {
     path:'connexion', component:ConnexionComponent
   },
   {
     path:'inscription', component:CreateUserAccountComponent
+  },
+  {
+    path:'tendance', component:TrendingComponent
   },
   {
     path:'recommendation', component:RecommendationComponent
@@ -42,7 +46,7 @@ const routes: Routes = [
     path:'detailtv/:id', component:DetailsheettvComponent
   },
   {
-    path:'**', component:DiscovermovieComponent
+    path:'**', component:TrendingComponent
   },
 
 ];

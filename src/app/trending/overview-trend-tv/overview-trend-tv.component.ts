@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
-import { RecoTv } from '../models/reco-tv.model';
-import { RecoTvService } from '../services/reco-tv.service';
+import { TrendTv } from '../models/trend-tv.model';
+import { TrendTvService } from '../services/trend-tv.service';
 
 @Component({
-  selector: 'app-overview-reco-tv',
-  templateUrl: './overview-reco-tv.component.html',
-  styleUrls: ['./overview-reco-tv.component.css']
+  selector: 'app-overview-trend-tv',
+  templateUrl: './overview-trend-tv.component.html',
+  styleUrls: ['./overview-trend-tv.component.css']
 })
-export class OverviewRecoTvComponent {
+export class OverviewTrendTvComponent {
 
-  recoTvs:Array<RecoTv> = [];
+  recoTvs:Array<TrendTv> = [];
+  isAuth = this.userService.isAuth();
 
   // Statut icône Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
@@ -36,15 +38,16 @@ export class OverviewRecoTvComponent {
   apiBackGetDetailsFromApi = '/tv/detail/';
 
   constructor(
-    private recoTvSvc:RecoTvService,
+    private recoTvSvc:TrendTvService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
   ){}
 
   async ngOnInit() {
     
     this.subscriptionRecoTv = await this.recoTvSvc.getRecoTv$()
-      .subscribe( async (recoArr:RecoTv[]) => {
+      .subscribe( async (recoArr:TrendTv[]) => {
         if(recoArr.length===0) {
           this.recoTvSvc.getRecoTvFromApi();
         }
@@ -55,6 +58,7 @@ export class OverviewRecoTvComponent {
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)
           .toPromise()      
           .then( (response:any) => {
+            console.log(response);
             // INIT icones wish, watch, blackList
             if (response.idWish !== null) {
               tv.idWish = response.idWish;
@@ -77,16 +81,14 @@ export class OverviewRecoTvComponent {
           });
           
         }  
+        console.log(this.recoTvs);
         return;
       });
 
   }
 
-  postBlackList(tv:RecoTv) {
-    this.recoTvSvc.postBlackListTv(tv);
-  }
-
-  updateStatusWishIcon(tv:RecoTv) {
+  updateStatusWishIcon(tv:TrendTv) {
+    console.log(tv);
     if (tv._wishStatusIcon === this._wishStatusIconOn) {
       console.log("Appel à this.recoTvSvc.delWishThisTv(tv);");
       this.recoTvSvc.delWishThisTv(tv);
@@ -99,7 +101,7 @@ export class OverviewRecoTvComponent {
     }
   }
 
-  updateStatusWatchIcon(tv:RecoTv) {
+  updateStatusWatchIcon(tv:TrendTv) {
     if (tv._watchStatusIcon === this._watchStatusIconOn) {
       console.log("Appel à this.recoTvSvc.delWatchThisTv(tv);");
       this.recoTvSvc.delWatchThisTv(tv);
@@ -112,7 +114,7 @@ export class OverviewRecoTvComponent {
     }
   }
 
-  setStatusWishIcon(tv:RecoTv , status: number) {
+  setStatusWishIcon(tv:TrendTv , status: number) {
     if (status) {
       tv._wishStatusIcon = this._wishStatusIconOn;
       tv._wishTitleIcon = this._wishTitleIconOn;
@@ -123,7 +125,7 @@ export class OverviewRecoTvComponent {
     }
   }
 
-  setStatusWatchIcon(tv:RecoTv , status: number) {
+  setStatusWatchIcon(tv:TrendTv , status: number) {
     if (status) {
       tv._watchStatusIcon = this._watchStatusIconOn;
       tv._watchTitleIcon = this._watchTitleIconOn;
@@ -140,7 +142,7 @@ export class OverviewRecoTvComponent {
     this.alerteSvc.showAlert("Ajouté aux " + str + "!!!");
   }
 
-  addWish(tv:RecoTv) {
+  addWish(tv:TrendTv) {
     let sendToApi = { idTv:tv.idTv, };
     
     this.recoTvSvc.postWishTvToApi(sendToApi)
@@ -153,7 +155,7 @@ export class OverviewRecoTvComponent {
     });
   }
 
-  checkWatch(tv:RecoTv) {
+  checkWatch(tv:TrendTv) {
     let sendToApi = { idTv:tv.idTv,};
     console.log(sendToApi);
 
@@ -176,5 +178,6 @@ export class OverviewRecoTvComponent {
   ngOnDestroy() {
     this.subscriptionRecoTv.unsubscribe();
   }
+
 
 }

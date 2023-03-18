@@ -1,19 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Movie } from 'src/app/models/movie.model';
+import { TmdbMovie } from 'src/app/models/tmdb-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-overview-reco-movie',
-  templateUrl: './overview-reco-movie.component.html',
-  styleUrls: ['./overview-reco-movie.component.css'],
+  selector: 'app-overview-trend-movie',
+  templateUrl: './overview-trend-movie.component.html',
+  styleUrls: ['./overview-trend-movie.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class OverviewRecoMovieComponent {
-  
-  recoMovies:Array<Movie> = [];
+export class OverviewTrendMovieComponent {
+
+  recoMovies:Array<TmdbMovie> = [];
+  isAuth = this.userService.isAuth();
 
   // Statut icône Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
@@ -40,14 +43,15 @@ export class OverviewRecoMovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
   ){}
   
   async ngOnInit() {
     
-    this.subscriptionRecoMovie = await this.movieSvc.getRecoMovie$()
+    this.subscriptionRecoMovie = await this.movieSvc.getTrendMovie$()
       .subscribe( async (recoArr:Movie[]) => {
         if(recoArr.length===0) {
-          this.movieSvc.getRecoMovieFromApi();
+          this.movieSvc.getTrendMovieFromApi();
         }
         this.recoMovies = recoArr;
         console.log(this.recoMovies);
@@ -73,18 +77,13 @@ export class OverviewRecoMovieComponent {
               movie._watchStatusIcon = this._watchStatusIconOff;
               movie._watchTitleIcon = this._watchTitleIconOff;
             };
-            movie._blackStatusIcon = this._blackStatusIconOn;
-            movie._blackTitleIcon = this._blackTitleIconOn;
+            
           });
           
         }  
         return;
       });
 
-  }
-
-  postBlackList(movie:Movie) {
-    this.movieSvc.postBlackListMovie(movie);
   }
 
   updateStatusWishIcon(movie:Movie) {
@@ -177,5 +176,7 @@ export class OverviewRecoMovieComponent {
   ngOnDestroy() {
     this.subscriptionRecoMovie.unsubscribe();
   }
-            
+
+
+
 }

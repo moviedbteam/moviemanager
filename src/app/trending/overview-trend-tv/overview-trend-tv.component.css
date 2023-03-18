@@ -1,15 +1,15 @@
 .titre {
   margin-top: 10px;
-    color: rgb(140, 120, 160);
-    display:flex;
-    flex-direction: row;
-    /* flex:auto; */
-    justify-content: space-between;
-  }
-/* p {
+  color: rgb(140, 120, 160);
+  display:flex;
+  flex-direction: row;
+  /* flex:auto; */
+  justify-content: space-between;
+}
+p {
     color: rgb(140, 120, 160);
   
-  } */
+  }
   .overviewContainer {
       color: rgb(140, 120, 160);
   }
@@ -54,22 +54,3 @@
     height: 20px; */
     /* border: 1px solid white; */
 }
- 
-  .mini-menu2 {
-    /* display: block; */
-    /* display: flex; */
-    position: absolute;
-    justify-content: space-between;
-    top: 125px;
-    /* width: 44px;
-    height: 20px;
-    right: 4px; */
-    /* border: 1px solid white; */
-}
-
-
-  
-  
-    
-    
-    

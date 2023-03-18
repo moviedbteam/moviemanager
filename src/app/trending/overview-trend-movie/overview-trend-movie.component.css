@@ -6,10 +6,16 @@
     /* flex:auto; */
     justify-content: space-between;
   }
-/* p {
-  color: rgb(140, 120, 160);
 
+/* .titre p{
+    color: white;
+}
+
+.titre h2{
+    color: white;
+    
 } */
+
 .overviewContainer {
     color: rgb(140, 120, 160);
 }
@@ -36,12 +42,31 @@
   writing-mode: horizontal-tb;    
 }
 
-
 img {
   height: 150px;
   width: 100px;
 }
 
-  
-  
-  
+.mini-menu1 {
+  /* display: block; */
+  /* display: flex; */
+  position: absolute;
+  justify-content: space-between;
+  top: 5px;
+  /* right: 5px; */
+  /* width: 44px;
+  height: 20px; */
+  /* border: 1px solid white; */
+}
+ 
+.mini-menu2 {
+  /* display: block; */
+  /* display: flex; */
+  position: absolute;
+  justify-content: space-between;
+  top: 125px;
+  /* width: 44px;
+  height: 20px;
+  right: 4px; */
+  /* border: 1px solid white; */
+}

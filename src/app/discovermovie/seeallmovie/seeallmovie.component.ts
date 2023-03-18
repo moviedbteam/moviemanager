@@ -4,6 +4,7 @@ import { MovieService } from 'src/app/services/movie.service';
 import { Movie } from 'src/app/models/movie.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-seeallmovie',
@@ -13,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 export class SeeallmovieComponent {
 
   movies:Array<Movie> =[];
+  isAuth = this.userService.isAuth();
 
   // Statut des icônes Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
@@ -35,6 +37,7 @@ export class SeeallmovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
     ) {}
 
   async ngOnInit() {
@@ -54,23 +57,23 @@ export class SeeallmovieComponent {
             console.log(response);
             console.log(movie);
             // INIT statut des icones wish et watch
-            if (response.idWish > 0) {
+            if (response.idWish !== null) {
               console.log(response.idWish);
               movie.idWish = response.idWish;
               movie._wishStatusIcon = this._wishStatusIconOn;
-              movie._wishTitleIcon = this._wishStatusIconOn;
+              movie._wishTitleIcon = this._wishTitleIconOn;
             } else {
               movie._wishStatusIcon = this._wishStatusIconOff;
-              movie._wishTitleIcon = this._wishStatusIconOff;
+              movie._wishTitleIcon = this._wishTitleIconOff;
             };
-            if (response.idWatch > 0) {
+            if (response.idWatch !== null) {
               console.log(response.idWatch);
               movie.idWatch = response.idWatch;
               movie._watchStatusIcon = this._watchStatusIconOn;
-              movie._watchTitleIcon = this._watchStatusIconOn;
+              movie._watchTitleIcon = this._watchTitleIconOn;
             } else {
               movie._watchStatusIcon = this._watchStatusIconOff;
-              movie._watchTitleIcon = this._watchStatusIconOff;
+              movie._watchTitleIcon = this._watchTitleIconOff;
             };
           });
           

@@ -6,13 +6,13 @@
     <div [routerLink]="['/detailmovie',movie.idMovie]" class="card bg-dark flex">
       <img [src]="getImgFullUrl(movie.backdropPath)" alt="">
       <div class="mini-menu">
-          <i [class]="movie._wishStatusIcon" 
+          <i *ngIf="this.isAuth" [class]="movie._wishStatusIcon" 
             [title]="movie._wishTitleIcon"
             style="color: yellow; margin-right: 10px;"
             (click)="updateStatusWishIcon(movie)
             ; $event.preventDefault(); $event.stopPropagation()">
           </i>
-          <i [class]="movie._watchStatusIcon" 
+          <i *ngIf="this.isAuth" [class]="movie._watchStatusIcon" 
             [title]="movie._watchTitleIcon"
             style="color: #0D6EFD;"
             (click)="updateStatusWatchIcon(movie)

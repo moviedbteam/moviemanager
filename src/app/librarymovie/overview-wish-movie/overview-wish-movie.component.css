@@ -1,7 +1,15 @@
-p {
+.titre {
+  margin-top: 10px;
+    color: rgb(140, 120, 160);
+    display:flex;
+    flex-direction: row;
+    /* flex:auto; */
+    justify-content: space-between;
+  }
+/* p {
   color: rgb(140, 120, 160);
 
-}
+} */
 .overviewContainer {
     color: rgb(140, 120, 160);
 }
@@ -9,8 +17,10 @@ p {
 .cdk-virtual-scroll-data-source-example .example-viewport {
   /* height: 300px;   */
   height: 220px;
+  width: 100%;
+  border: 1px solid rgb(255, 255, 255);
   /* width: 200px; */
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
   
 .cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
@@ -29,6 +39,18 @@ p {
 img {
   height: 150px;
   width: 100px;
+}
+
+.mini-menu1 {
+  /* display: block; */
+  /* display: flex; */
+  position: absolute;
+  justify-content: space-between;
+  top: 5px;
+  /* right: 5px; */
+  /* width: 44px;
+  height: 20px; */
+  /* border: 1px solid white; */
 }
 
   

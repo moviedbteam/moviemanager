@@ -4,6 +4,7 @@ import { Movie } from 'src/app/models/movie.model';
 import { TmdbMovie } from 'src/app/models/tmdb-movie.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,6 +16,7 @@ import { environment } from 'src/environments/environment';
 export class OverviewTrendMovieComponent {
 
   recoMovies:Array<TmdbMovie> = [];
+  isAuth = this.userService.isAuth();
 
   // Statut icône Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
@@ -41,6 +43,7 @@ export class OverviewTrendMovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
   ){}
   
   async ngOnInit() {

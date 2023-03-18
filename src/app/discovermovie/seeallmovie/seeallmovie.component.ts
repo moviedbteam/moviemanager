@@ -4,6 +4,7 @@ import { MovieService } from 'src/app/services/movie.service';
 import { Movie } from 'src/app/models/movie.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-seeallmovie',
@@ -13,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 export class SeeallmovieComponent {
 
   movies:Array<Movie> =[];
+  isAuth = this.userService.isAuth();
 
   // Statut des icônes Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg"
@@ -35,6 +37,7 @@ export class SeeallmovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
     ) {}
 
   async ngOnInit() {

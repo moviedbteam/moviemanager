@@ -6,6 +6,7 @@ interface Genre {
 export class TvModel {
 
     id: number;
+    firstAirDate: Date;
     titre: string;
     resume: string;
     image_portrait: string;
@@ -20,6 +21,7 @@ export class TvModel {
 
     constructor(tvFromApi:any) {
         this.id = tvFromApi.id;
+        this.firstAirDate = tvFromApi.first_air_date;
         this.titre = tvFromApi.name;
         this.resume = tvFromApi.overview;
         this.image_portrait = tvFromApi.poster_path;

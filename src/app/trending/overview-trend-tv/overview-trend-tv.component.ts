@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import { TrendTv } from '../models/trend-tv.model';
 import { TrendTvService } from '../services/trend-tv.service';
@@ -13,6 +14,7 @@ import { TrendTvService } from '../services/trend-tv.service';
 export class OverviewTrendTvComponent {
 
   recoTvs:Array<TrendTv> = [];
+  isAuth = this.userService.isAuth();
 
   // Statut icône Wish
   _wishStatusIconOn: string = "fa-solid fa-bookmark fa-lg";
@@ -39,6 +41,7 @@ export class OverviewTrendTvComponent {
     private recoTvSvc:TrendTvService,
     private alerteSvc:AlertService,
     private http:HttpClient,
+    public userService: UserService,
   ){}
 
   async ngOnInit() {

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 import { MovieService } from '../services/movie.service';
 import { AlertService } from '../services/alert.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-detailsheetmovie',
@@ -15,6 +16,7 @@ export class DetailsheetmovieComponent {
   viewingPlace:string = "";
   viewingRate:number = 0;
   viewingMood:number = 0;
+  isAuth = this.userService.isAuth();
 
   // Statuts des boutons Wish et Watch
   wishStatusButton: string = "btn btn-outline-warning btn-sm";
@@ -28,7 +30,8 @@ export class DetailsheetmovieComponent {
       private route:ActivatedRoute,
       public movieSvc:MovieService,
       private _location:Location,
-      private alerteSvc:AlertService
+      private alerteSvc:AlertService,
+      public userService: UserService,
   ) {}
 
   async ngOnInit() {
@@ -36,7 +39,14 @@ export class DetailsheetmovieComponent {
     this.idMovie = this.route.snapshot.params['id'];
     console.log(this.idMovie);
 
-    this.movieSvc.getBackDetailsFromApi(this.idMovie);
+    if (this.isAuth) {
+      this.movieSvc.getBackDetailsFromApi(this.idMovie);
+      console.log("connecté")
+    }
+    else {
+      this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
+      console.log("non connecté")
+    }
     
     this.subscription = await this.movieSvc.getMovieDetail$()
       .subscribe( async (response:any)=>  {

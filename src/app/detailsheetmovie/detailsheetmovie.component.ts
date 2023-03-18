@@ -46,11 +46,11 @@ export class DetailsheetmovieComponent {
         if (response.idWish !== null && response.idWish !== undefined) {
           console.log(response.idWish)
           this.setStatusWishButton(1) ;
-        }
+        } else this.setStatusWishButton(0) ;
         if (response.idWatch !== null && response.idWish !== undefined) {
           console.log(response.idWatch)
           this.setStatusWatchButton(1) ;
-        }
+        } else this.setStatusWatchButton(0) ;
         console.log(response)
         return;
       

@@ -116,7 +116,6 @@ export class DetailsheettvComponent {
       public alerteService:AlertService,
       public userService: UserService
   ) { 
-    console.log("========== this.loading$.next(true)")
     this.loading$.next(true);
     this.loadingAllWishEpisodes$.next(false);
     this.loadingAllWatchEpisodes$.next(false);
@@ -124,15 +123,11 @@ export class DetailsheettvComponent {
 
   async ngOnInit() {
 
-    console.log(this.route.snapshot.params);
     this.idSerie = this.route.snapshot.params['id'];
 
     // vérifie si la série n'est pas dans une Wish/Watch List
     if(this.isAuth) await this.checkWishWatchSerie();
 
-    console.log("======== Après checkWishWatch ===========")
-    console.log("this.idWishSerie = " + this.idWishSerie)
-    console.log("this.idWatchSerie = " + this.idWatchSerie)
     
     // récupère tous les wish de la série
     if(this.isAuth) this.buildMapIconesEpisodesSaisons();
@@ -140,7 +135,6 @@ export class DetailsheettvComponent {
     if((this.idWishSerie == 0) || (this.idWatchSerie == 0)) {
       this.origineAPI = "MMA";
       // Les infos de la  série sont à récupérer dans le back
-      console.log("Appel de this.detailTvService.getDetailsFromApiMma")
       this.detailTvService.getDetailsFromApiMma(this.idSerie)
 
       this.subscriptionDetailSeasons = this.detailTvService.seasonDetail$
@@ -151,7 +145,6 @@ export class DetailsheettvComponent {
             (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
           )
           this.loading$.next(false);
-          console.log("detailSeasons :", this.detailSeasons);
         }  
   
       )
@@ -171,10 +164,7 @@ export class DetailsheettvComponent {
           this.detailSeasons.sort(
             (a,b) => ( a.seasonNumber < b.seasonNumber ? -1 : 1)
           )
-          console.log("========== this.loading$.next(false)")
           this.loading$.next(false);
-          console.log("detailSeasons :", this.detailSeasons);
-          console.log("this.loading$ ", this.loading$.getValue())
         }  
   
       )
@@ -190,7 +180,6 @@ export class DetailsheettvComponent {
     // https://redline.fr.nf/api/v1/wish/episode/all
     this.wishSvc.getAllWishId().subscribe({
       next: (response:any) => {
-        console.log("buildMapBtnEpisodes > getAllWishId ", response)
         for (let wish of response) {
           // on ne prend que les wish de la série
           if(wish.idTv == this.idSerie) {
@@ -208,7 +197,6 @@ export class DetailsheettvComponent {
             })
           }
         }
-        console.log("this.mapWishEpisode = ", this.mapWishEpisode)
       },
       error: error => console.error(error)
     })
@@ -217,7 +205,6 @@ export class DetailsheettvComponent {
     // https://redline.fr.nf/api/v1/watch/episode/all
     this.watchSvc.getAllWatchId().subscribe({
       next: (response:any) => {
-        console.log("buildMapBtnEpisodes > getAllWatchId ", response)
         for (let watch of response) {
           // on ne prend que les watch de la série
           if(watch.idTv == this.idSerie) {
@@ -235,9 +222,6 @@ export class DetailsheettvComponent {
             })
           }
         }
-        console.log("this.mapWishEpisode = ", this.mapWishEpisode)
-        console.log("this.mapWatchEpisode = ", this.mapWatchEpisode)
-        console.log("this.mapWatchSeason = ", this.mapWatchSeason)
       },
       error: error => console.error(error)
     })
@@ -260,14 +244,12 @@ export class DetailsheettvComponent {
 
     // vérifie si la série a un WishId
     await this.wishSvc.getWishIdTv().toPromise().then((response:any) => {
-      console.log("getWishIdTv ", response)
       for (let wish of response) {
         if(wish.idTv == this.idSerie) {
           this.idWishSerie = wish.idWish;
           break;
         }
       }
-      console.log("this.idWishSerie = " + this.idWishSerie)
       this.initStatusWishButton();
     }).catch((error: any) => {
       console.error(error);
@@ -275,14 +257,12 @@ export class DetailsheettvComponent {
 
   // vérifie si la série a un WatchId
   await this.watchSvc.getWatchIdTv().toPromise().then((response:any) => {
-      console.log("getWatchIdTv ", response)
       for (let watch of response) {
         if(watch.idTv == this.idSerie) {
           this.idWatchSerie = watch.idWatch;
           break;
         }
       }
-      console.log("this.idWatchSerie = " + this.idWatchSerie)
       this.initStatusWatchButton();
     }).catch((error: any) => {
       console.error(error);
@@ -303,7 +283,6 @@ export class DetailsheettvComponent {
     this.wishSvc.postAllWishEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
-        console.log("addAllWishEpisodes > wishSvc.postAllWishEpisodesToApi", response)
         for (let wish of response) {
           // MAJ de la map des episodes
           this.mapWishEpisode.set(wish.idEpisode, {
@@ -337,7 +316,6 @@ export class DetailsheettvComponent {
     this.wishSvc.deleteAllWishEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
-        console.log("delAllWishEpisodes > wishSvc.delAllWishEpisodesToApi", response)
 
           // MAJ de la map des episodes
           this.mapWishEpisode.clear();
@@ -359,11 +337,9 @@ export class DetailsheettvComponent {
 
   addAllWishEpisodesOfSeason(idSeason: number) {
 
-    console.log("Début addAllWishEpisodesOfSeason")
     this.wishSvc.postAllWishEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
-        console.log("addAllWishEpisodesOfSeason > wishSvc.postAllWishEpisodesOfSeasonToApi", response)
         
         for (let wish of response) {
             // MAJ de la map des episodes
@@ -382,7 +358,6 @@ export class DetailsheettvComponent {
             })
 
             // MAJ le gros bouton Wish
-            console.log("this.mapWishEpisode.size " +  this.mapWishEpisode.size)
             if (this.mapWishEpisode.size > 0) {
               this.setStatusWishButton(1);
             }
@@ -400,11 +375,9 @@ export class DetailsheettvComponent {
 
   delAllWishEpisodesOfSeason(idSeason: number) {
 
-    console.log("Début delAllWishEpisodesOfSeason")
     this.wishSvc.deleteAllWishEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
-        console.log("delAllWishEpisodesOfSeason > wishSvc.deleteAllWishEpisodesOfSeasonToApi", response)
         
         for (let wish of response) {
           // MAJ de la map des episodes
@@ -418,7 +391,6 @@ export class DetailsheettvComponent {
           }
 
           // MAJ le gros bouton Wish
-          console.log("this.mapWishEpisode.size " +  this.mapWishEpisode.size)
           if (this.mapWishEpisode.size > 0) {
             this.setStatusWishButton(1);
           }
@@ -443,7 +415,6 @@ export class DetailsheettvComponent {
     this.wishSvc.postWishEpisodeToApi(this.idSerie, idSeason, idEpisode)
     .subscribe({
       next: (wish:any)=> {
-        console.log("addWishEpisode > wishSvc.postWishEpisodeToApi", wish)
           // MAJ de la map des episodes
           this.mapWishEpisode.set(wish.idEpisode, {
             cssIconOn: this._wishStatusIconEpisodeOn,
@@ -451,7 +422,6 @@ export class DetailsheettvComponent {
             idWish: wish.idWish,
             seasonId: wish.idSeason
           })
-        console.log("mapWishEpisode ", this.mapWishEpisode)
 
           
           // MAJ de la map des saisons
@@ -462,7 +432,6 @@ export class DetailsheettvComponent {
           })
 
           // MAJ le gros bouton Wish
-          console.log("this.mapWishEpisode.size " +  this.mapWishEpisode.size)
           if (this.mapWishEpisode.size > 0) {
             this.setStatusWishButton(1);
           }
@@ -484,56 +453,37 @@ export class DetailsheettvComponent {
     let wishIdToDelete:any;
     if (this.mapWishEpisode.has(idEpisode)) {
       wishIdToDelete = this.mapWishEpisode.get(idEpisode)?.idWish 
-      console.log("wishIdToDelete = " + wishIdToDelete)
     }
 
     this.wishSvc.deleteWishEpisodeToApi(wishIdToDelete)
     .subscribe({
       next: (wish:any)=> {
-        console.log("addWishEpisode > wishSvc.deleteWishEpisodeToApi", wish)
-        console.log("mapWishSeason au début de deleteWishEpisodeToApi", this.mapWishSeason)
 
         // MAJ de la map des episodes
         this.mapWishEpisode.delete(idEpisode)  
-        console.log("idEpisode " + idEpisode + " effacé de mapWishEpisode")
-        console.log("mapWishEpisode ", this.mapWishEpisode)
-          
           
           // MAJ de la map des saisons: s'il n'y a plus d'épisode de la saison => on supprime la saison de mapWatchSeason          
           // const hasSeason = [...this.mapWishEpisode.values()].some((wishEpisode) => wishEpisode.seasonNumber === idSeason);
           // if (!hasSeason) {
           //   this.mapWishSeason.delete(idSeason)
-          //   console.log("idSeason " + idSeason + " effacé de mapWishSeason")
-          //   console.log("mapWishSeason ", this.mapWishSeason)
           // }
 
 
           let deleteIdSeason = true;
-          console.log("mapWishSeason au début de deleteWishEpisodeToApi avant : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishSeason)
-          console.log("mapWishEpisode au début de deleteWishEpisodeToApi avant : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishEpisode)
           for (let wishEpisode of this.mapWishEpisode.entries()) {
-            console.log("wishEpisode[1].seasonId = " + wishEpisode[1].seasonId)
-            console.log("idSeason = " + idSeason)
             if(wishEpisode[1].seasonId == idSeason) {
-              console.log("On est dans le : if(wishEpisode[0] == idSeason)")
               deleteIdSeason = false;
               break;
             }
           }
-          console.log("Après le for deleteIdSeason = " + deleteIdSeason)
-          console.log("mapWishSeason au début de deleteWishEpisodeToApi après : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishSeason)
-          console.log("mapWishEpisode au début de deleteWishEpisodeToApi après : for(let wishEpisode of this.mapWishEpisode.entries())", this.mapWishEpisode)
           
           if(deleteIdSeason) {
             this.mapWishSeason.delete(idSeason);
           }
 
-        console.log("mapWishSeason à la fin de deleteWishEpisodeToApi", this.mapWishSeason)
-        console.log("mapWishEpisode à la fin de deleteWishEpisodeToApi", this.mapWishEpisode)
 
 
           // MAJ le gros bouton Watch
-          console.log("this.mapWishEpisode.size " +  this.mapWatchEpisode.size)
           if (this.mapWatchEpisode.size > 0) {
             this.setStatusWishButton(1);
           }
@@ -541,7 +491,7 @@ export class DetailsheettvComponent {
             this.setStatusWishButton(0);
           }          
         
-          this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
+          this.alerteService.showAlert("L'épisode a été supprimé de la Wish liste");
 
       },
       error: error => console.error(error)
@@ -558,7 +508,6 @@ export class DetailsheettvComponent {
     this.watchSvc.postAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
-        console.log("addAllWatchEpisodes > wishSvc.postAllWatchEpisodesToApi", response)
         for (let watch of response) {
           // MAJ de la map des episodes
           this.mapWatchEpisode.set(watch.idEpisode, {
@@ -592,7 +541,6 @@ export class DetailsheettvComponent {
     this.watchSvc.deleteAllWatchEpisodesToApi(this.idSerie)
     .subscribe({
       next: (response:any)=> {
-        console.log("delAllWatchEpisodes > wishSvc.delAllWatchEpisodesToApi", response)
 
           // MAJ de la map des episodes
           this.mapWatchEpisode.clear();
@@ -614,11 +562,9 @@ export class DetailsheettvComponent {
 
   addAllWatchEpisodesOfSeason(idSeason: number) {
 
-    console.log("Début addAllWatchEpisodesOfSeason")
     this.watchSvc.postAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
-        console.log("addAllWatchEpisodesOfSeason > wishSvc.postAllWatchEpisodesOfSeasonToApi", response)
         
         for (let watch of response) {
             // MAJ de la map des episodes
@@ -637,7 +583,6 @@ export class DetailsheettvComponent {
             })
 
             // MAJ le gros bouton Watch
-            console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
             if (this.mapWatchEpisode.size > 0) {
               this.setStatusWatchButton(1);
             }
@@ -655,11 +600,9 @@ export class DetailsheettvComponent {
 
   delAllWatchEpisodesOfSeason(idSeason: number) {
 
-    console.log("Début delAllWatchEpisodesOfSeason")
     this.watchSvc.deleteAllWatchEpisodesOfSeasonToApi(this.idSerie, idSeason)
     .subscribe({
       next: (response:any)=> {
-        console.log("delAllWatchEpisodesOfSeason > wishSvc.deleteAllWatchEpisodesOfSeasonToApi", response)
         
         for (let watch of response) {
           // MAJ de la map des episodes
@@ -673,7 +616,6 @@ export class DetailsheettvComponent {
           }
 
           // MAJ le gros bouton Watch
-          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
           if (this.mapWatchEpisode.size > 0) {
             this.setStatusWatchButton(1);
           }
@@ -698,7 +640,6 @@ export class DetailsheettvComponent {
     this.watchSvc.postWatchEpisodeToApi(this.idSerie, idSeason, idEpisode)
     .subscribe({
       next: (watch:any)=> {
-        console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)
           // MAJ de la map des episodes
           this.mapWatchEpisode.set(watch.idEpisode, {
             cssIconOn: this._watchStatusIconEpisodeOn,
@@ -715,7 +656,6 @@ export class DetailsheettvComponent {
           })
 
           // MAJ le gros bouton Wish
-          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
           if (this.mapWatchEpisode.size > 0) {
             this.setStatusWatchButton(1);
           }
@@ -738,32 +678,24 @@ export class DetailsheettvComponent {
     let watchIdToDelete:any;
     if (this.mapWatchEpisode.has(idEpisode)) {
       watchIdToDelete = this.mapWatchEpisode.get(idEpisode)?.idWatch 
-      console.log("watchIdToDelete = " + watchIdToDelete)
     }
 
     this.watchSvc.deleteWatchEpisodeToApi(watchIdToDelete)
     .subscribe({
       next: (watch:any)=> {
-        console.log("addWatchEpisode > wishSvc.postWatchEpisodeToApi", watch)
 
         // MAJ de la map des episodes
         this.mapWatchEpisode.delete(idEpisode)  
-        console.log("idEpisode " + idEpisode + " effacé de mapWishEpisode")
-        console.log("mapWishEpisode ", this.mapWishEpisode)
-          
           
           // MAJ de la map des saisons: s'il n'y a plus d'épisode de la saison => on supprime la saison de mapWatchSeason          
           const hasSeason = [...this.mapWatchEpisode.values()].some((watchEpisode) => watchEpisode.seasonId === idSeason);
           if (!hasSeason) {
             this.mapWatchSeason.delete(idSeason)
-            console.log("idSeason " + idSeason + " effacé de mapWatchSeason")
-            console.log("mapWatchSeason ", this.mapWatchSeason)
 
           }
           
 
           // MAJ le gros bouton Watch
-          console.log("this.mapWatchEpisode.size " +  this.mapWatchEpisode.size)
           if (this.mapWatchEpisode.size > 0) {
             this.setStatusWatchButton(1);
           }
@@ -823,12 +755,10 @@ export class DetailsheettvComponent {
 
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
-      console.log("Appel à this.delAllWishEpisodes()");
       this.deleteAllWishEpisodes();
       this.setStatusWishButton(0);
     }
     else {
-      console.log("Appel à this.addAllWishEpisodes()");
       this.addAllWishEpisodes();
       this.setStatusWishButton(1);
     }
@@ -836,12 +766,10 @@ export class DetailsheettvComponent {
 
   updateStatusWatchButton() {
     if (this.watchStatusButton.includes('btn-primary')) {
-      console.log("Appel à this.delAllWatchEpisodes()");
       this.deleteAllWatchEpisodes();
       this.setStatusWatchButton(0);
     }
     else {
-      console.log("Appel à this.addAllWatchEpisodes()");
       this.addAllWatchEpisodes();
       this.setStatusWatchButton(1);
     }
@@ -852,11 +780,9 @@ export class DetailsheettvComponent {
     // Recherche du statut de l'icône dans la map saison
     // => S'il n'est pas présent dans la map c'est que l'icône est à off
     if ( this.mapWishSeason.has(idSeason) ) {
-      console.log("Appel à this.delAllWishEpisodesOfSeason()");
       this.delAllWishEpisodesOfSeason(idSeason)
     }
     else {
-      console.log("Appel à this.addAllWishEpisodesOfSeason()");
       this.addAllWishEpisodesOfSeason(idSeason)
     }
   }
@@ -866,11 +792,9 @@ export class DetailsheettvComponent {
     // Recherche du statut de l'icône dans la map saison
     // => S'il n'est pas présent dans la map c'est que l'icône est à off
     if ( this.mapWatchSeason.has(idSeason) ) {
-      console.log("Appel à this.delAllWishEpisodesOfSeason()");
       this.delAllWatchEpisodesOfSeason(idSeason)
     }
     else {
-      console.log("Appel à this.addAllWishEpisodesOfSeason()");
       this.addAllWatchEpisodesOfSeason(idSeason)
     }
   }
@@ -880,11 +804,9 @@ export class DetailsheettvComponent {
     // Recherche du statut de l'icône dans la map episode
     // => S'il n'est pas présent dans la map c'est que l'icône est à off
     if ( this.mapWishEpisode.has(idEpisode) ) {
-      console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) VRAI");
       this.delWishEpisode(idSeason, idEpisode)
     }
     else {
-      console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) FAUX");
       this.addWishEpisode(idSeason, idEpisode)
     }
   }
@@ -894,11 +816,9 @@ export class DetailsheettvComponent {
     // Recherche du statut de l'icône dans la map episode
     // => S'il n'est pas présent dans la map c'est que l'icône est à off
     if ( this.mapWatchEpisode.has(idEpisode) ) {
-      console.log("Appel à this.updateStatusWatchEpisode() > this.mapWatchEpisode.has(idEpisode) VRAI");
       this.delWatchEpisode(idSeason, idEpisode)
     }
     else {
-      console.log("Appel à this.updateStatusWishEpisode() > this.mapWishEpisode.has(idEpisode) FAUX");
       this.addWatchEpisode(idSeason, idEpisode)
     }
   }

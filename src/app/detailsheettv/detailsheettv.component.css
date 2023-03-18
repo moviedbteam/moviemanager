@@ -129,6 +129,10 @@ div>button>span>i {
     font-weight: 500;
 }
 
+.accordion-button::after {
+    color: #5D1BEB;
+  }
+
 table {
     color: rgb(140, 120, 160);
 }

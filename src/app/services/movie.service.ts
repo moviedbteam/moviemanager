@@ -74,6 +74,7 @@ export class MovieService {
     });  
   }
   getTrendMovie$ ():Observable<TmdbMovie[]> {
+    // this._trendMovie$.next([])
     return this._trendMovie$.asObservable();
   }
 
@@ -96,6 +97,7 @@ export class MovieService {
     });  
   }
   getRecoMovie$ ():Observable<Movie[]> {
+    this._recoMovie$.next([])
     return this._recoMovie$.asObservable();
   }
   getRecoTvFromApi(){
@@ -117,6 +119,7 @@ export class MovieService {
   }
 
   getRecoTv$ ():Observable<RecoTv[]> {
+    this._recoTv$.next([])
     return this._recoTv$.asObservable();
   }
 
@@ -231,6 +234,7 @@ export class MovieService {
     });
   }
   getWishesMovie$ ():Observable<Movie[]> {
+    this._wishesMovie$.next([])
     return this._wishesMovie$.asObservable();
   }
   delWishMovie() {
@@ -287,6 +291,7 @@ export class MovieService {
     });    
   }
   getWatchesMovie$ ():Observable<Movie[]> {
+    this._watchesMovie$.next([])
     return this._watchesMovie$.asObservable();
   }
   delWatchMovie() {

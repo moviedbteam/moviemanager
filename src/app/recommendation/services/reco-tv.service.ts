@@ -38,6 +38,7 @@ export class RecoTvService {
     });  
   }
   getRecoTv$ ():Observable<RecoTv[]> {
+    this._recoTv$.next([])
     return this._recoTv$.asObservable();
   }
 

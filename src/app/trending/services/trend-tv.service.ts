@@ -59,12 +59,10 @@ export class TrendTvService {
 
   delWishThisTv(wishTvToDel: any) {
    let sendToApi = {idTv:wishTvToDel.idTv,};
-   console.log(sendToApi);
     // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
     this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
         if(response.status == "200") {
           wishTvToDel.idWish = null;
           /////// A VERIFIER !!! ///////
@@ -87,7 +85,6 @@ export class TrendTvService {
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
         if(response.status == "200") {
           watchTvToDel.idWatch = null;
           /////// A VERIFIER !!! ///////

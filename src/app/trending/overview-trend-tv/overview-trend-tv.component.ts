@@ -52,13 +52,13 @@ export class OverviewTrendTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr;
-        console.log(this.recoTvs);
+        // console.log(this.recoTvs);
 
         for (let tv of this.recoTvs){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)
           .toPromise()      
           .then( (response:any) => {
-            console.log(response);
+            // console.log(response);
             // INIT icones wish, watch, blackList
             if (response.idWish !== null) {
               tv.idWish = response.idWish;
@@ -81,21 +81,18 @@ export class OverviewTrendTvComponent {
           });
           
         }  
-        console.log(this.recoTvs);
+        // console.log(this.recoTvs);
         return;
       });
 
   }
 
   updateStatusWishIcon(tv:TrendTv) {
-    console.log(tv);
     if (tv._wishStatusIcon === this._wishStatusIconOn) {
-      console.log("Appel à this.recoTvSvc.delWishThisTv(tv);");
       this.recoTvSvc.delWishThisTv(tv);
       this.setStatusWishIcon(tv, 0)
     }
     else {
-      console.log("Appel à this.addWish(tv);");
       this.addWish(tv);
       this.setStatusWishIcon(tv, 1)
     }
@@ -103,13 +100,11 @@ export class OverviewTrendTvComponent {
 
   updateStatusWatchIcon(tv:TrendTv) {
     if (tv._watchStatusIcon === this._watchStatusIconOn) {
-      console.log("Appel à this.recoTvSvc.delWatchThisTv(tv);");
       this.recoTvSvc.delWatchThisTv(tv);
       this.setStatusWatchIcon(tv, 0)
     }
     else {
-      console.log("Appel à this.checkWatch(tv);");
-      this.checkWatch(tv);
+      this.addWatch(tv);
       this.setStatusWatchIcon(tv, 1)
     }
   }
@@ -136,11 +131,6 @@ export class OverviewTrendTvComponent {
     }
   }
 
-  
-
-  callTest(str:string) {
-    this.alerteSvc.showAlert("Ajouté aux " + str + "!!!");
-  }
 
   addWish(tv:TrendTv) {
     let sendToApi = { idTv:tv.idTv, };
@@ -148,24 +138,20 @@ export class OverviewTrendTvComponent {
     this.recoTvSvc.postWishTvToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
         this.alerteSvc.showAlert("Ajouté à la Wish liste!")
       },
       error: error => console.error(error)
     });
   }
 
-  checkWatch(tv:TrendTv) {
+  addWatch(tv:TrendTv) {
     let sendToApi = { idTv:tv.idTv,};
-    console.log(sendToApi);
 
     this.recoTvSvc.postWatchTvToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
-        if(response.status = "201") {
-          
-        }
+        // console.log(response.status)/
+        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
       },
       error: error => console.error(error)
     });

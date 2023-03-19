@@ -61,7 +61,7 @@
       <!-- <i routerLink="/connexion" class="nav-link btn" style="margin-right: 10px" class="fa-solid fa-user">{{ userData.username?userData.username:'' }}</i> -->
       <!-- <i routerLink="/connexion" [class]="_cssLoginIcon" style="margin-right: 10px" >{{ userData.username?userData.username:'' }}</i> -->
       <!-- <i routerLink="/connexion" [ngClass]="{'fa-solid fa-user': isAuth, 'fa-regular fa-user': !isAuth}" style="margin-right: 10px" >{{ userData.username?userData.username:'' }}</i> -->
-      <i routerLink="/connexion" class="fa fa-user" [ngClass]="{'fa-sign-in': !isAuth, 'fa-sign-out': isAuth}" (click)="refreshAppComponent()">{{ userData.username?userData.username:'' }}</i>
+      <i routerLink="/connexion" class="fa fa-user" style="margin-right:10px" [ngClass]="{'fa-sign-in': !isAuth, 'fa-sign-out': isAuth}" (click)="refreshAppComponent()">{{ userData.username?userData.username:'' }}</i>
 
       <!-- <div [ngClass]="{'my-class': isActive, 'other-class': !isActive}">Contenu de la div</div> -->
 
@@ -81,7 +81,7 @@
               Tendances de la semaine
             </a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="isAuth" class="nav-item">
             <a routerLink="/recommendation" class="nav-link" href="#">
               <span><i class="fa-solid fa-hand-holding-heart" style="margin-right: 10px"></i></span>
               Recommandations personnalisées
@@ -94,7 +94,7 @@
               Recherche
             </a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="isAuth" class="nav-item">
             <a routerLink="/librarymovie" class="nav-link" href="#">
               <span><i class="fa-solid fa-star" style="margin-right: 10px"></i></span>
               Mes films
@@ -107,7 +107,7 @@
               Recherche
             </a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="isAuth" class="nav-item">
             <a routerLink="/librarytv" class="nav-link" href="#">
               <span><i class="fa-solid fa-star" style="margin-right: 10px"></i></span>Mes séries TV
             </a>

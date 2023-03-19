@@ -49,7 +49,7 @@ export class OverviewRecoTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr;
-        // console.log(this.recoTvs);
+        console.log(this.recoTvs);
 
         for (let tv of this.recoTvs){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)

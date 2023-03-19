@@ -169,6 +169,7 @@ export class DetailsheetmovieComponent {
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
+        this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         if(response.status = "201") {
           
         }

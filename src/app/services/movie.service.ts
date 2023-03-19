@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Movie } from '../models/movie.model';
 import { TmdbMovie } from '../models/tmdb-movie.model';
 import { RecoTv } from '../recommendation/models/reco-tv.model';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,9 @@ export class MovieService {
   private _trendMovie$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private alerteSvc:AlertService,
+
   ) { }
 
   ////////////////////////////// SERVICES FOR TREND //////////////////////////////
@@ -247,6 +250,7 @@ export class MovieService {
         if(response.status == "200") {
           this.movie.idWish = null;
           this._movieDetail$.next(this.movie);
+          this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
       error: error => console.error(error)
@@ -304,6 +308,7 @@ export class MovieService {
         if(response.status == "200") {
           this.movie.idWatch = null;
           this._movieDetail$.next(this.movie);
+          this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
       error: error => console.error(error)

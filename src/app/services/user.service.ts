@@ -4,11 +4,14 @@ import { AlertService } from './alert.service';
 import { Router, RouterModule } from '@angular/router';
 import { CreateUserModel, CreateUserModelIam, UserModel } from '../models/userlogin.model';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  private refreshSubject = new Subject<void>();
 
   // API_USER:string = 'http://localhost:8081/login';
   API_USER = environment.url_apiUser;
@@ -23,6 +26,15 @@ export class UserService {
     private alertSvc:AlertService,
     private router:Router,
   ) { }
+
+  get refresh$() {
+    console.log( "get refresh$() { return this.refreshSubject.asObservable();}")
+    return this.refreshSubject.asObservable();
+  }
+  triggerRefresh() {
+    console.log ( "triggerRefresh() {this.refreshSubject.next();}")
+    this.refreshSubject.next();
+  }
 
   getGenresMovie () {
     return this.http.get(this.API_GET_GENRESMOVIE);
@@ -51,9 +63,11 @@ export class UserService {
   }
 
   logout() {
+    
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     this.alertSvc.showAlert('Vous êtes déconnecté(e)');
+    this.triggerRefresh();
     // this.router.navigate(['/']);
   }
 
@@ -64,5 +78,7 @@ export class UserService {
     }
     return false;
   }
+
+
 
 }

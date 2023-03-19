@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from './services/user.service';
 
@@ -18,7 +18,8 @@ export class AppComponent {
   constructor (
     public userService: UserService,
     private router:Router,
-  ){}
+    private cdRef: ChangeDetectorRef,
+  ){   this.userService.refresh$.subscribe(  () => { this.refreshAppComponent(); }  );  }
 
   ngOnInit() {
 
@@ -28,6 +29,14 @@ export class AppComponent {
       if (this.isAuth) this._cssLoginIcon = this._cssLoginIconOn;
       else  this._cssLoginIcon = this._cssLoginIconOff;
     
+  }
+
+  refreshAppComponent(): void {
+    console.log("refreshAppComponent(): void {this.isAuth = this.userService.isAuth();this.cdRef.detectChanges();}")
+    this.isAuth = this.userService.isAuth();
+    let userDataInStorage = localStorage.getItem('userData');
+    this.userData = userDataInStorage!=null?JSON.parse(userDataInStorage):{}; 
+    this.cdRef.detectChanges();
   }
 
   

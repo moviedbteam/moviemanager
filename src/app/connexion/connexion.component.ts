@@ -57,6 +57,7 @@ export class ConnexionComponent {
             if(response.jwt){  
               this.router.navigate(['/recommendation']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
+              this.userSvc.triggerRefresh();
             }
           },
           // error: (err) => console.log('mon erreur'+err)
@@ -67,8 +68,9 @@ export class ConnexionComponent {
     } 
   }
 
-  logoutAction() {
-    this.userSvc.logout()
-  }
+  // logoutAction() {
+  //   this.userSvc.triggerRefresh();
+  //   this.userSvc.logout();
+  // }
   
 }

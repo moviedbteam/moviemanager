@@ -48,13 +48,13 @@ export class DetailTvService {
       map((apiSerieMmaResponse:any)=> new DetailTvMmaModel(apiSerieMmaResponse))
     )
     .subscribe( (serie:DetailTvMmaModel) => {
-      console.log("serie récupérée de MMA : ");
-      console.log(serie);
+      console.log("serie récupérée par API MMA");
+      // console.log(serie);
       
       this._serieDetail$.next(serie);
       this._seasonDetail$.next(serie.seasons);
-      console.log("_serieDetail$", this._serieDetail$);
-      console.log("_saisonDetail$", this._seasonDetail$);
+      // console.log("_serieDetail$", this._serieDetail$);
+      // console.log("_saisonDetail$", this._seasonDetail$);
 
     });
 
@@ -74,11 +74,11 @@ export class DetailTvService {
       map((apiTmdbResponse:any)=> new DetailTvTmdbModel(apiTmdbResponse))
     )
     .subscribe( (serie:DetailTvTmdbModel) => {
-      console.log("serie récupéré de TMDB : ");
-      console.log(serie);
+      console.log("serie récupérée par API TMDB");
+      // console.log(serie);
       
       for (let i = serie.numFirstSeason; i <= serie.nbSeasons; i++ ) {
-        console.log("saison récupérée de TMDB : ");
+        console.log("saison récupérée par API TMDB");
         this.getSeasonDetailsFromApiTmdb(idTv, i)
       }
       this._serieDetail$.next(serie);

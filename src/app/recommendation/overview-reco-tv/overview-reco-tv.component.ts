@@ -49,7 +49,7 @@ export class OverviewRecoTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr;
-        console.log(this.recoTvs);
+        // console.log(this.recoTvs);
 
         for (let tv of this.recoTvs){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)
@@ -88,12 +88,10 @@ export class OverviewRecoTvComponent {
 
   updateStatusWishIcon(tv:RecoTv) {
     if (tv._wishStatusIcon === this._wishStatusIconOn) {
-      console.log("Appel à this.recoTvSvc.delWishThisTv(tv);");
       this.recoTvSvc.delWishThisTv(tv);
       this.setStatusWishIcon(tv, 0)
     }
     else {
-      console.log("Appel à this.addWish(tv);");
       this.addWish(tv);
       this.setStatusWishIcon(tv, 1)
     }
@@ -101,13 +99,11 @@ export class OverviewRecoTvComponent {
 
   updateStatusWatchIcon(tv:RecoTv) {
     if (tv._watchStatusIcon === this._watchStatusIconOn) {
-      console.log("Appel à this.recoTvSvc.delWatchThisTv(tv);");
       this.recoTvSvc.delWatchThisTv(tv);
       this.setStatusWatchIcon(tv, 0)
     }
     else {
-      console.log("Appel à this.checkWatch(tv);");
-      this.checkWatch(tv);
+      this.addWatch(tv);
       this.setStatusWatchIcon(tv, 1)
     }
   }
@@ -146,24 +142,19 @@ export class OverviewRecoTvComponent {
     this.recoTvSvc.postWishTvToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
-        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        this.alerteSvc.showAlert("L'épisode a été ajouté à la Wish liste")
       },
       error: error => console.error(error)
     });
   }
 
-  checkWatch(tv:RecoTv) {
+  addWatch(tv:RecoTv) {
     let sendToApi = { idTv:tv.idTv,};
-    console.log(sendToApi);
 
     this.recoTvSvc.postWatchTvToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
-        if(response.status = "201") {
-          
-        }
+        this.alerteSvc.showAlert("Marqué comme 'Vu'")
       },
       error: error => console.error(error)
     });

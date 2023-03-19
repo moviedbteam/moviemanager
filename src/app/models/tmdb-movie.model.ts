@@ -42,7 +42,7 @@ export class TmdbMovie {
     this.genres = movieFromApi.genres?movieFromApi.genres:[];
     this.originalLanguage = movieFromApi.original_language;
     this.originalTitle = movieFromApi.original_title;
-    this.voteCount = movieFromApi.vote_ount;
+    this.voteCount = movieFromApi.vote_count;
     /// IDENTIQUES A BACK ///
     this.idWatch = movieFromApi.idWatch;
     this.idWish = movieFromApi.idWish;

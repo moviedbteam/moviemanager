@@ -45,9 +45,9 @@
                 <span class="spinner-border spinner-border-sm text-light"></span>Watch
             </button>
 
-            <h2>Popularité: <span>{{serie?.popularity}}</span></h2>
+            <p style="font-size: 1.3em; color: rgba(93,27,235); margin-top: 10px;">Moyenne des votes  <span class="badge bg-info text-dark">{{serie?.voteAverage | number:'1.1-1' }}</span></p> 
             
-            <h2>Moyenne des votes: <span>{{serie?.voteAverage}}</span></h2>
+            <h2>Popularité: <span>{{serie?.popularity | number:'1.2-2' }}</span></h2>
             
             <h2>Nombre de votes: <span>{{serie?.voteCount}}</span></h2>
             
@@ -62,7 +62,7 @@
             </p>
 
             <h2>Statut</h2>
-            <p>{{serie?.status}}</p>
+            <p class="badge rounded-pill bg-warning text-dark">{{serie?.status}}</p>
         </div>
 
         </div>
@@ -137,7 +137,7 @@
                                     <td class="align-middle"><img src="https://image.tmdb.org/t/p/w92{{ episode.stillPath }}"></td>
                                     <th class="align-middle" scope="row">{{ episode.episodeNumber }}</th>
                                     <td class="align-middle" style="width: 100px;">{{ episode.airDate?(episode.airDate | date:"dd-MM-yyyy"):"-" }}</td>
-                                    <td class="align-middle">{{ episode.voteAverage?episode.voteAverage:"-" }}</td>
+                                    <td class="align-middle"><span class="badge bg-info text-dark" style="font-size: 1em;">{{ episode.voteAverage?(episode.voteAverage | number:'1.1-1'):"-" }}</span></td>
                                     <td class="align-middle">{{ episode.overview?episode.overview:"Non disponible"}}</td>
                                     <td *ngIf="this.isAuth" class="align-middle" style="width: 100px;">
                                         <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconEpisodeOff" 

@@ -35,7 +35,7 @@ export class OverviewWishMovieComponent {
             this.movieSvc.getWishMoviesFromApi();
           }
           this.wishMovies = wishesArr
-          console.log(this.wishMovies);
+          
           
           for (let wishMovie of this.wishMovies){
           
@@ -56,12 +56,12 @@ export class OverviewWishMovieComponent {
 
   updateStatusWatchIcon(movie:Movie) {
     if (movie._watchStatusIcon === this._watchStatusIconOn) {
-      console.log("Appel à this.movieSvc.delWatchMovie()");
+      
       this.movieSvc.delWatchThisMovie(movie);
       this.setStatusWatchIcon(movie, 0)
     }
     else {
-      console.log("Appel à this.checkWatch()");
+      
       this.checkWatch(movie);
       this.setStatusWatchIcon(movie, 1)
     }
@@ -84,17 +84,17 @@ export class OverviewWishMovieComponent {
 
   checkWatch(movie:Movie) {
     let sendToApi = { idMovie:movie.idMovie,};
-    console.log(sendToApi);
+    
 
     this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 

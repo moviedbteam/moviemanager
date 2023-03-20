@@ -52,16 +52,16 @@ export class OverviewTrendTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr;
-        // console.log(this.recoTvs);
+        
 
         if (this.isAuth){
-          console.log(this.isAuth)
+        
           
           for (let tv of this.recoTvs){
             await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)
             .toPromise()      
             .then( (response:any) => {
-              // console.log(response);
+        
               // INIT icones wish, watch, blackList
               if (response.idWish !== null) {
                 tv.idWish = response.idWish;
@@ -85,7 +85,7 @@ export class OverviewTrendTvComponent {
             
           }  
         }
-        // console.log(this.recoTvs);
+        
         return;
       });
 
@@ -142,12 +142,12 @@ export class OverviewTrendTvComponent {
     this.recoTvSvc.postWishTvToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -157,12 +157,12 @@ export class OverviewTrendTvComponent {
     this.recoTvSvc.postWatchTvToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
             

@@ -37,65 +37,47 @@ export class DetailsheetmovieComponent {
   async ngOnInit() {
 
     this.idMovie = this.route.snapshot.params['id'];
-    console.log(this.idMovie);
+    
 
     if (this.isAuth) {
       this.movieSvc.getBackDetailsFromApi(this.idMovie);
-      console.log("connecté")
+    
     }
     else {
       this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
-      console.log("non connecté")
+    
     }
     
     this.subscription = await this.movieSvc.getMovieDetail$()
       .subscribe( async (response:any)=>  {
         if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
         // INIT statut des boutons wish et watch
-        console.log(response)
+        
         if (response.idWish !== null && response.idWish !== undefined) {
-          console.log(response.idWish)
+        
           this.setStatusWishButton(1) ;
         } else this.setStatusWishButton(0) ;
         if (response.idWatch !== null && response.idWish !== undefined) {
-          console.log(response.idWatch)
+        
           this.setStatusWatchButton(1) ;
         } else this.setStatusWatchButton(0) ;
-        console.log(response)
+        
         return;
       
     });
 
-    // this.subscription = await this.movieSvc.getMovieDetail$()
-    // .subscribe({
-    //   next: (response:any)=>  {
-    //     if ( response.idMovie === null) this.movieSvc.getTmdbDetailsFromApi(this.idMovie);
-    //     // INIT statut des boutons wish et watch
-    //     console.log(response)
-    //     if (response.idWish !== null) {
-    //       console.log(response.idWish)
-    //       this.setStatusWishButton(1) ;
-    //     }
-    //     if (response.idWatch !== null) {
-    //       console.log(response.idWatch)
-    //       this.setStatusWatchButton(1) ;
-    //     }
-    //     console.log(response)
-    //     return;
-    //   },
-    //   error: error => console.error(error)
-    // });
+    
 
   }
 
   updateStatusWishButton() {
     if (this.wishStatusButton.includes('btn-warning')) {
-      console.log("Appel à this.movieSvc.delWishMovie()");
+      
       this.movieSvc.delWishMovie();
       this.setStatusWishButton(0)
     }
     else {
-      console.log("Appel à this.addWish()");
+      
       this.addWish();
       this.setStatusWishButton(1)
     }
@@ -103,12 +85,12 @@ export class DetailsheetmovieComponent {
 
   updateStatusWatchButton() {
     if (this.watchStatusButton.includes('btn-primary')) {
-      console.log("Appel à this.movieSvc.delWatchMovie()");
+      
       this.movieSvc.delWatchMovie();
       this.setStatusWatchButton(0)
     }
     else {
-      console.log("Appel à this.checkWatch()");
+      
       this.checkWatch();
       this.setStatusWatchButton(1)
     }
@@ -152,10 +134,10 @@ export class DetailsheetmovieComponent {
     this.movieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
+        
         this.alerteSvc.showAlert("Ajouté à la Wish liste!")
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -163,18 +145,18 @@ export class DetailsheetmovieComponent {
     let sendToApi = { 
       idMovie:this.idMovie
     };
-    console.log(sendToApi);
+    
 
     this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+    
         this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         if(response.status = "201") {
           
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 

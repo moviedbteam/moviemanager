@@ -92,7 +92,7 @@ export class SeealltvComponent {
           })         
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     })
     
     // API pour récupérer tous les episodes Watch
@@ -107,7 +107,7 @@ export class SeealltvComponent {
             })
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     })
     
   }
@@ -134,12 +134,12 @@ export class SeealltvComponent {
     this.wishService.deleteAllWishEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        console.log(response.status)
+        
         // MAJ de la map des wish serie
         this.mapWishSerie.delete(idTv)
         this.alerteService.showAlert("Tous les épisodes de cette série ont été supprimés de la Wish liste");
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -149,7 +149,7 @@ export class SeealltvComponent {
     this.wishService.postAllWishEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        console.log(response.status)
+        
         // MAJ de la map des wish serie
         this.mapWishSerie.set(idTv, {
           cssIconOn: this._wishStatusIconSerieOn,
@@ -159,7 +159,7 @@ export class SeealltvComponent {
         this.alerteService.showAlert("Tous les épisodes de cette saison ont été ajoutés à la Wish liste");
         
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -185,12 +185,12 @@ export class SeealltvComponent {
     this.watchService.deleteAllWatchEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        console.log(response.status)
+        
         // MAJ de la map des watch serie
         this.mapWatchSerie.delete(idTv)
         this.alerteService.showAlert("Tous les épisodes de cette série ont été restaurés à 'Non Vu'");
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -200,7 +200,7 @@ export class SeealltvComponent {
     this.watchService.postAllWatchEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        console.log(response.status)
+        
         // MAJ de la map des wish serie
         this.mapWatchSerie.set(idTv, {
           cssIconOn: this._watchStatusIconSerieOn,
@@ -210,7 +210,7 @@ export class SeealltvComponent {
         this.alerteService.showAlert("Tous les épisodes de cette série ont été marqués comme 'Vu'");
         
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }

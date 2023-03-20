@@ -85,7 +85,7 @@ export class CreateUserAccountComponent {
       });
     }
     this.movieGenreCheckSelected = checkArrayMovie.value 
-    // console.log("Cat. de films sélectionnées: " + this.movieGenreCheckSelected)
+    
   }
 
   onCheckboxChangeSerie(event:any) {
@@ -104,7 +104,7 @@ export class CreateUserAccountComponent {
       });
     }
     this.serieGenreCheckSelected = checkArraySerie.value 
-    // console.log("Cat. de séries sélectionnées: " + this.serieGenreCheckSelected)
+    
   }
 
   onCheckboxChangeStreaming(event:any) {
@@ -123,7 +123,7 @@ export class CreateUserAccountComponent {
       });
     }
     this.streamingGenreCheckSelected = checkArrayStreaming.value 
-    // console.log("Abonnements VOD sélectionnés: " + this.streamingGenreCheckSelected)
+    
   }
 
   createAccount() {    
@@ -147,56 +147,40 @@ export class CreateUserAccountComponent {
       loginName: this.formInscription.controls['pseudo'].value
     }
 
-    console.log("==== UserModel IAM ====")
-    console.log(userModelIam);
-
-    console.log("==== UserModel MMA ====")
-    console.log(userModelMma);
-
-          // this.userService.postCreateUserToApi(userModelMma)
-          // .subscribe({
-          //   next: (responseMma:any) => {
-          //       console.log("User MMA créé avec succès!")
-          //   },
-          //   error:error => console.log("Error create user mma: " + error)
-            
-          // })
+    
 
     this.userService.postCreateUserIamToApi(userModelIam)
     .subscribe({
       next: (responseIam:any) => {
-        console.log("responseIam");
-        console.log(responseIam);
+        
         if(responseIam) {
-          console.log("User IAM - " + responseIam.pseudo + " - créé avec succès!");
+          
           this.userService.postCreateUserToApi(userModelMma)
           .subscribe({
             next: (responseMma:any) => {
-              console.log("responseMma");
-              console.log(responseMma);
+          
               if(responseMma) {
-                console.log("User MMA créé avec succès!");
+                
                 this.router.navigate(['connexion']);
               }
               else {
-                console.log("Pb création user mma")
-                console.log("responseMma");
-                console.log(responseMma);
+                // console.log("Pb création user mma")
+                // console.log("responseMma");
+                // console.log(responseMma);
               }
             },
-            // error:error => console.log("Error create user mma: " + error)
-            error:error => console.log(error)
+            
+            // error: error => console.log(error)
             
           })
 
         } else {
-          console.log("Pb création user iam");
-          console.log("responseIam");
-          console.log(responseIam);
+          // console.log("Pb création user iam");
+          // console.log("responseIam");
+          // console.log(responseIam);
         }
       },
-      // error: error => console.error("Error create user iam: " + error)
-      error:error => console.log(error)
+      // error:error => console.log(error)
     });
   
   }

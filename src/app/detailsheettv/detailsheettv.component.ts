@@ -198,7 +198,7 @@ export class DetailsheettvComponent {
           }
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     })
     
     // API pour récupérer tous les episodes Watch
@@ -223,7 +223,7 @@ export class DetailsheettvComponent {
           }
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     })
     
   }
@@ -252,7 +252,7 @@ export class DetailsheettvComponent {
       }
       this.initStatusWishButton();
     }).catch((error: any) => {
-      console.error(error);
+      // console.error(error);
     });
 
   // vérifie si la série a un WatchId
@@ -265,7 +265,7 @@ export class DetailsheettvComponent {
       }
       this.initStatusWatchButton();
     }).catch((error: any) => {
-      console.error(error);
+      // console.error(error);
     });
 
   }
@@ -303,7 +303,7 @@ export class DetailsheettvComponent {
         }
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -326,7 +326,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("Tous les épisodes de la série ont été supprimés de la Wish liste")
         
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -368,7 +368,7 @@ export class DetailsheettvComponent {
             this.alerteService.showAlert("Tous les épisodes de cette saison ont été ajoutés à la Wish liste");
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -401,7 +401,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("Tous les épisodes de cette saison ont été supprimés de la Wish liste");
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -442,7 +442,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("L'épisode a été ajouté à la Wish liste");
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -494,7 +494,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("L'épisode a été supprimé de la Wish liste");
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -529,7 +529,7 @@ export class DetailsheettvComponent {
         }
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -551,7 +551,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("Tous les épisodes de la série ont été restaurés en 'Non Vu'")
         
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -593,7 +593,7 @@ export class DetailsheettvComponent {
             this.alerteService.showAlert("Tous les épisodes de cette saison ont été marqués comme 'Vus'");
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -626,7 +626,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("Tous les épisodes de cette saison ont été restaurés en 'Non Vu'");
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -666,7 +666,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }
@@ -706,7 +706,7 @@ export class DetailsheettvComponent {
           this.alerteService.showAlert("L'épisode a été marqué comme 'Vu'");
 
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }

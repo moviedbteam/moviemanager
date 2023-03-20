@@ -57,7 +57,6 @@ export class RecoTvService {
     this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
         if(response.status == "200") {
           wishTvToDel.idWish = null;
           /////// A VERIFIER !!! ///////
@@ -65,7 +64,7 @@ export class RecoTvService {
           this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -81,7 +80,7 @@ export class RecoTvService {
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+
         if(response.status == "201") {
           watchTvToDel.idWatch = null;
           /////// A VERIFIER !!! ///////
@@ -89,7 +88,7 @@ export class RecoTvService {
           this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -97,18 +96,17 @@ export class RecoTvService {
   ////////////////////////////// SERVICES BLACKLIST //////////////////////////////
   postBlackListTv(tvToBlackList:RecoTv) {
     let sendToApi = {idContent:tvToBlackList.idTv,};
-    console.log(sendToApi);
-    console.log(this.apiBack+this.apiPostBlackListTv);
-    // this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi)
+    
+    
     this.http.post(this.apiBack+this.apiPostBlackListTv, sendToApi ,{observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+    
         if(response.status == "200") {
           this.alerteSvc.showAlert("Ajouté à la Black liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }

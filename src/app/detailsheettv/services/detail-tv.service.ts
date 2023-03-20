@@ -32,29 +32,18 @@ export class DetailTvService {
 
     this._seasonDetail$.next([]);
 
-    // this.http.get(this.apiSerieMma + idTv)
-    // .pipe(
-    //   map((apiSerieMmaResponse:any)=> new DetailTvMmaModel(apiSerieMmaResponse)),
-    //   tap((serie:DetailTvMmaModel) => {
-    //     console.log("serie récupérée de MMA : ");
-    //     console.log(serie);
-    //     // Stocker la variable serie dans une variable de classe
-    //     this._serieDetail$.next(serie);
-    //   })
-    // );
+    
 
     this.http.get(this.apiSerieMma + idTv)
     .pipe(
       map((apiSerieMmaResponse:any)=> new DetailTvMmaModel(apiSerieMmaResponse))
     )
     .subscribe( (serie:DetailTvMmaModel) => {
-      console.log("serie récupérée par API MMA");
-      // console.log(serie);
+      
       
       this._serieDetail$.next(serie);
       this._seasonDetail$.next(serie.seasons);
-      // console.log("_serieDetail$", this._serieDetail$);
-      // console.log("_saisonDetail$", this._seasonDetail$);
+      
 
     });
 
@@ -74,11 +63,10 @@ export class DetailTvService {
       map((apiTmdbResponse:any)=> new DetailTvTmdbModel(apiTmdbResponse))
     )
     .subscribe( (serie:DetailTvTmdbModel) => {
-      console.log("serie récupérée par API TMDB");
-      // console.log(serie);
+      
       
       for (let i = serie.numFirstSeason; i <= serie.nbSeasons; i++ ) {
-        console.log("saison récupérée par API TMDB");
+        
         this.getSeasonDetailsFromApiTmdb(idTv, i)
       }
       this._serieDetail$.next(serie);
@@ -95,7 +83,7 @@ export class DetailTvService {
       .set('api_key', this.apiKeyTmdb)
       .set('language', 'fr-FR')
 
-      // console.log("getSeasonDetailsFromApiTmdb > http.get() ");
+      
       this.http.get(this.apiSerieTmdb + idTv + "/season/" + seasonNum, {params})
       .pipe(
         map((seasons:any) => {
@@ -105,9 +93,7 @@ export class DetailTvService {
           return seasons.map( (season: any) => new DetailSeasonTmdbModel(season)) })
       )
       .subscribe( (seasons:DetailSeasonTmdbModel[]) => {
-        next:
-        
-        console.log("getSeasonDetailsFromApiTmdb > subscribe > season: ", seasons);
+        // next:
         let actualSeasons = this._seasonDetail$.getValue();
         let allSeasons:any = [...actualSeasons, ...seasons];
         this._seasonDetail$.next(allSeasons);

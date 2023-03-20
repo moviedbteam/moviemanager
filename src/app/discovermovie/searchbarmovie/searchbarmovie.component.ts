@@ -19,7 +19,7 @@ export class SearchbarmovieComponent {
   }
 
   onKeyupInput(userSearch:string) {
-    console.log(userSearch);
+    
     if (userSearch.length == 0) {
       this.movieSvc.setSearchMovies$([]);
     }

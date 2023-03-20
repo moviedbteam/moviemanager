@@ -28,11 +28,11 @@ export class UserService {
   ) { }
 
   get refresh$() {
-    console.log( "get refresh$() { return this.refreshSubject.asObservable();}")
+    
     return this.refreshSubject.asObservable();
   }
   triggerRefresh() {
-    console.log ( "triggerRefresh() {this.refreshSubject.next();}")
+    
     this.refreshSubject.next();
   }
 

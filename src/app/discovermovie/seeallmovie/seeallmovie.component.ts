@@ -48,20 +48,19 @@ export class SeeallmovieComponent {
           this.movieSvc.getMoviesFromApi();
         }
         this.movies = moviesArr
-        console.log(this.movies);
+        
 
         if (this.isAuth){
-          console.log(this.isAuth)
+        
           
           for (let movie of this.movies){
             await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
             .toPromise()      
             .then( (response:any) => {
-              console.log(response);
-              console.log(movie);
+        
               // INIT statut des icones wish et watch
               if (response.idWish !== null) {
-                console.log(response.idWish);
+        
                 movie.idWish = response.idWish;
                 movie._wishStatusIcon = this._wishStatusIconOn;
                 movie._wishTitleIcon = this._wishTitleIconOn;
@@ -70,7 +69,7 @@ export class SeeallmovieComponent {
                 movie._wishTitleIcon = this._wishTitleIconOff;
               };
               if (response.idWatch !== null) {
-                console.log(response.idWatch);
+        
                 movie.idWatch = response.idWatch;
                 movie._watchStatusIcon = this._watchStatusIconOn;
                 movie._watchTitleIcon = this._watchTitleIconOn;
@@ -82,7 +81,7 @@ export class SeeallmovieComponent {
             
           }  
         }
-        console.log(this.movies);
+        
         return;
       });
 
@@ -90,12 +89,12 @@ export class SeeallmovieComponent {
 
   updateStatusWishIcon(movie:Movie) {
     if (movie._wishStatusIcon === this._wishStatusIconOn) {
-      console.log("Appel à this.movieSvc.delWishMovie()");
+      
       this.movieSvc.delWishThisMovie(movie);
       this.setStatusWishIcon(movie, 0)
     }
     else {
-      console.log("Appel à this.addWish()");
+      
       this.addWish(movie);
       this.setStatusWishIcon(movie, 1)
     }
@@ -103,12 +102,12 @@ export class SeeallmovieComponent {
 
   updateStatusWatchIcon(movie:Movie) {
     if (movie._watchStatusIcon === this._watchStatusIconOn) {
-      console.log("Appel à this.movieSvc.delWatchMovie()");
+      
       this.movieSvc.delWatchThisMovie(movie);
       this.setStatusWatchIcon(movie, 0)
     }
     else {
-      console.log("Appel à this.checkWatch()");
+      
       this.checkWatch(movie);
       this.setStatusWatchIcon(movie, 1)
     }
@@ -148,29 +147,29 @@ export class SeeallmovieComponent {
     this.movieSvc.postWishMovieToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
   checkWatch(movie:Movie) {
     let sendToApi = { idMovie:movie.idMovie,};
-    console.log(sendToApi);
+    
 
     this.movieSvc.postWatchMovieToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Watch liste!")
           
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 

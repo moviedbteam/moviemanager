@@ -49,7 +49,7 @@ export class OverviewRecoTvComponent {
           this.recoTvSvc.getRecoTvFromApi();
         }
         this.recoTvs = recoArr.slice(0, 20);
-        console.log(this.recoTvs);
+        
 
         for (let tv of this.recoTvs){
           await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+tv.idTv)
@@ -142,12 +142,11 @@ export class OverviewRecoTvComponent {
     this.recoTvSvc.postWishTvToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        console.log(response.status)
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -157,12 +156,12 @@ export class OverviewRecoTvComponent {
     this.recoTvSvc.postWatchTvToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
             

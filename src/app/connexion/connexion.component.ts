@@ -43,7 +43,7 @@ export class ConnexionComponent {
       .subscribe(
         {
           next: (response:any) => {
-            console.log(response);
+            
 
             let name = response.email.split ('@');
             let userData = {
@@ -60,17 +60,14 @@ export class ConnexionComponent {
               this.userSvc.triggerRefresh();
             }
           },
-          // error: (err) => console.log('mon erreur'+err)
-          error: (err) => console.log(err)
+          
+          // error: (err) => console.log(err)
         }
       
       )
     } 
   }
 
-  // logoutAction() {
-  //   this.userSvc.triggerRefresh();
-  //   this.userSvc.logout();
-  // }
+  
   
 }

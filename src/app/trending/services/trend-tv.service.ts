@@ -65,7 +65,7 @@ export class TrendTvService {
     this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           wishTvToDel.idWish = null;
           /////// A VERIFIER !!! ///////
@@ -73,7 +73,7 @@ export class TrendTvService {
           this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -89,7 +89,7 @@ export class TrendTvService {
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "201") {
           watchTvToDel.idWatch = null;
           /////// A VERIFIER !!! ///////
@@ -97,7 +97,7 @@ export class TrendTvService {
           this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 

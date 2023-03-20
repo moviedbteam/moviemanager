@@ -23,7 +23,7 @@ export class OverviewWatchMovieComponent {
             this.movieSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
-          console.log(this.watchMovies);
+          
           return;
         });    
   }

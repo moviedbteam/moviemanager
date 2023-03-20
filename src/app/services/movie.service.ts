@@ -135,7 +135,7 @@ export class MovieService {
     .set('language', 'fr')
     .set('query', userSearch);
 
-    console.log (urlApi+'?api_key='+apiKey+'&language=fr&query='+userSearch);
+    
     this.http.get(urlApi, {params})
     .pipe(
       map((apiResponse:any)=> {
@@ -162,13 +162,13 @@ export class MovieService {
     .set('vote_count.gte', '1000')
     .set('page', this.indexPage);
 
-    // console.log (urlApi+'?api_key='+apiKey+'&language=fr&page=1');
+    
     this.http.get(urlApi, {params})
     .pipe(
       map((apiResponse:any)=> {
-        // console.log(apiResponse)
+        
         return apiResponse.results.map( (movie: any) => {
-          // console.log(movie);
+          
           return new TmdbMovie(movie) ;
           
         })
@@ -246,14 +246,14 @@ export class MovieService {
     this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           this.movie.idWish = null;
           this._movieDetail$.next(this.movie);
           this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
   delWishThisMovie(wishMovieToDel: any) {
@@ -262,7 +262,7 @@ export class MovieService {
     this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           wishMovieToDel.idWish = null;
           /////// A VERIFIER !!! ///////
@@ -270,7 +270,7 @@ export class MovieService {
           this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
@@ -305,14 +305,14 @@ export class MovieService {
     this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           this.movie.idWatch = null;
           this._movieDetail$.next(this.movie);
           this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
   delWatchThisMovie(watchMovieToDel:any) {
@@ -321,7 +321,7 @@ export class MovieService {
     this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           watchMovieToDel.idWatch = null;
           /////// A VERIFIER !!! ///////
@@ -329,25 +329,23 @@ export class MovieService {
           this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
   }
 
 ////////////////////////////// SERVICES BLACKLIST //////////////////////////////
   postBlackListMovie(movieToBlackList:Movie) {
     let sendToApi = {idContent:movieToBlackList.idMovie,};
-    console.log(sendToApi);
-    console.log(this.apiBack+this.apiPostBlackListMovie);
-    // this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi)
+    
     this.http.post(this.apiBack+this.apiPostBlackListMovie, sendToApi ,{observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        console.log(response.status)
+        
         if(response.status == "200") {
           this.alerteSvc.showAlert("Ajouté à la Black liste!")
         }
       },
-      error: error => console.error(error)
+      // error: error => console.error(error)
     });
 
   }

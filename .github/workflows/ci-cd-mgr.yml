@@ -5,7 +5,6 @@ name: CI/CD Serveur MGR
 
 on:
   push:
-    #branches: [ $default-branch ]
     branches: [ develop ]
 
 env:
@@ -14,40 +13,12 @@ env:
 
 jobs:
 
-  ###########
-  ## BUILD ##
-  ###########
-  # build_on_github:
-
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
-  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   - run: npm ci
-  #   - run: npm run build --if-present
-
-    # - run: npm test
-  
   #####################################################
   ## CI : INTEGRATION                                ##
   ## npm install, build, and test                    ##
   ## archive dist-without-markdown dist/moviemanager ##
   #####################################################
-  
-  #name: Node CI
-  #on: [push]
-  #jobs:
-  
+    
   CI_install_build:
     runs-on: ubuntu-latest
     steps:
@@ -66,12 +37,6 @@ jobs:
             #dist
             dist/moviemanager
             !dist/**/*.md
-      # - name: Archive code coverage results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: code-coverage-report
-      #     path: output/test/code-coverage.html
-
 
   ######################################################
   ## CD : DEPLOYMENT                                  ##
@@ -79,44 +44,26 @@ jobs:
   ## Deploy to Netlify                                ##
   ######################################################
 
-  # .github/workflows/netlify.yml
-  #name: Build and Deploy to Netlify
-  #on:
-  #  push:
-  #  pull_request:
-  #jobs:
   CD_deploy_to_netlify:
-    # needs: build_on_github
     needs: CI_install_build
-    # runs-on: ubuntu-18.04
     runs-on: ubuntu-latest
     steps:
       
-      
-      
       - uses: actions/checkout@v2
 
-      #- run: mkdir /home/runner/work/moviemanager/moviemanager/dist
-      # récupération de l'artefact
       - name: Download a single artifact
         uses: actions/download-artifact@v3
         with:
           name: dist-without-markdown
-          #path: dist
           path: dist/moviemanager
       - name: Create _redirects netlify file
         run: |
           echo "${{ secrets._REDIRECTS }}" > dist/moviemanager/_redirects
 
-      # ( Build to ./dist or other directory... )
-
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
-      #- name: Netlify Actions
-      #  uses: nwtgck/actions-netlify@v2.0.0
 
         with:
-          #publish-dir: './dist'
           publish-dir: './dist/moviemanager'
           production-branch: develop
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -128,119 +75,3 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
-
-
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# SONAR TOKEN créé
-
-
-  ####################
-  ## ANALYSE SONAR ##
-  ###################
-  #  quality-gates:
-  #
-  #    runs-on: ubuntu-latest
-  #
-  #    steps:
-  #    - uses: actions/checkout@v3
-  #      with:
-  #        fetch-depth: 0
-  #    - name: Set up JDK 17
-  #      uses: actions/setup-java@v3
-  #      with:
-  #        java-version: '17'
-  #        distribution: 'temurin'
-  #        cache: maven
-  #    - name: Sonar Cloud Analysis
-  #      env:
-  #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #      run: mvn verify sonar:sonar
-
-  ###############
-  ## BUILD JAR ##
-  ###############
-  # build_dist:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     packages: write
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Set up JDK 19
-  #       uses: actions/setup-java@v3
-  #       with:
-  #         java-version: '19'
-  #         distribution: 'oracle'
-  #         cache: maven
-  #     - name: Create env file
-  #       run: |
-  #         echo "${{ secrets.ENV_FILE_MMA }}" > ./MMA-ExpositionLayer/src/main/resources/env.properties
-
-  #     - name: Build Maven
-  #       run: mvn clean package
-
-  #     - run: mkdir artifact && cp MMA-ExpositionLayer/target/*.jar artifact
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: movie-manager-mma
-  #         path: artifact
-  #         retention-days: 1
-
-
-  #      - name: Publish package
-  #        run: mvn deploy
-  #        env:
-  #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  ########################
-  ## BUILD IMAGE DOCKER ##
-  ########################
-  # build_docker_image:
-  #   needs: build_jar
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     packages: write
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Recuperation de l'artefact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: movie-manager-mma
-
-  #     - name: Build and push Docker image
-  #       uses: mr-smithers-excellent/docker-build-push@v5
-  #       with:
-  #         image: movie-manager-mma
-  #         tags: latest
-  #         registry: ghcr.io
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-          
- #######################################
-  ## PULL IMAGE DOCKER & RUN CONTAINER ##
-  #######################################
-  # run_docker_container:
-  #   needs: build_docker_image
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: connexion SSH à VM
-  #       uses: appleboy/ssh-action@v0.1.7
-  #       with:
-  #         host: ${{ secrets.SSH_HOST_BACKEND }}
-  #         username: ${{ secrets.SSH_USERNAME }}
-  #         key: ${{ secrets.SSH_BACKEND_KEY }}
-  #         port: ${{ secrets.SSH_PORT }}
-  #         script: |
-  #           docker pull ghcr.io/moviedbteam/movie-manager-mma:latest
-  #           docker stop mma
-  #           docker run --rm -d -ti --name mma -p 80:8080 ghcr.io/moviedbteam/movie-manager-mma:latest
-

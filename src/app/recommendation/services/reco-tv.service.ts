@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { RecoTv } from '../models/reco-tv.model';
@@ -9,6 +9,8 @@ import { RecoTv } from '../models/reco-tv.model';
   providedIn: 'root'
 })
 export class RecoTvService {
+
+  private refreshOnBlackListWatchSubject = new Subject<void>();
   
   apiBack = environment.base_url_apiBack;
   apiGetRecoTvs:string = '/recommendation/tv';
@@ -21,6 +23,13 @@ export class RecoTvService {
     private http:HttpClient,
     private alerteSvc:AlertService,
   ) { }
+
+  get refreshOnBlackListWatch$() {
+    return this.refreshOnBlackListWatchSubject.asObservable();
+  }
+  triggerOnBlackListWatchRefresh() {
+    this.refreshOnBlackListWatchSubject.next();
+  }
 
   getRecoTvFromApi(){
 
@@ -107,6 +116,7 @@ export class RecoTvService {
     
         if(response.status == "200") {
           this.alerteSvc.showAlert("Ajouté à la Black liste!")
+          this.triggerOnBlackListWatchRefresh();
         }
       },
       // error: error => console.error(error)

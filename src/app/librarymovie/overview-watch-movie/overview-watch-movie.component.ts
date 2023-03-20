@@ -37,21 +37,16 @@ export class OverviewWatchMovieComponent {
   }
 
   refreshOverWatchMovieComponent(): void {
-    // console.log("refreshOverWatchMovieComponent(): void { this.ngOnInit(); }")
-    // this.ngOnInit();
     this.subscriptionWatchesMovie.unsubscribe();
     this.subscriptionWatchesMovie = this.movieSvc.getWatchesMovie$()
-    // this.movieSvc.getWatchesMovie$()
       .subscribe(
         (watchesArr:Movie[]) => {
           if(watchesArr.length===0) {
             this.movieSvc.getWatchMoviesFromApi();
           }
           this.watchMovies = watchesArr
-          
           return;
-        });    
-    // this.cdRef.detectChanges();
+      });    
   }
 
   getImgFullUrl(urlFragment:string):string {

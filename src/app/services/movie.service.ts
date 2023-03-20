@@ -13,6 +13,7 @@ import { AlertService } from './alert.service';
 export class MovieService {
 
   private refreshWishToWatchSubject = new Subject<void>();
+  private refreshOnBlackListWishSubject = new Subject<void>();
 
   movie:any = {};
   private indexPage:number = 1;
@@ -59,6 +60,13 @@ export class MovieService {
     this.refreshWishToWatchSubject.next();
   }
 
+  get refreshOnBlackListWish$() {
+    return this.refreshOnBlackListWishSubject.asObservable();
+  }
+  triggerOnBlackListWishRefresh() {
+    this.refreshOnBlackListWishSubject.next();
+  }
+  
   ////////////////////////////// SERVICES FOR TREND //////////////////////////////
   getTrendMovieFromApi(){
 
@@ -101,10 +109,13 @@ export class MovieService {
     )
     .subscribe((recos:Movie[]) => {
 
-      let actualRecos = this._recoMovie$.getValue();
-      let allRecos:any = [...actualRecos, ...recos]
-      if (allRecos.length !== 0){
-        this._recoMovie$.next(allRecos);
+      // let actualRecos = this._recoMovie$.getValue();
+      // let allRecos:any = [...actualRecos, ...recos]
+      // if (allRecos.length !== 0){
+      //   this._recoMovie$.next(allRecos);
+      // }
+      if (recos.length !== 0){
+        this._recoMovie$.next(recos);
       }
     });  
   }
@@ -241,12 +252,6 @@ export class MovieService {
       })
     )
     .subscribe((wishes:Movie[]) => {
-      // let actualWishes = this._wishesMovie$.getValue();
-      // let allWishes:any = [...actualWishes, ...wishes];
-      // let allWishes:any = [...wishes];
-      // if (allWishes.length !== 0){
-      //   this._wishesMovie$.next(allWishes);
-      // }
       if (wishes.length !== 0){
         this._wishesMovie$.next(wishes);
       }
@@ -258,7 +263,6 @@ export class MovieService {
   }
   delWishMovie() {
     let sendToApi = {wishIdToDelete:this.movie.idWish,};
-    // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+this.movie.idWish, {observe: 'response', responseType:'text'})
     this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
@@ -274,7 +278,6 @@ export class MovieService {
   }
   delWishThisMovie(wishMovieToDel: any) {
     let sendToApi = {wishIdToDelete:wishMovieToDel.idWish,};
-    // this.http.delete(this.apiBack+this.apiPostWishMovie+"/"+wishMovieToDel.idWish, {observe: 'response', responseType:'text'})
     this.http.delete(this.apiBack+this.apiPostWishMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
@@ -289,7 +292,6 @@ export class MovieService {
       // error: error => console.error(error)
     });
   }
-
   
 
   ////////////////////////////// SERVICES WATCH //////////////////////////////
@@ -304,12 +306,6 @@ export class MovieService {
       })
     )
     .subscribe((watches:Movie[]) => {
-      // let actualWatches = this._watchesMovie$.getValue();
-      // let allWatches:any = [...actualWatches, ...watches];
-      // let allWatches:any = [...watches];
-      // if (allWatches.length !== 0){ 
-      //   this._watchesMovie$.next(allWatches);
-      // }
       if (watches.length !== 0){ 
         this._watchesMovie$.next(watches);
       }
@@ -321,7 +317,6 @@ export class MovieService {
   }
   delWatchMovie() {
     let sendToApi = {watchIdToDelete:this.movie.idWatch,};
-    // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+this.movie.idWatch, {observe: 'response', responseType: 'text'} )
     this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
@@ -337,7 +332,6 @@ export class MovieService {
   }
   delWatchThisMovie(watchMovieToDel:any) {
     let sendToApi = {watchIdToDelete:watchMovieToDel.idWatch,};
-    // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
     this.http.delete(this.apiBack+this.apiPostWatchMovie, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
@@ -362,7 +356,8 @@ export class MovieService {
       next: (response:any) => {
         
         if(response.status == "200") {
-          this.alerteSvc.showAlert("Ajouté à la Black liste!")
+          this.alerteSvc.showAlert("Ajouté à la Black liste!");
+          this.triggerOnBlackListWishRefresh();
         }
       },
       // error: error => console.error(error)

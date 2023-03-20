@@ -40,7 +40,7 @@ export class OverviewRecoMovieComponent {
     private movieSvc:MovieService,
     private alerteSvc:AlertService,
     private http:HttpClient,
-  ){}
+  ){this.movieSvc.refreshOnBlackListWish$.subscribe(  () => { this.refreshOnBlackListMovieComponent(); }  ); }
   
   async ngOnInit() {
     
@@ -170,6 +170,19 @@ export class OverviewRecoMovieComponent {
         }
       },
       // error: error => console.error(error)
+    });
+  }
+
+  refreshOnBlackListMovieComponent(): void {
+    this.subscriptionRecoMovie.unsubscribe();
+    this.subscriptionRecoMovie = this.movieSvc.getRecoMovie$()
+    .subscribe( 
+      (recoArr:Movie[]) => {
+        if(recoArr.length===0) {
+          this.movieSvc.getRecoMovieFromApi();
+        }
+        this.recoMovies = recoArr.slice(0, 20);
+      return;
     });
   }
             

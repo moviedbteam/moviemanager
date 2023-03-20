@@ -39,7 +39,7 @@ export class OverviewRecoTvComponent {
     private recoTvSvc:RecoTvService,
     private alerteSvc:AlertService,
     private http:HttpClient,
-  ){}
+  ){this.recoTvSvc.refreshOnBlackListWatch$.subscribe(  () => { this.refreshOnBlackListTvComponent(); }  ); }
 
   async ngOnInit() {
     
@@ -162,6 +162,19 @@ export class OverviewRecoTvComponent {
         }
       },
       // error: error => console.error(error)
+    });
+  }
+
+  refreshOnBlackListTvComponent(): void {
+    this.subscriptionRecoTv.unsubscribe();
+    this.subscriptionRecoTv = this.recoTvSvc.getRecoTv$()
+    .subscribe( 
+      (recoArr:RecoTv[]) => {
+        if(recoArr.length===0) {
+          this.recoTvSvc.getRecoTvFromApi();
+        }
+        this.recoTvs = recoArr.slice(0, 20);
+      return;
     });
   }
             

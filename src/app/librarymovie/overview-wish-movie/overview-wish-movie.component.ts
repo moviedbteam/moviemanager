@@ -101,35 +101,16 @@ export class OverviewWishMovieComponent {
   }
 
   refreshOverWishMovieComponent(): void {
-    // console.log("refreshOverWishMovieComponent(): void { this.ngOnInit(); }")
-    // this.ngOnInit();
     this.subscriptionWishesMovie.unsubscribe();
     this.subscriptionWishesMovie = this.movieSvc.getWishesMovie$()
-    // this.movieSvc.getWishesMovie$()
-    .subscribe(
-      (wishesArr:Movie[]) => {
+      .subscribe(
+        (wishesArr:Movie[]) => {
           if(wishesArr.length===0) {
             this.movieSvc.getWishMoviesFromApi();
           }
           this.wishMovies = wishesArr
-          
-          
-          // for (let wishMovie of this.wishMovies){
-          
-            // INIT icone watch
-          //   if (wishMovie.idWatch !== null) {
-          //     wishMovie._watchStatusIcon = this._watchStatusIconOn;
-          //     wishMovie._watchTitleIcon = this._watchTitleIconOn;
-          //   } else {
-          //     wishMovie._watchStatusIcon = this._watchStatusIconOff;
-          //     wishMovie._watchTitleIcon = this._watchTitleIconOff;
-          //   };
-          
-          // }
-          
           return;
-        });
-    // this.cdRef.detectChanges();
+      });
   }
   
 

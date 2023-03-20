@@ -56,31 +56,35 @@ export class OverviewTrendMovieComponent {
         this.recoMovies = recoArr;
         console.log(this.recoMovies);
 
-        for (let movie of this.recoMovies){
-          await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
-          .toPromise()      
-          .then( (response:any) => {
-            // INIT icones wish, watch, blackList
-            if (response.idWish !== null) {
-              movie.idWish = response.idWish;
-              movie._wishStatusIcon = this._wishStatusIconOn;
-              movie._wishTitleIcon = this._wishTitleIconOn;
-            } else {
-              movie._wishStatusIcon = this._wishStatusIconOff;
-              movie._wishTitleIcon = this._wishTitleIconOff;
-            };
-            if (response.idWatch !== null) {
-              movie.idWatch = response.idWatch;
-              movie._watchStatusIcon = this._watchStatusIconOn;
-              movie._watchTitleIcon = this._watchTitleIconOn;
-            } else {
-              movie._watchStatusIcon = this._watchStatusIconOff;
-              movie._watchTitleIcon = this._watchTitleIconOff;
-            };
+        if (this.isAuth){
+          console.log(this.isAuth)
+
+          for (let movie of this.recoMovies){
+            await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
+            .toPromise()      
+            .then( (response:any) => {
+              // INIT icones wish, watch, blackList
+              if (response.idWish !== null) {
+                movie.idWish = response.idWish;
+                movie._wishStatusIcon = this._wishStatusIconOn;
+                movie._wishTitleIcon = this._wishTitleIconOn;
+              } else {
+                movie._wishStatusIcon = this._wishStatusIconOff;
+                movie._wishTitleIcon = this._wishTitleIconOff;
+              };
+              if (response.idWatch !== null) {
+                movie.idWatch = response.idWatch;
+                movie._watchStatusIcon = this._watchStatusIconOn;
+                movie._watchTitleIcon = this._watchTitleIconOn;
+              } else {
+                movie._watchStatusIcon = this._watchStatusIconOff;
+                movie._watchTitleIcon = this._watchTitleIconOff;
+              };
+              
+            });
             
-          });
-          
-        }  
+          }  
+        }
         return;
       });
 
@@ -147,7 +151,9 @@ export class OverviewTrendMovieComponent {
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
-        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        }
       },
       error: error => console.error(error)
     });
@@ -162,6 +168,7 @@ export class OverviewTrendMovieComponent {
       next: (response:any) => {
         console.log(response.status)
         if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Watch liste!")
           
         }
       },

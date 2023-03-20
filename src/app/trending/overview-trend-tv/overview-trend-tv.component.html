@@ -9,6 +9,7 @@
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
           <div [routerLink]="['/detailtv', recoTv.idTv]"  *ngFor="let recoTv of recoTvs" class="example-item">
             <div>
+              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
               <div class="mini-menu1">
                 <i  *ngIf="this.isAuth" [class]="recoTv._wishStatusIcon" 
                   [title]="recoTv._wishTitleIcon"
@@ -23,7 +24,6 @@
                   ; $event.preventDefault(); $event.stopPropagation()">
                 </i>
               </div>
-              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
             </div>
             {{recoTv.originalName}}
           </div>

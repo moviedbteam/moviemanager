@@ -267,6 +267,7 @@ export class MovieService {
           wishMovieToDel.idWish = null;
           /////// A VERIFIER !!! ///////
           // this._movieDetail$.next(wishMovieToDel);
+          this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
       error: error => console.error(error)
@@ -323,7 +324,9 @@ export class MovieService {
         console.log(response.status)
         if(response.status == "200") {
           watchMovieToDel.idWatch = null;
-          this._movieDetail$.next(this.movie);
+          /////// A VERIFIER !!! ///////
+          // this._movieDetail$.next(this.movie);
+          this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
       error: error => console.error(error)
@@ -340,6 +343,9 @@ export class MovieService {
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
+        if(response.status == "200") {
+          this.alerteSvc.showAlert("Ajouté à la Black liste!")
+        }
       },
       error: error => console.error(error)
     });

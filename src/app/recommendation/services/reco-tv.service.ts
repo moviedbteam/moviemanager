@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { AlertService } from 'src/app/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { RecoTv } from '../models/reco-tv.model';
 
@@ -17,7 +18,8 @@ export class RecoTvService {
   private _recoTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private alerteSvc:AlertService,
   ) { }
 
   getRecoTvFromApi(){
@@ -60,6 +62,7 @@ export class RecoTvService {
           wishTvToDel.idWish = null;
           /////// A VERIFIER !!! ///////
           // this._tvDetail$.next(wishTvToDel);
+          this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
       error: error => console.error(error)
@@ -73,16 +76,17 @@ export class RecoTvService {
   }
 
   delWatchThisTv(watchTvToDel:RecoTv) {
-    let sendToApi = {IdTv:watchTvToDel.idTv,};
+    let sendToApi = {idTv:watchTvToDel.idTv,};
     // this.http.delete(this.apiBack+this.apiPostWatchMovie+"/"+watchMovieToDel.idWatch, {observe: 'response', responseType: 'text'} )
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
-        if(response.status == "200") {
+        if(response.status == "201") {
           watchTvToDel.idWatch = null;
           /////// A VERIFIER !!! ///////
           // this._tvDetail$.next(watchTvToDel);
+          this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
       error: error => console.error(error)
@@ -100,6 +104,9 @@ export class RecoTvService {
     .subscribe({
       next: (response:any) => {
         console.log(response.status)
+        if(response.status == "200") {
+          this.alerteSvc.showAlert("Ajouté à la Black liste!")
+        }
       },
       error: error => console.error(error)
     });

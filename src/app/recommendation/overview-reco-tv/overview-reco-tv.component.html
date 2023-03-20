@@ -8,6 +8,7 @@
           <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
           <div [routerLink]="['/detailtv', recoTv.idTv]"  *ngFor="let recoTv of recoTvs" class="example-item">
             <div>
+              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
               <div class="mini-menu1">
                 <i [class]="recoTv._wishStatusIcon" 
                   [title]="recoTv._wishTitleIcon"
@@ -22,7 +23,6 @@
                   ; $event.preventDefault(); $event.stopPropagation()">
                 </i>
               </div>
-              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
               <div class="mini-menu2">
                 <i [class]="recoTv._blackStatusIcon" 
                   [title]="recoTv._blackTitleIcon"

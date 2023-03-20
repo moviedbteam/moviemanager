@@ -48,7 +48,7 @@ export class OverviewRecoTvComponent {
         if(recoArr.length===0) {
           this.recoTvSvc.getRecoTvFromApi();
         }
-        this.recoTvs = recoArr;
+        this.recoTvs = recoArr.slice(0, 20);
         console.log(this.recoTvs);
 
         for (let tv of this.recoTvs){
@@ -142,7 +142,10 @@ export class OverviewRecoTvComponent {
     this.recoTvSvc.postWishTvToApi(sendToApi)
     .subscribe({
       next: (response:any)=>  {
-        this.alerteSvc.showAlert("L'épisode a été ajouté à la Wish liste")
+        console.log(response.status)
+        if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        }
       },
       error: error => console.error(error)
     });
@@ -154,7 +157,10 @@ export class OverviewRecoTvComponent {
     this.recoTvSvc.postWatchTvToApi(sendToApi)
     .subscribe({
       next: (response:any) => {
-        this.alerteSvc.showAlert("Marqué comme 'Vu'")
+        console.log(response.status)
+        if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Watch liste!")
+        }
       },
       error: error => console.error(error)
     });

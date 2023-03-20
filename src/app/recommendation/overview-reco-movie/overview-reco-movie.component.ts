@@ -49,7 +49,8 @@ export class OverviewRecoMovieComponent {
         if(recoArr.length===0) {
           this.movieSvc.getRecoMovieFromApi();
         }
-        this.recoMovies = recoArr;
+        this.recoMovies = recoArr.slice(0, 20);
+        ;
         console.log(this.recoMovies);
 
         for (let movie of this.recoMovies){
@@ -148,7 +149,9 @@ export class OverviewRecoMovieComponent {
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
-        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        }
       },
       error: error => console.error(error)
     });
@@ -163,6 +166,7 @@ export class OverviewRecoMovieComponent {
       next: (response:any) => {
         console.log(response.status)
         if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Watch liste!")
           
         }
       },

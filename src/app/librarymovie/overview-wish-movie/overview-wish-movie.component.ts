@@ -91,7 +91,7 @@ export class OverviewWishMovieComponent {
       next: (response:any) => {
         console.log(response.status)
         if(response.status = "201") {
-          
+          this.alerteSvc.showAlert("Ajouté à la Watch liste!")
         }
       },
       error: error => console.error(error)

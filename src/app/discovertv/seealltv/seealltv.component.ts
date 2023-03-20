@@ -134,6 +134,7 @@ export class SeealltvComponent {
     this.wishService.deleteAllWishEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
+        console.log(response.status)
         // MAJ de la map des wish serie
         this.mapWishSerie.delete(idTv)
         this.alerteService.showAlert("Tous les épisodes de cette série ont été supprimés de la Wish liste");
@@ -148,7 +149,7 @@ export class SeealltvComponent {
     this.wishService.postAllWishEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        
+        console.log(response.status)
         // MAJ de la map des wish serie
         this.mapWishSerie.set(idTv, {
           cssIconOn: this._wishStatusIconSerieOn,
@@ -184,6 +185,7 @@ export class SeealltvComponent {
     this.watchService.deleteAllWatchEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
+        console.log(response.status)
         // MAJ de la map des watch serie
         this.mapWatchSerie.delete(idTv)
         this.alerteService.showAlert("Tous les épisodes de cette série ont été restaurés à 'Non Vu'");
@@ -198,7 +200,7 @@ export class SeealltvComponent {
     this.watchService.postAllWatchEpisodesToApi(idTv)
     .subscribe({
       next: (response:any)=> {
-        
+        console.log(response.status)
         // MAJ de la map des wish serie
         this.mapWatchSerie.set(idTv, {
           cssIconOn: this._watchStatusIconSerieOn,

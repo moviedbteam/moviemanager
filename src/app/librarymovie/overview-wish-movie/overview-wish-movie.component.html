@@ -8,6 +8,7 @@
     <div class="cdk-virtual-scroll-data-source-example">
       <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
         <div [routerLink]="['/detailmovie', movieWish.idMovie]"  *ngFor="let movieWish of wishMovies" class="example-item">
+          <img [src]="getImgFullUrl(movieWish.posterPath)" alt="">
           <div class="mini-menu1">
             <i [class]="movieWish._watchStatusIcon" 
               [title]="movieWish._watchTitleIcon"
@@ -17,7 +18,6 @@
             </i>
           </div>
             <div>
-              <img [src]="getImgFullUrl(movieWish.posterPath)" alt="">
             </div>
             {{movieWish.title}}
         </div>

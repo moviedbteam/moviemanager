@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { AlertService } from 'src/app/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { TrendTv } from '../models/trend-tv.model';
 
@@ -18,7 +19,8 @@ export class TrendTvService {
   private _trendTv$:BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private alerteSvc:AlertService,
   ) { }
 
   getRecoTvFromApi(){
@@ -63,10 +65,12 @@ export class TrendTvService {
     this.http.delete(this.apiBack+this.apiPostWishTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
+        console.log(response.status)
         if(response.status == "200") {
           wishTvToDel.idWish = null;
           /////// A VERIFIER !!! ///////
           // this._tvDetail$.next(wishTvToDel);
+          this.alerteSvc.showAlert("Supprimé de la Wish liste!")
         }
       },
       error: error => console.error(error)
@@ -85,10 +89,12 @@ export class TrendTvService {
     this.http.delete(this.apiBack+this.apiPostWatchTv, {body: sendToApi, observe: 'response', responseType:'text'} )
     .subscribe({
       next: (response:any) => {
-        if(response.status == "200") {
+        console.log(response.status)
+        if(response.status == "201") {
           watchTvToDel.idWatch = null;
           /////// A VERIFIER !!! ///////
           // this._tvDetail$.next(watchTvToDel);
+          this.alerteSvc.showAlert("Supprimé de la Watch liste!")
         }
       },
       error: error => console.error(error)

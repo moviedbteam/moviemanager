@@ -145,7 +145,9 @@ export class SeeallmovieComponent {
     .subscribe({
       next: (response:any)=>  {
         console.log(response.status)
-        this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Wish liste!")
+        }
       },
       error: error => console.error(error)
     });
@@ -160,6 +162,7 @@ export class SeeallmovieComponent {
       next: (response:any) => {
         console.log(response.status)
         if(response.status = "201") {
+          this.alerteSvc.showAlert("Ajouté à la Watch liste!")
           
         }
       },

@@ -8,6 +8,7 @@
     <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
       <div [routerLink]="['/detailmovie', recoMovie.idMovie]"  *ngFor="let recoMovie of recoMovies" class="example-item">
         <div>
+          <img [src]="getImgFullUrl(recoMovie.posterPath)" alt="">
           <div class="mini-menu1">
             <i  *ngIf="this.isAuth" [class]="recoMovie._wishStatusIcon" 
               [title]="recoMovie._wishTitleIcon"
@@ -22,7 +23,6 @@
               ; $event.preventDefault(); $event.stopPropagation()">
             </i>
           </div>
-          <img [src]="getImgFullUrl(recoMovie.posterPath)" alt="">
         </div>
         {{recoMovie.title}}
       </div>

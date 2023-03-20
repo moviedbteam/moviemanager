@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { Movie } from 'src/app/models/movie.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { MovieService } from 'src/app/services/movie.service';
@@ -25,7 +25,8 @@ export class OverviewWishMovieComponent {
   constructor(
     public movieSvc:MovieService,
     private alerteSvc:AlertService,
-  ){}
+    private cdRef: ChangeDetectorRef,
+  ){this.movieSvc.refreshWishToWatch$.subscribe(  () => { this.refreshOverWishMovieComponent(); }  ); }
 
   ngOnInit() {
     this.subscriptionWishesMovie = this.movieSvc.getWishesMovie$()
@@ -92,11 +93,45 @@ export class OverviewWishMovieComponent {
         
         if(response.status = "201") {
           this.alerteSvc.showAlert("Ajouté à la Watch liste!")
+          this.movieSvc.triggerWishToWatchRefresh();
         }
       },
       // error: error => console.error(error)
     });
   }
+
+  refreshOverWishMovieComponent(): void {
+    // console.log("refreshOverWishMovieComponent(): void { this.ngOnInit(); }")
+    // this.ngOnInit();
+    this.subscriptionWishesMovie.unsubscribe();
+    this.subscriptionWishesMovie = this.movieSvc.getWishesMovie$()
+    // this.movieSvc.getWishesMovie$()
+    .subscribe(
+      (wishesArr:Movie[]) => {
+          if(wishesArr.length===0) {
+            this.movieSvc.getWishMoviesFromApi();
+          }
+          this.wishMovies = wishesArr
+          
+          
+          // for (let wishMovie of this.wishMovies){
+          
+            // INIT icone watch
+          //   if (wishMovie.idWatch !== null) {
+          //     wishMovie._watchStatusIcon = this._watchStatusIconOn;
+          //     wishMovie._watchTitleIcon = this._watchTitleIconOn;
+          //   } else {
+          //     wishMovie._watchStatusIcon = this._watchStatusIconOff;
+          //     wishMovie._watchTitleIcon = this._watchTitleIconOff;
+          //   };
+          
+          // }
+          
+          return;
+        });
+    // this.cdRef.detectChanges();
+  }
+  
 
   getImgFullUrl(urlFragment:string):string {
     return "https://image.tmdb.org/t/p/w500/"+urlFragment;

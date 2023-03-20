@@ -19,7 +19,7 @@ export class AppComponent {
     public userService: UserService,
     private router:Router,
     private cdRef: ChangeDetectorRef,
-  ){   this.userService.refresh$.subscribe(  () => { this.refreshAppComponent(); }  );  }
+  ){   this.userService.refreshAuth$.subscribe(  () => { this.refreshAppComponent(); }  );  }
 
   ngOnInit() {
 

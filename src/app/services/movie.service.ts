@@ -12,6 +12,8 @@ import { AlertService } from './alert.service';
 })
 export class MovieService {
 
+  private refreshWishToWatchSubject = new Subject<void>();
+
   movie:any = {};
   private indexPage:number = 1;
 
@@ -50,6 +52,13 @@ export class MovieService {
 
   ) { }
 
+  get refreshWishToWatch$() {
+    return this.refreshWishToWatchSubject.asObservable();
+  }
+  triggerWishToWatchRefresh() {
+    this.refreshWishToWatchSubject.next();
+  }
+
   ////////////////////////////// SERVICES FOR TREND //////////////////////////////
   getTrendMovieFromApi(){
 
@@ -77,7 +86,7 @@ export class MovieService {
     });  
   }
   getTrendMovie$ ():Observable<TmdbMovie[]> {
-    // this._trendMovie$.next([])
+    this._trendMovie$.next([])
     return this._trendMovie$.asObservable();
   }
 
@@ -145,6 +154,7 @@ export class MovieService {
     .subscribe( (foundMovies:TmdbMovie[]) => this._searchedMovies$.next(foundMovies) );
   }
   getSearchedMovies$ ():Observable<TmdbMovie[]> {
+    this._searchedMovies$.next([])
     return this._searchedMovies$.asObservable();
   }
   setSearchMovies$ (movies:TmdbMovie[]):void {
@@ -183,6 +193,7 @@ export class MovieService {
     this.indexPage++;
   }
   getMovies$ ():Observable<TmdbMovie[]> {
+    this._movies$.next([])
     return this._movies$.asObservable();
   }
 
@@ -214,6 +225,7 @@ export class MovieService {
     });
   }
   getMovieDetail$ ():Observable<Movie> {
+    // this._movieDetail$.next([])
     return this._movieDetail$.asObservable();
   }
 
@@ -229,10 +241,14 @@ export class MovieService {
       })
     )
     .subscribe((wishes:Movie[]) => {
-      let actualWishes = this._wishesMovie$.getValue();
-      let allWishes:any = [...actualWishes, ...wishes]
-      if (allWishes.length !== 0){
-        this._wishesMovie$.next(allWishes);
+      // let actualWishes = this._wishesMovie$.getValue();
+      // let allWishes:any = [...actualWishes, ...wishes];
+      // let allWishes:any = [...wishes];
+      // if (allWishes.length !== 0){
+      //   this._wishesMovie$.next(allWishes);
+      // }
+      if (wishes.length !== 0){
+        this._wishesMovie$.next(wishes);
       }
     });
   }
@@ -288,10 +304,14 @@ export class MovieService {
       })
     )
     .subscribe((watches:Movie[]) => {
-      let actualWatches = this._watchesMovie$.getValue();
-      let allWatches:any = [...actualWatches, ...watches]
-      if (allWatches.length !== 0){ 
-        this._watchesMovie$.next(allWatches);
+      // let actualWatches = this._watchesMovie$.getValue();
+      // let allWatches:any = [...actualWatches, ...watches];
+      // let allWatches:any = [...watches];
+      // if (allWatches.length !== 0){ 
+      //   this._watchesMovie$.next(allWatches);
+      // }
+      if (watches.length !== 0){ 
+        this._watchesMovie$.next(watches);
       }
     });    
   }

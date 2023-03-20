@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
 
-  private refreshSubject = new Subject<void>();
+  private refreshAuthSubject = new Subject<void>();
 
   // API_USER:string = 'http://localhost:8081/login';
   API_USER = environment.url_apiUser;
@@ -27,13 +27,13 @@ export class UserService {
     private router:Router,
   ) { }
 
-  get refresh$() {
+  get refreshAuth$() {
     
-    return this.refreshSubject.asObservable();
+    return this.refreshAuthSubject.asObservable();
   }
-  triggerRefresh() {
+  triggerAuthRefresh() {
     
-    this.refreshSubject.next();
+    this.refreshAuthSubject.next();
   }
 
   getGenresMovie () {
@@ -67,7 +67,7 @@ export class UserService {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     this.alertSvc.showAlert('Vous êtes déconnecté(e)');
-    this.triggerRefresh();
+    this.triggerAuthRefresh();
     // this.router.navigate(['/']);
   }
 

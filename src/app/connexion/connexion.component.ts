@@ -57,7 +57,7 @@ export class ConnexionComponent {
             if(response.jwt){  
               this.router.navigate(['/recommendation']);
               this.alertSvc.showAlert('Vous êtes connecté(e)');
-              this.userSvc.triggerRefresh();
+              this.userSvc.triggerAuthRefresh();
             }
           },
           

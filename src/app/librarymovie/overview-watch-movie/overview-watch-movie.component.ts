@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { Movie } from 'src/app/models/movie.model';
 import { MovieService } from 'src/app/services/movie.service';
 
@@ -9,11 +9,19 @@ import { MovieService } from 'src/app/services/movie.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class OverviewWatchMovieComponent {
+
   watchMovies:Array<Movie> = [] ;
+
   subscriptionWatchesMovie:any;
+  
   constructor(
     public movieSvc:MovieService,
-  ) {}
+    private cdRef: ChangeDetectorRef,
+  ) {
+    this.movieSvc.refreshWishToWatch$.subscribe(  () => 
+    { this.refreshOverWatchMovieComponent(); }  
+    ); 
+  }
 
   ngOnInit() {
     this.subscriptionWatchesMovie = this.movieSvc.getWatchesMovie$()
@@ -26,6 +34,24 @@ export class OverviewWatchMovieComponent {
           
           return;
         });    
+  }
+
+  refreshOverWatchMovieComponent(): void {
+    // console.log("refreshOverWatchMovieComponent(): void { this.ngOnInit(); }")
+    // this.ngOnInit();
+    this.subscriptionWatchesMovie.unsubscribe();
+    this.subscriptionWatchesMovie = this.movieSvc.getWatchesMovie$()
+    // this.movieSvc.getWatchesMovie$()
+      .subscribe(
+        (watchesArr:Movie[]) => {
+          if(watchesArr.length===0) {
+            this.movieSvc.getWatchMoviesFromApi();
+          }
+          this.watchMovies = watchesArr
+          
+          return;
+        });    
+    // this.cdRef.detectChanges();
   }
 
   getImgFullUrl(urlFragment:string):string {

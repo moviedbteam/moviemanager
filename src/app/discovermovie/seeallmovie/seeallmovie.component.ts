@@ -50,34 +50,38 @@ export class SeeallmovieComponent {
         this.movies = moviesArr
         console.log(this.movies);
 
-        for (let movie of this.movies){
-          await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
-          .toPromise()      
-          .then( (response:any) => {
-            console.log(response);
-            console.log(movie);
-            // INIT statut des icones wish et watch
-            if (response.idWish !== null) {
-              console.log(response.idWish);
-              movie.idWish = response.idWish;
-              movie._wishStatusIcon = this._wishStatusIconOn;
-              movie._wishTitleIcon = this._wishTitleIconOn;
-            } else {
-              movie._wishStatusIcon = this._wishStatusIconOff;
-              movie._wishTitleIcon = this._wishTitleIconOff;
-            };
-            if (response.idWatch !== null) {
-              console.log(response.idWatch);
-              movie.idWatch = response.idWatch;
-              movie._watchStatusIcon = this._watchStatusIconOn;
-              movie._watchTitleIcon = this._watchTitleIconOn;
-            } else {
-              movie._watchStatusIcon = this._watchStatusIconOff;
-              movie._watchTitleIcon = this._watchTitleIconOff;
-            };
-          });
+        if (this.isAuth){
+          console.log(this.isAuth)
           
-        }  
+          for (let movie of this.movies){
+            await this.http.get(this.apiBack+this.apiBackGetDetailsFromApi+movie.idMovie)
+            .toPromise()      
+            .then( (response:any) => {
+              console.log(response);
+              console.log(movie);
+              // INIT statut des icones wish et watch
+              if (response.idWish !== null) {
+                console.log(response.idWish);
+                movie.idWish = response.idWish;
+                movie._wishStatusIcon = this._wishStatusIconOn;
+                movie._wishTitleIcon = this._wishTitleIconOn;
+              } else {
+                movie._wishStatusIcon = this._wishStatusIconOff;
+                movie._wishTitleIcon = this._wishTitleIconOff;
+              };
+              if (response.idWatch !== null) {
+                console.log(response.idWatch);
+                movie.idWatch = response.idWatch;
+                movie._watchStatusIcon = this._watchStatusIconOn;
+                movie._watchTitleIcon = this._watchTitleIconOn;
+              } else {
+                movie._watchStatusIcon = this._watchStatusIconOff;
+                movie._watchTitleIcon = this._watchTitleIconOff;
+              };
+            });
+            
+          }  
+        }
         console.log(this.movies);
         return;
       });

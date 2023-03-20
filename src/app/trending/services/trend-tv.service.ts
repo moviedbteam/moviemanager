@@ -41,14 +41,18 @@ export class TrendTvService {
     )
     .subscribe((recos:TrendTv[]) => {
 
-      let actualRecos = this._trendTv$.getValue();
-      let allRecos:any = [...actualRecos, ...recos]
-      if (allRecos.length !== 0){
-        this._trendTv$.next(allRecos);
+      // let actualRecos = this._trendTv$.getValue();
+      // let allRecos:any = [...actualRecos, ...recos]
+      // if (allRecos.length !== 0){
+      //   this._trendTv$.next(allRecos);
+      // }
+      if (recos.length !== 0){
+        this._trendTv$.next(recos);
       }
     });  
   }
   getRecoTv$ ():Observable<TrendTv[]> {
+    this._trendTv$.next([])
     return this._trendTv$.asObservable();
   }
 

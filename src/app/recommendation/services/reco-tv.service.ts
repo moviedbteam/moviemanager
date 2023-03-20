@@ -32,10 +32,13 @@ export class RecoTvService {
     )
     .subscribe((recos:RecoTv[]) => {
 
-      let actualRecos = this._recoTv$.getValue();
-      let allRecos:any = [...actualRecos, ...recos]
-      if (allRecos.length !== 0){
-        this._recoTv$.next(allRecos);
+      // let actualRecos = this._recoTv$.getValue();
+      // let allRecos:any = [...actualRecos, ...recos]
+      // if (allRecos.length !== 0){
+      //   this._recoTv$.next(allRecos);
+      // }
+      if (recos.length !== 0){
+        this._recoTv$.next(recos);
       }
     });  
   }

@@ -46,11 +46,14 @@ export class WishService {
 
     .subscribe((wishes:WishesTv[]) => {
 
-      let actualWishes = this._wishesTv$.getValue();
+      // let actualWishes = this._wishesTv$.getValue();
 
-      let allWishes:any = [...actualWishes, ...wishes]
-      if (allWishes.length !== 0){
-        this._wishesTv$.next(allWishes);
+      // let allWishes:any = [...actualWishes, ...wishes]
+      // if (allWishes.length !== 0){
+      //   this._wishesTv$.next(allWishes);
+      // }
+      if (wishes.length !== 0){
+        this._wishesTv$.next(wishes);
       }
     });
   }

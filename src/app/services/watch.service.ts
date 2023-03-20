@@ -42,10 +42,13 @@ export class WatchService {
     )
     
     .subscribe((watches:WatchesTv[]) => {
-      let actualWatches = this._watchesTv$.getValue();
-      let allWatches:any = [...actualWatches, ...watches]
-      if (allWatches.length !== 0){ 
-        this._watchesTv$.next(allWatches);
+      // let actualWatches = this._watchesTv$.getValue();
+      // let allWatches:any = [...actualWatches, ...watches]
+      // if (allWatches.length !== 0){ 
+      //   this._watchesTv$.next(allWatches);
+      // }
+      if (watches.length !== 0){ 
+        this._watchesTv$.next(watches);
       }
     });    
   }

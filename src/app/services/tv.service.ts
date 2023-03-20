@@ -132,6 +132,7 @@ export class TvService {
   }
 
   getTvWatchDetail$ ():Observable<TvModel> {
+    this.tvDetailWatch$.next([])
     return this.tvDetailWatch$.asObservable();
   }
 
@@ -155,6 +156,7 @@ export class TvService {
   }
 
   getSearchedTvs$ ():Observable<TvModel[]> {
+    this.searchedTvs$.next([])
     return this.searchedTvs$.asObservable();
   }
 
@@ -162,14 +164,14 @@ export class TvService {
     this.searchedTvs$.next(tvs);
   }
 
-  getVideosFromApi(id:number){  
-    let urlApi = this.apiTmdb+'/tv/';
-    let apiKey = this.apiKeyTmdb;
-    let params = new HttpParams()
-    .set('api_key', apiKey)
-    .set('language', 'fr')
-    return this.http.get(urlApi+id+'/videos', {params});
-  }
+  // getVideosFromApi(id:number){  
+  //   let urlApi = this.apiTmdb+'/tv/';
+  //   let apiKey = this.apiKeyTmdb;
+  //   let params = new HttpParams()
+  //   .set('api_key', apiKey)
+  //   .set('language', 'fr')
+  //   return this.http.get(urlApi+id+'/videos', {params});
+  // }
 
 
 }

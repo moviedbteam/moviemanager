@@ -60,6 +60,7 @@ export class TvService {
   }
 
   getTvs$ ():Observable<TvModel[]> {
+    this.tvs$.next([])
     return this.tvs$.asObservable();
   }
 

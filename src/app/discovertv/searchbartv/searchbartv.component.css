@@ -1,7 +1,14 @@
 p {
     color: rgb(140, 120, 160);
-
+    font-size: 1.4em;
 }
+
+.title_movie {
+    color: rgba(93,27,235);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
 input.form-control:focus {
     box-shadow: 0 0 0 .25rem rgba(113,13,253);
 }
@@ -28,10 +35,10 @@ ul li {
 ul li:hover {
     cursor: pointer;
     background: rgb(202, 201, 203);
- 
 }
 
 img {
     height: 150px;
     width: 100px;
+    border: 1px solid rgba(93,27,235);
 }

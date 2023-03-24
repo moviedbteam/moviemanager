@@ -1,7 +1,7 @@
 <div class="row pt-3 pb-5 seeall">
   <h2 class="text-center">Découvrir des films</h2>
 
-  <div *ngFor="let movie of movies" class="col-12  col-lg-2 col-md-4">
+  <div *ngFor="let movie of movies" class="col-12  col-md-6 col-lg-4 col-xl-3 col-xxl-2">
 
     <div [routerLink]="['/detailmovie',movie.idMovie]" class="card bg-dark flex">
       <img [src]="getImgFullUrl(movie.backdropPath)" alt="">

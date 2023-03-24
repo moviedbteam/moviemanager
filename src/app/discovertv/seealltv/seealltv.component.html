@@ -1,7 +1,7 @@
 <div class="row pt-3 pb-5 seeall">
     <h2 class="text-center">Découvrir des séries TV</h2>
 
-    <div *ngFor="let tv of tvs" class="col-12  col-lg-2 col-md-4">
+    <div *ngFor="let tv of tvs" class="col-12  col-md-6 col-lg-4 col-xl-3 col-xxl-2">
 
         <div [routerLink]="['/detailtv',tv.id]" class="card bg-dark flex">
             <img [src]="getImgFullUrl(tv.image_landscape)" alt="">

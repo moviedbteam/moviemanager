@@ -1,16 +1,16 @@
 <input #field (keyup)="onKeyupInput(field.value)" type="text" class="form-control" placeholder="Rechercher des films...">
 
 <ul *ngIf="searchedMovies.length>0"> 
-  <li [routerLink]="['/detailmovie',movie.idMovie]" *ngFor="let movie of searchedMovies">
+  <li [routerLink]="['/detailmovie',movie.idMovie]" *ngFor="let movie of searchedMovies" class="d-flex">
     <div class="row">
-      <div class="col-1">
-        <div class="image-container">
+      <!-- <div class="col-1"> -->
+        <div class="col-4 col-sm-3 col-md-3 col-lg-2 col-xl-1">
           <img [src]="getImgFullUrl(movie.posterPath)" alt="">
         </div>
-      </div>
-      <div class="col-10">
+      <!-- </div> -->
+      <div class="col-6 col-sm-9 col-md-9 col-lg-10 col-xl-10">
         <div class="title_movie">{{movie?.title}} ({{ movie?.releaseDate | date:'yyyy' }})</div>
-        <p>{{movie?.overview}}</p>
+        <p id="overview_movie">{{movie?.overview}}</p>
       </div>
     </div>
   </li>

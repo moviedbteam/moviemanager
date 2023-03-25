@@ -3,6 +3,10 @@ p {
     font-size: 1.4em;
 
 }
+
+.row {
+    width:100%;
+}
 input.form-control:focus {
     box-shadow: 0 0 0 .25rem rgba(113,13,253);
 }
@@ -43,4 +47,14 @@ img {
     height: 150px;
     width: 100px;
     border: 1px solid rgba(93,27,235);
+}
+
+@media screen and (max-width: 576px) {
+    #overview_movie {
+      display:none;
+    }
+
+    .title_movie {
+        font-size: 1.8em;
+    }
 }

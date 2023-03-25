@@ -33,7 +33,7 @@ h2 > span {
 
 .affiche {
     width: 300px;
-    height: 450px;
+    /* height: 450px; */
     margin-right: 50px;
     margin-bottom: 50px;
 }
@@ -101,7 +101,7 @@ div>button>span>i {
 }
 
 .rounded-pill {
-    font-size: 0.9em;
+    font-size: 1.1em;
 }
 
 .accordion {
@@ -118,9 +118,20 @@ div>button>span>i {
     margin-bottom: 10px;
 }
 
+.mini-menu > i:nth-child(1){
+    color: yellow;
+    margin-right: 10px;
+}
+
+.mini-menu > i:nth-child(2){
+    color: #0D6EFD;;
+    margin-right: 10px;
+}
+
 .accordion-body{
     background-color: #0D0D4E;
     color: rgb(140, 120, 160);
+    font-size: 1.1em;
 }
 
 .accordion-button {
@@ -142,4 +153,63 @@ td > img {
     height: 52px;
     border:1px solid #0D6CFD;
     background-image: url("./assets/apercu-episode-non-dispo.png");
+}
+
+td > i:nth-child(1) {
+    color: yellow; 
+    margin-right: 10px;
+}
+
+td > i:nth-child(2) {
+    color: #0D6EFD;
+    margin-right: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .flex-container {
+        display:block;
+    }
+
+    .btn {
+        margin-top: 15px;
+        font-size: 2em;
+    }
+
+    .affiche {
+        width: 150px;
+        margin-bottom: 10px;
+    }
+    
+    .affiche > img {
+        width: 150px;
+        height: 225px;
+        border:1px solid #0D6CFD;
+    }
+
+    .affiche-season {
+        display: none;
+    }
+    
+
+    table tr th:nth-child(1), table tr td:nth-child(1){
+        width: 100px;
+    }
+
+    table tr th:nth-child(5), table tr td:nth-child(5){
+        display:none; /* colonne résumé */
+    }
+
+    /* icône Wish pour chaque episode */
+    td > i:nth-child(1) {
+        color: yellow; 
+        margin-right: 35px;
+    }
+
+    .mini-menu > i:nth-child(1){
+        color: yellow;
+        margin-right: 35px;
+    }
+
+
 }

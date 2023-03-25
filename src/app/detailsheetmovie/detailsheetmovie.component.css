@@ -79,7 +79,7 @@ div>button>span>i {
     font-size: 1.1em;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 819px) {
     .flex-container {
         display:block;
     }
@@ -99,5 +99,4 @@ div>button>span>i {
         border:1px solid #0D6CFD;
     }
     
-
 }

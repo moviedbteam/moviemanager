@@ -8,23 +8,16 @@
   <h1>{{ (movieSvc.getMovieDetail$() | async )?.title }}</h1>
 </div>
 
-
-
-
-
-
 <div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
 
 
   <div class="flex-container">
 
-
-    <div class="affiche">
+    <div class="affiche col-12 col-sm-12 col-md-6 col-lg-6 col-xl-5">
       <img [src]="getImgFullUrl(movie.posterPath)" alt="">
     </div>
 
-
-    <div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-6 col-xl-7">
       <button *ngIf="this.isAuth" [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
         <span><i class="fa-regular fa-bookmark"></i></span>Wish
       </button>
@@ -33,24 +26,29 @@
         <span><i class="fa-solid fa-check"></i></span>Watch
       </button>
 
-      <!-- <h2>Moyenne des votes: <span>{{movie?.voteAverage}}</span></h2> -->
-      <p style="font-size: 1.3em; color: rgba(93,27,235); margin-top: 10px;">Moyenne des votes  <span class="badge bg-info text-dark">{{movie?.voteAverage | number:'1.1-1' }}</span></p> 
+ 
+
+      <!-- <p style="font-size: 1.3em; color: rgba(93,27,235); margin-top: 10px;">Moyenne des votes  <span class="badge bg-info text-dark">{{movie?.voteAverage | number:'1.1-1' }}</span></p>  -->
+      <p style="font-size: 1.8em; color: rgba(93,27,235); margin-top: 10px;"><span class="badge bg-info text-dark">{{movie?.voteAverage | number:'1.1-1' }}</span></p> 
+
+      <p>
+        <span class="badge rounded-pill bg-primary" *ngFor="let genre of movie.genres">{{ genre.name}}</span>
+      </p>
       
+      <h2>Durée: <span>{{ movie.runtime | printDuration }}</span></h2>
+      <h2>Date de sortie: <span>{{ movie?.releaseDate | date:'dd-MM-yyyy' }}</span></h2>
       <h2>Popularité: <span>{{movie?.popularity  | number:'1.2-2'}}</span></h2>
       
       <h2>Nombre de votes: <span>{{movie?.voteCount?movie.voteCount:"non disponible"}}</span></h2>
       
-      <h2>Date de sortie: <span>{{ movie?.releaseDate | date:'dd-MM-yyyy' }}</span></h2>
+
 
       <h2>Résumé</h2>
-      <p>{{movie?.overview}}</p>
+      <p class="overview">{{movie?.overview}}</p>
 
-      <h2>Genres</h2>
-      <p>
-        <span class="badge rounded-pill bg-primary" *ngFor="let genre of movie.genres">{{ genre.name}}</span>
-      </p>
+      <!-- <h2>Genres</h2> -->
 
-      <h2>Durée: <span>{{ movie.runtime | printDuration }}</span></h2>
+
 
     </div>
   </div> 

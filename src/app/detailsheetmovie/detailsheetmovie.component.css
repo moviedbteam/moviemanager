@@ -38,6 +38,10 @@ h2 > span {
     /* background-image: url("./assets/affiche-serie-non-dispo.png"); */
 }
 
+p.overview {
+    font-size: 1.2em;
+}
+
 p.genre span{
     padding: 2px 5px;
     background: #fff;
@@ -72,5 +76,17 @@ div>button>span>i {
 }
 
 .rounded-pill {
-    font-size: 0.9em;
+    font-size: 1.1em;
+}
+
+@media screen and (max-width: 768px) {
+    .flex-container {
+        display:block;
+    }
+
+    .btn {
+        margin-top: 15px;
+        font-size: 2em;
+    }
+
 }

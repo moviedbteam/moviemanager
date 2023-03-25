@@ -89,4 +89,15 @@ div>button>span>i {
         font-size: 2em;
     }
 
+    .affiche {
+        width: 150px;
+    }
+    
+    .affiche > img {
+        width: 150px;
+        height: 225px;
+        border:1px solid #0D6CFD;
+    }
+    
+
 }
